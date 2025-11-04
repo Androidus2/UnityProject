@@ -1,22 +1,22 @@
-\# Unity Project – Sprint 0
+# Unity Project – Sprint 0
 
 
 
-\## Overview
+## Overview
 
-This project represents \*\*Sprint 0\*\* of our Unity game development process.  
+This project represents **Sprint 0** of our Unity game development process.  
 
-The game is developed using \*\*Unity 6.0 LTS\*\*.
+The game is developed using **Unity 6.0 LTS**.
 
 
 
 At this stage, the project contains:
 
-\- A scene named \*\*`SampleScene`\*\*
+- A scene named **`SampleScene`**
 
-\- Basic gameplay systems:
+- Basic gameplay systems:
 
-&nbsp; - Player movement (walking \& sprinting) using `CharacterController` and the \*\*Unity Input System\*\*
+&nbsp; - Player movement (walking & sprinting) using `CharacterController` and the **Unity Input System**
 
 &nbsp; - Player attack system
 
@@ -30,13 +30,13 @@ At this stage, the project contains:
 
 
 
-\## How to Run
+## How to Run
 
-1\. Open the project in \*\*Unity 6.0 LTS\*\*
+1. Open the project in **Unity 6.0 LTS**
 
-2\. Navigate to the \*\*`SampleScene`\*\*
+2. Navigate to the **`SampleScene`**
 
-3\. Press \*\*Play\*\* in the Unity Editor
+3. Press **Play** in the Unity Editor
 
 
 
@@ -44,15 +44,15 @@ At this stage, the project contains:
 
 
 
-\## Sprint Artifacts
+## Sprint Artifacts
 
-A folder named \*\*`Reports`\*\* is included in the project.  
+A folder named **`Reports`** is included in the project.  
 
-It contains sprint-related documentation, including the \*\*Sprint 0 report\*\*.
+It contains sprint-related documentation, including the **Sprint 0 report**.
 
 
 
-\## Review Feedback
+## Review Feedback
 
-Please send the report feedback \*\*as a message on Microsoft Teams\*\*.
+Please send the report feedback **as a message on Microsoft Teams**.
 
