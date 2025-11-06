@@ -7,7 +7,8 @@ public class PlayerHealth : MonoBehaviour
 
     private int currentHealth;
 
-    public HealthBar healthBar;
+    [SerializeField]
+    private HealthBar healthBar;
 
     void Start()
     {
@@ -56,10 +57,5 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Player healed " + amount + " health. Current health: " + currentHealth);
     }
-    void OnGUI()
-    {
-        GUI.contentColor = Color.black;
-        GUI.Label(new Rect(10, 10, 200, 20), "Health: " + currentHealth + "/" + maxHealth);
-    }
-
+   
 }

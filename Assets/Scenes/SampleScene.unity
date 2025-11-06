@@ -661,25 +661,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1335538597 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4387012101248262574, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
-  m_PrefabInstance: {fileID: 8571890329818464165}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1335538603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335538597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85bb127cc83265542b4911a737ebbb87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 30
-  healthBar: {fileID: 1435516820}
 --- !u!1 &1435516818
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +713,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1435516821}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.09107867, b: 0, a: 1}
+    key1: {r: 0.9649088, g: 1, b: 0.1566037, a: 1}
+    key2: {r: 0.3226415, g: 1, b: 0.32561752, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 21357
+    ctime1: 43870
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 1
+    m_ColorSpace: -1
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  fill: {fileID: 228109284}
 --- !u!114 &1435516821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,7 +789,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 3
+  m_MaxValue: 4
   m_WholeNumbers: 1
   m_Value: 3
   m_OnValueChanged:
@@ -1048,7 +1060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1218,6 +1230,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1048539645315841674, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1435516820}
     - target: {fileID: 2148448706564392191, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1265,10 +1281,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4387012101248262574, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1335538603}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
 --- !u!1001 &8709350188549894213
 PrefabInstance:
