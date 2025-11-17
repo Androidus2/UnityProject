@@ -19,5 +19,8 @@ public abstract class ItemObject : ScriptableObject
     [SerializeField]
     protected string description;
 
-    
+    public GameObject GetIcon()
+    {
+        return icon;
+    }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1463265e98388784b8cc1d246da8fb28, type: 3}
   m_Name: Key
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 2039747009769397215, guid: 13f276f348687dd4fa86545a2287b749, type: 3}
   type: 1
   description: 
   missionName: openBrownDoor

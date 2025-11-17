@@ -12,6 +12,11 @@ public class Item : MonoBehaviour, IInteractable
     {
         Debug.Log("Adding item: to inventory");
         Destroy(gameObject); //destroy the item
-        return true;
+        return item;
+    }
+
+    public ItemObject GetItem()
+    {
+        return item;
     }
 }
