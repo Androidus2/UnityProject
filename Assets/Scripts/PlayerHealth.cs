@@ -18,7 +18,13 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        // We don't want these commands to be active, but we're keeping them in if we need to test something
+        // TestCommands();
+    }
+
+    void TestCommands()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(10);
         }
@@ -26,8 +32,8 @@ public class PlayerHealth : MonoBehaviour
         {
             Heal(10);
         }
-
     }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
