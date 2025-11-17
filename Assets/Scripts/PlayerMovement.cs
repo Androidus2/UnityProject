@@ -28,9 +28,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float sneakSpeed;
 
-    EnemyController[] enemies;
+    [SerializeField]
     float rotationSpeed;
 
+    EnemyController[] enemies;
     float movementSpeed;
     Vector3 moveDirection;
 

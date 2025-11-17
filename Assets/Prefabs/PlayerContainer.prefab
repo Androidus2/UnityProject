@@ -399,6 +399,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 259112251357655829}
   walkSpeed: 3
   sprintSpeed: 5
+  sneakSpeed: 1.5
   rotationSpeed: 10
 --- !u!114 &4208811195851466618
 MonoBehaviour:
