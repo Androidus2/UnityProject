@@ -23,10 +23,6 @@ public class Interactor : MonoBehaviour
     //inventory system
 
     [SerializeField]
-    protected LayerMask itemMask;
-
-
-    [SerializeField]
     private InventoryObject inventory;
 
     
@@ -46,33 +42,11 @@ public class Interactor : MonoBehaviour
             var interactable = colliders[0].GetComponent<IInteractable>(); //find the mono behaviour which implements the interface
 
             if (interactable != null && interactButton.WasPressedThisFrame()) { //to add controller key?
-                interactable.Interact(this);
+                interactable.Interact(this, inventory);
 
             
             }
 
-        }
-
-        //items
-        numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, interactionPointRadius, colliders, itemMask);
-
-        if (numFound > 0)
-        {
-            var interactable = colliders[0].GetComponent<IInteractable>(); //find the mono behaviour which implements the interface
-
-            //if the interactable is an item, we add it to inventory and destroy it as well
-            if (interactable != null && interactButton.WasPressedThisFrame())
-            {
-
-                try
-                {
-                    Item item = (Item)interactable;
-                    inventory.AddItem(item.GetItem());  //items should be on item layer, but in order to make sure, we're adding a try
-                    interactable.Interact(this); //interact and destroy
-
-                }
-                catch { }
-            }
         }
 
     }

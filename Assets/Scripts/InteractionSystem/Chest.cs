@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour, IInteractable
 {
-       public void Interact(Interactor interactor)
+       public void Interact(Interactor interactor, InventoryObject inventory)
     {
         //lockpicking mechanic
         //open the chest ui

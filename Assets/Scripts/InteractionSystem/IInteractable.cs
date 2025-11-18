@@ -2,6 +2,6 @@
 public interface IInteractable
 {
 
-    public void Interact (Interactor interactor);
+    public void Interact (Interactor interactor, InventoryObject inventory);
 
 }
