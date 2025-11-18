@@ -1,35 +1,51 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 
 public class Interactor : MonoBehaviour
 {
-    [SerializeField]
-    protected Transform _interactionPoint;
+    private InputAction interactButton;
 
     [SerializeField]
-    protected float _interactionPointRadius = 0.5f; //interact radius / area
+    protected Transform interactionPoint;
 
     [SerializeField]
-    protected LayerMask _interactableMask;
-
-    protected Collider[] _colliders = new Collider[3];
+    protected float interactionPointRadius = 0.5f; //interact radius / area
 
     [SerializeField]
-    protected int _numFound; //number of colliders found - serialized for viewing
+    protected LayerMask interactableMask;
+
+    protected Collider[] colliders = new Collider[3];
+
+    [SerializeField]
+    protected int numFound; //number of colliders found - serialized for viewing
+
+
+    //inventory system
+
+    [SerializeField]
+    protected LayerMask itemMask;
+
+
+    [SerializeField]
+    private InventoryObject inventory;
+
+    
+    private void Start()
+    {
+        interactButton = InputSystem.actions.FindAction("Interact");
+    }
 
     private void Update()
     {
-        _numFound = Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, _colliders, _interactableMask);
+        //interactables
+        numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, interactionPointRadius, colliders, interactableMask);
 
-        if(_numFound > 0)
+        if(numFound > 0)
         {
            
-            var interactable = _colliders[0].GetComponent<IInteractable>(); //find the mono behaviour which implements the interface
+            var interactable = colliders[0].GetComponent<IInteractable>(); //find the mono behaviour which implements the interface
 
-            if (interactable != null && Keyboard.current.eKey.wasPressedThisFrame) { //to add controller key?
+            if (interactable != null && interactButton.WasPressedThisFrame()) { //to add controller key?
                 interactable.Interact(this);
 
             
@@ -37,11 +53,41 @@ public class Interactor : MonoBehaviour
 
         }
 
+        //items
+        numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, interactionPointRadius, colliders, itemMask);
+
+        if (numFound > 0)
+        {
+            var interactable = colliders[0].GetComponent<IInteractable>(); //find the mono behaviour which implements the interface
+
+            //if the interactable is an item, we add it to inventory and destroy it as well
+            if (interactable != null && interactButton.WasPressedThisFrame())
+            {
+
+                try
+                {
+                    Item item = (Item)interactable;
+                    inventory.AddItem(item.GetItem());  //items should be on item layer, but in order to make sure, we're adding a try
+                    interactable.Interact(this); //interact and destroy
+
+                }
+                catch { }
+            }
+        }
+
     }
 
     private void OnDrawGizmos() //to view the interaction sphere
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(_interactionPoint.position, _interactionPointRadius);
+        Gizmos.DrawWireSphere(interactionPoint.position, interactionPointRadius);
     }
+
+    //for testing purposes, we clear the inventory
+    private void OnApplicationQuit()
+    {
+        inventory.GetItems().Clear();
+    }
+
+
 }

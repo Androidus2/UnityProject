@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PopUpPanelI : MonoBehaviour
+public class PopUpPanel : MonoBehaviour
 {
-    public GameObject Panel;
+    [SerializeField]
+    private GameObject Panel;
     InputAction inventoryButton;
 
     void Awake()

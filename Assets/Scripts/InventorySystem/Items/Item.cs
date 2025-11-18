@@ -2,19 +2,14 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, IInteractable
 {
-    public ItemObject item;
-
     [SerializeField]
-    private string _prompt;
-    public string InteractionPoint => _prompt;
+    private ItemObject item;
 
-    public bool Interact(Interactor interactor)
+    public void Interact(Interactor interactor)
     {
-        Debug.Log("Adding item: to inventory");
+        Debug.Log("Adding item: " + item.name + " to inventory");
         Destroy(gameObject); //destroy the item
-        return item;
     }
-
     public ItemObject GetItem()
     {
         return item;

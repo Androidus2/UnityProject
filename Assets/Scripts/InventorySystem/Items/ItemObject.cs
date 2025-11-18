@@ -10,7 +10,7 @@ public enum ItemType
 public abstract class ItemObject : ScriptableObject
 {
     [SerializeField]
-    protected GameObject icon;
+    protected GameObject icon; //TO DO - Change to image / sprite in the future
 
     [SerializeField]
     protected ItemType type;
