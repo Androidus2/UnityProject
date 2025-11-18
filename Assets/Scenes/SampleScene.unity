@@ -697,7 +697,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.44528478, y: 0.633}
   m_AnchorMax: {x: 0.44528478, y: 0.633}
-  m_AnchoredPosition: {x: -1.1122017, y: 8.979599}
+  m_AnchoredPosition: {x: -1.1121979, y: 8.979599}
   m_SizeDelta: {x: 85.1783, y: 17.959}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435516820
@@ -904,6 +904,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 657550250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1548621326 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5819808647879495414, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
+  m_PrefabInstance: {fileID: 8571890329818464165}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1905076913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9113785452643893925, guid: 7f5e2f56ea65e044295e490a40e0deb2, type: 3}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 1548621326}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
