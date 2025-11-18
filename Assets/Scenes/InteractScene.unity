@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 572075644}
   - component: {fileID: 572075647}
   - component: {fileID: 572075646}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,9 +705,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   numFound: 0
-  itemMask:
-    serializedVersion: 2
-    m_Bits: 128
   inventory: {fileID: 11400000, guid: 78b77aa034dfb134da1a1d2499eba11f, type: 2}
 --- !u!1 &675225847
 GameObject:
@@ -1232,7 +1229,7 @@ GameObject:
   - component: {fileID: 1552161368}
   - component: {fileID: 1552161367}
   - component: {fileID: 1552161366}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1855,7 +1852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2055647430
 RectTransform:
   m_ObjectHideFlags: 0
