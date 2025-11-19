@@ -245,7 +245,7 @@ MonoBehaviour:
   viewAngle: 90
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1024
 --- !u!195 &5615104058150037955
 NavMeshAgent:
   m_ObjectHideFlags: 0
