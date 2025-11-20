@@ -12,11 +12,13 @@ TagManager:
   - 
   - Water
   - UI
+  - Interactable
+  - Item
   - 
   - 
+  - Map
   - 
-  - 
-  - 
+  - Player
   - 
   - 
   - 
