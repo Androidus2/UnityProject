@@ -17,6 +17,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private bool isPassive = true;
 
+    [SerializeField]
+    private bool isStealable = true;
+
     [Header("References")]
     [SerializeField] 
     private EnemyHeadLook headLook;
@@ -271,6 +274,12 @@ public class EnemyController : MonoBehaviour
         EnterInvestigate(point);
     }
 
+    public void MarkStolen()
+    {
+        isStealable = false;
+        Debug.Log(gameObject.name + " was stolen from!");
+    }
+
     public Transform GetPlayerTransform()
     {
         return player.transform;
@@ -279,6 +288,11 @@ public class EnemyController : MonoBehaviour
     public void SetPlayer(Transform player)
     {
         this.player = player;
+    }
+
+    public bool GetIsStealable()
+    {
+        return isStealable;
     }
 
 }
