@@ -155,8 +155,19 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+        // Rotate torso toward the player during attack
+        Vector3 dir = player.position - transform.position;
+        dir.y = 0;
+        if (dir.sqrMagnitude > 0.001f)
+        {
+            Quaternion target = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, target, 8f * Time.deltaTime
+            );
+        }
+
         // If the player is super close or we have LOS, we can try to attack
-        if (vision.CanSeePlayer() || dist <= followRange)
+        if (vision.CanSeePlayer())
         {
             lastSeenPlayerPos = player.position;
             if (attack.IsReady())
