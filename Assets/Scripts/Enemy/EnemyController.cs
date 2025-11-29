@@ -212,7 +212,9 @@ public class EnemyController : MonoBehaviour
 
         movement.SetInvestigatePoint(point);
 
-        headLook.StartLooking();
+        // If we weren't investigating already, look around too
+        if (state != EnemyState.Investigate)
+            headLook.StartLooking();
 
         state = EnemyState.Investigate;
     }
