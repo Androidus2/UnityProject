@@ -167,7 +167,7 @@ public class EnemyController : MonoBehaviour
         }
 
         // If the player is super close or we have LOS, we can try to attack
-        if (vision.CanSeePlayer())
+        if (vision.CanSeePlayer() || vision.HasClearMeleeLine(followRange))
         {
             lastSeenPlayerPos = player.position;
             if (attack.IsReady())
