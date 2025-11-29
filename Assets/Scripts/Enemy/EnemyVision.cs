@@ -53,4 +53,24 @@ public class EnemyVision : MonoBehaviour
 
         return true;
     }
+
+    public bool HasClearMeleeLine(float maxDistance)
+    {
+        Vector3 start = enemyEyes.position;
+        Vector3 end = player.position;
+        Vector3 dir = (end - start);
+
+        if (dir.sqrMagnitude > maxDistance * maxDistance)
+            return false;
+
+        float distance = dir.magnitude;
+        dir /= distance;
+
+        // Raycast only for obstacles. If we don't hit, melee is allowed.
+        if (Physics.Raycast(start, dir, distance, obstacleMask))
+            return false;
+
+        return true;
+    }
+
 }
