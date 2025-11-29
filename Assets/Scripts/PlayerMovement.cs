@@ -30,11 +30,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float rotationSpeed;
 
+    [SerializeField]
+    float gravity = -9.81f;
+
     EnemyController[] enemies;
     float movementSpeed;
     Vector3 moveDirection;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    float verticalVelocity;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -46,14 +50,11 @@ public class PlayerMovement : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
 
-        // Find all enemies in the scene
         enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
-        // Give them a reference to the player through code so we don't have to do it in the inspector
         foreach (EnemyController enemy in enemies)
             enemy.SetPlayer(transform);
     }
 
-    // Update is called once per frame
     void Update()
     {
         ReadInput();
@@ -74,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateMovementSpeed()
     {
-        // If the player presses both sneak and sprint, give priority to sneaking so he doesn't accidentally make a sound
         if (sneakInput != 0f)
             movementSpeed = sneakSpeed;
         else if (sprintInput != 0f)
@@ -104,17 +104,30 @@ public class PlayerMovement : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
-
     }
 
     void DoMovement()
     {
+        // Apply gravity
+        verticalVelocity += gravity * Time.deltaTime;
+        if (characterController.isGrounded)
+        {
+            if (verticalVelocity < 0f)
+                verticalVelocity = -2f;       // Keeps grounded consistently
+        }
+
+        // Horizontal movement
         Vector3 movement = movementSpeed * Time.deltaTime * moveDirection;
+
+        // Add gravity to movement
+        movement.y = verticalVelocity * Time.deltaTime;
+
+        // Move character
         characterController.Move(movement);
 
-        // If we aren't sneaking and have moved, alert the enemies
+        // Alert enemies
         if (sneakInput == 0f && moveInput != Vector2.zero)
-            foreach(EnemyController enemy in enemies)
+            foreach (EnemyController enemy in enemies)
                 enemy.HearSound(transform.position);
     }
 }
