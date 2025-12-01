@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
     CharacterController characterController;
 
     [SerializeField]
+    Animator animator;
+
+    [SerializeField]
     Transform cameraTransform;
 
     [SerializeField]
@@ -35,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -112,9 +115,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movement = movementSpeed * Time.deltaTime * moveDirection;
         characterController.Move(movement);
 
+        if (moveInput == Vector2.zero)
+            animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+        else
+            animator.SetFloat("Speed", movementSpeed, 0.1f, Time.deltaTime);
+
+        bool isSneaking = movementSpeed == sneakSpeed;
+        if (isSneaking)
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1, Time.deltaTime * 5f));
+
+        animator.SetBool("IsSneaking", isSneaking);
+
         // If we aren't sneaking and have moved, alert the enemies
         if (sneakInput == 0f && moveInput != Vector2.zero)
-            foreach(EnemyController enemy in enemies)
+            foreach (EnemyController enemy in enemies)
                 enemy.HearSound(transform.position);
     }
 }

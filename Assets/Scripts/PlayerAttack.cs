@@ -13,6 +13,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     float attackCooldown;
 
+    [SerializeField]
+    Animator animator;
+
     float timeSinceLastAttack;
 
     List<EnemyHealth> targets;
@@ -41,6 +44,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
+        animator.SetTrigger("Attack");
         if (targets.Count > 0)
         {
             EnemyHealth hitEnemy = targets[0];

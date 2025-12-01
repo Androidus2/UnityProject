@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,6 +11,12 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField]
     private HealthBar healthBar;
+
+    [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
+    private MonoBehaviour[] playerComponents;
 
     void Start()
     {
@@ -43,10 +51,31 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Debug.Log("Player is dead.");
+            Die();
         }
         healthBar.SetHealth(currentHealth);
     }
+
+    void Die()
+    {
+        Debug.Log("Player is dead.");
+        animator.applyRootMotion = true;
+        animator.SetTrigger("Die");
+
+        // TODO: Make a better way of disabling the player's inputs on death
+        foreach(var player in playerComponents) 
+            player.enabled = false;
+
+        // TODO: Add a death screen instead of directly resetting the scene
+        StartCoroutine(WaitBeforeRestartingScene());
+    }
+
+    IEnumerator WaitBeforeRestartingScene()
+    {
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void Heal(int amount)
     {
         if (currentHealth >= maxHealth)
