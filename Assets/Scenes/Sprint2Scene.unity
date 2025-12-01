@@ -178,7 +178,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3657550811296833644, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 795296750}
   m_SourcePrefab: {fileID: 100100000, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
 --- !u!1 &51887872
 GameObject:
@@ -1551,6 +1554,24 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &795296742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3657550811296833644, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+  m_PrefabInstance: {fileID: 9545762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &795296750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795296742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3395eb20eb61cf54b9025bb28d7e94d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stealCooldown: 1
 --- !u!1 &798148327
 GameObject:
   m_ObjectHideFlags: 0
