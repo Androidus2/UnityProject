@@ -70,7 +70,7 @@ public class PlayerSteal : MonoBehaviour
             {
                 return;
             }
-
+            Debug.Log("Enemy entered steal range.");
             targets.Add(enemy);
         }
     }
