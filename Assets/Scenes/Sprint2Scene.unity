@@ -303,6 +303,7 @@ MonoBehaviour:
   xSpaceBetweenItems: 120
   ySpaceBetweenItems: 150
   numberOfColumns: 5
+  itemScaleDuration: 0.15
 --- !u!114 &65169346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,6 +1633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 65169344}
+  scaleDuration: 0.15
 --- !u!223 &846841912
 Canvas:
   m_ObjectHideFlags: 0
@@ -2009,6 +2011,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   fill: {fileID: 228109284}
+  tweenDuration: 0.25
 --- !u!114 &1435516821
 MonoBehaviour:
   m_ObjectHideFlags: 0
