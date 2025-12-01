@@ -371,6 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 106796702}
   - component: {fileID: 106796704}
+  - component: {fileID: 106796706}
   - component: {fileID: 106796703}
   - component: {fileID: 106796705}
   m_Layer: 6
@@ -408,6 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517366148cc684a4fa59b8b1022c22cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetWidth: 6
+  tweenDuration: 0.15
   item: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
 --- !u!136 &106796704
 CapsuleCollider:
@@ -448,6 +451,24 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &106796706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106796701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &157162999
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +864,7 @@ GameObject:
   - component: {fileID: 484096011}
   - component: {fileID: 484096010}
   - component: {fileID: 484096009}
+  - component: {fileID: 484096013}
   - component: {fileID: 484096008}
   - component: {fileID: 484096012}
   m_Layer: 6
@@ -879,6 +901,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dc63565ac9e844380605be096d883e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetWidth: 6
+  tweenDuration: 0.15
 --- !u!65 &484096009
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -969,6 +993,24 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &484096013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484096006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &497444604
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,6 +1423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 708721716}
   - component: {fileID: 708721718}
+  - component: {fileID: 708721720}
   - component: {fileID: 708721717}
   - component: {fileID: 708721719}
   m_Layer: 6
@@ -1418,6 +1461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517366148cc684a4fa59b8b1022c22cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetWidth: 6
+  tweenDuration: 0.15
   item: {fileID: 11400000, guid: 69cd69f93c1dd28479f972db751b2537, type: 2}
 --- !u!136 &708721718
 CapsuleCollider:
@@ -1458,6 +1503,24 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &708721720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708721715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &798148327
 GameObject:
   m_ObjectHideFlags: 0
@@ -2159,6 +2222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1486083318}
   - component: {fileID: 1486083320}
+  - component: {fileID: 1486083322}
   - component: {fileID: 1486083319}
   - component: {fileID: 1486083321}
   m_Layer: 6
@@ -2196,6 +2260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517366148cc684a4fa59b8b1022c22cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetWidth: 6
+  tweenDuration: 0.15
   item: {fileID: 11400000, guid: a22fa3e2f1bd34646a3a735cc64c0063, type: 2}
 --- !u!136 &1486083320
 CapsuleCollider:
@@ -2236,6 +2302,24 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &1486083322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486083317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1514944064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,6 +2975,7 @@ GameObject:
   - component: {fileID: 1993941315}
   - component: {fileID: 1993941314}
   - component: {fileID: 1993941313}
+  - component: {fileID: 1993941317}
   - component: {fileID: 1993941312}
   - component: {fileID: 1993941316}
   m_Layer: 6
@@ -2927,6 +3012,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee80d2917e1005488962247bc809de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetWidth: 6
+  tweenDuration: 0.15
 --- !u!65 &1993941313
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3017,6 +3104,24 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &1993941317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993941310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2058599373
 GameObject:
   m_ObjectHideFlags: 0
@@ -3244,6 +3349,10 @@ PrefabInstance:
     - target: {fileID: 464935524173545579, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: m_Name
       value: BasicEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 464935524173545579, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4429289213280302391, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: patrolArea

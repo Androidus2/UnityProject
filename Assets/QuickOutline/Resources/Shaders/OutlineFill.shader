@@ -1,4 +1,6 @@
-﻿//
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+//
 //  OutlineFill.shader
 //  QuickOutline
 //
@@ -64,9 +66,20 @@ Shader "Custom/Outline Fill" {
 
         float3 normal = any(input.smoothNormal) ? input.smoothNormal : input.normal;
         float3 viewPosition = UnityObjectToViewPos(input.vertex);
-        float3 viewNormal = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, normal));
 
+        // Get the world-space normal
+        float3 worldNormal = normalize(mul((float3x3)unity_ObjectToWorld, normal));
+
+        // Compensate for non-uniform scale
+        float3 scale = float3(length(unity_ObjectToWorld[0].xyz), length(unity_ObjectToWorld[1].xyz), length(unity_ObjectToWorld[2].xyz));
+        worldNormal /= scale; // divide by scale on each axis
+
+        // Transform to view space
+        float3 viewNormal = normalize(mul((float3x3)UNITY_MATRIX_V, worldNormal));
+
+        // Apply offset
         output.position = UnityViewToClipPos(viewPosition + viewNormal * -viewPosition.z * _OutlineWidth / 1000.0);
+
         output.color = _OutlineColor;
 
         return output;
