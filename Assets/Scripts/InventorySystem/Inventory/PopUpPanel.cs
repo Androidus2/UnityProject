@@ -15,6 +15,7 @@ public class PopUpPanel : MonoBehaviour
     void Awake()
     {
         inventoryButton = InputSystem.actions.FindAction("Inventory");
+        // TODO: Make this unsubscribe when the scene is changed so that we don't constantly get errors whenever opening the inventory after being killed
         inventoryButton.performed += ctx => TogglePanel();
     }
 
