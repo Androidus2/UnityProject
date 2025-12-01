@@ -17,6 +17,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private bool isPassive = true;
 
+    [SerializeField]
+    private bool isStealable = true;
+
     [Header("References")]
     [SerializeField] 
     private EnemyHeadLook headLook;
@@ -155,8 +158,19 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+        // Rotate torso toward the player during attack
+        Vector3 dir = player.position - transform.position;
+        dir.y = 0;
+        if (dir.sqrMagnitude > 0.001f)
+        {
+            Quaternion target = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, target, 8f * Time.deltaTime
+            );
+        }
+
         // If the player is super close or we have LOS, we can try to attack
-        if (vision.CanSeePlayer() || dist <= followRange)
+        if (vision.CanSeePlayer() || vision.HasClearMeleeLine(followRange))
         {
             lastSeenPlayerPos = player.position;
             if (attack.IsReady())
@@ -212,7 +226,9 @@ public class EnemyController : MonoBehaviour
 
         movement.SetInvestigatePoint(point);
 
-        headLook.StartLooking();
+        // If we weren't investigating already, look around too
+        if (state != EnemyState.Investigate)
+            headLook.StartLooking();
 
         state = EnemyState.Investigate;
     }
@@ -271,6 +287,12 @@ public class EnemyController : MonoBehaviour
         EnterInvestigate(point);
     }
 
+    public void MarkStolen()
+    {
+        isStealable = false;
+        Debug.Log(gameObject.name + " was stolen from!");
+    }
+
     public Transform GetPlayerTransform()
     {
         return player.transform;
@@ -279,6 +301,11 @@ public class EnemyController : MonoBehaviour
     public void SetPlayer(Transform player)
     {
         this.player = player;
+    }
+
+    public bool GetIsStealable()
+    {
+        return isStealable;
     }
 
 }
