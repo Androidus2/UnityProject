@@ -1,12 +1,30 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    private InputAction pauseAction;
+
     [SerializeField]
     private GameObject pauseMenu;
 
     private bool isPaused;
+
+    void Awake()
+    {
+        pauseAction = InputSystem.actions.FindAction("Pause");
+    }
+
+    void OnEnable()
+    {
+        pauseAction.Enable();
+    }
+
+    void OnDisable()
+    {
+        pauseAction.Disable();
+    }
 
     void Start()
     {
@@ -16,19 +34,14 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (pauseAction.triggered)
         {
-            if(isPaused)
-            {
+            if (isPaused)
                 ResumeGame();
-            }
             else
-            {
                 PauseGame();
-            }
         }
     }
-
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
@@ -58,7 +71,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()
