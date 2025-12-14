@@ -9,12 +9,16 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField]
     private GameObject pauseMenu;
-
     [SerializeField]
     private GameObject gameUI;
 
-    [SerializeField] private float tweenDuration = 0.25f;
-    [SerializeField] private Ease tweenEase = Ease.OutBack;
+    [SerializeField]
+    private float tweenDuration = 0.25f;
+    [SerializeField]
+    private Ease tweenEase = Ease.OutBack;
+
+    [SerializeField]
+    private Fade fade;
 
     private bool isPaused;
 
@@ -130,13 +134,19 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        SceneManager.LoadScene("MainMenu");
+        fade.BeginFade(() =>
+        {
+            SceneManager.LoadScene("MainMenu");
+        });
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quit pressed"); //for testing in editor
-        Application.Quit();
+        fade.BeginFade(() =>
+        {
+            Debug.Log("Quit pressed"); //for testing in editor
+            Application.Quit();
+        });
     }
 
     public bool GameIsPaused()  //to use in other scripts to stop input actions, if needed

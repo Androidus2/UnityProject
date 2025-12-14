@@ -18,6 +18,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private MonoBehaviour[] playerComponents;
 
+    [SerializeField]
+    private Fade fade;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -73,7 +76,10 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator WaitBeforeRestartingScene()
     {
         yield return new WaitForSeconds(4f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        fade.BeginFade(() =>
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        });
     }
 
     public void Heal(int amount)
