@@ -78,12 +78,14 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateMovementSpeed()
     {
-        if (sneakInput != 0f)
+        if (sneakInput != 0f && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Sneaking"))
             movementSpeed = sneakSpeed;
-        else if (sprintInput != 0f)
+        else if (sprintInput != 0f && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Sprinting"))
             movementSpeed = sprintSpeed;
-        else
+        else if (PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Movement"))
             movementSpeed = walkSpeed;
+        else
+            movementSpeed = 0f;
     }
 
     void RotateMoveInputToCameraDirection()
@@ -102,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
     void RotatePlayer()
     {
-        if (moveDirection.sqrMagnitude > 0.001f)
+        if (moveDirection.sqrMagnitude > 0.001f && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Movement"))
         {
             Quaternion targetRot = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);

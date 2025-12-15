@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
     {
         attackValue = attackAction.ReadValue<float>();
         timeSinceLastAttack += Time.deltaTime;
-        if(attackValue > 0f && timeSinceLastAttack >= attackCooldown)
+        if(attackValue > 0f && timeSinceLastAttack >= attackCooldown && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Attacking"))
         {
             timeSinceLastAttack = 0f;
             Attack();

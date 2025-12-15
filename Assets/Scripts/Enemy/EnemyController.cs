@@ -265,6 +265,10 @@ public class EnemyController : MonoBehaviour
         // TODO: Make this system better instead of manually disabling these components
         if (anim)
             anim.SetTrigger("Die");
+        else // If there is no animator yet, just disable the enemy so the player knows it died
+            gameObject.SetActive(false);
+
+        // If there is an animator, disable the individual components
         if (headLook)
             headLook.enabled = false;
         if (movement)
@@ -277,8 +281,8 @@ public class EnemyController : MonoBehaviour
             health.enabled = false;
         if(capsuleCollider)
             capsuleCollider.enabled = false;
-
-        //gameObject.SetActive(false);
+        // Also disable the controller
+        enabled = false;
     }
 
     public void HearSound(Vector3 point)

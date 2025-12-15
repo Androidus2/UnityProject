@@ -32,7 +32,7 @@ public class PlayerSteal : MonoBehaviour
 
         timeSinceLastSteal += Time.deltaTime;
 
-        if (stealValue > 0f && timeSinceLastSteal >= stealCooldown)
+        if (stealValue > 0f && timeSinceLastSteal >= stealCooldown && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Stealing"))
         {
             timeSinceLastSteal = 0f;
             Steal();

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Dialogue : MonoBehaviour
 {
@@ -8,22 +9,31 @@ public class Dialogue : MonoBehaviour
     TextMeshProUGUI textComponent;
 
     [SerializeField]
-    string[] lines; // Array to hold multiple lines of dialogue
+    private GameObject dialogBox;
+
+    [SerializeField]
+    private DialogPiece defaultDialogPiece;
 
     [SerializeField]
     float textSpeed;
 
+    private string[] lines;
+    private string[] unlockedMechanics; // Unused for now
     private int index; // Current line index for the dialogue array
 
     void Start()
     {
-        textComponent.text = string.Empty; 
-        StartDialogue();
+        if (defaultDialogPiece)
+        {
+            lines = defaultDialogPiece.Lines;
+            unlockedMechanics = defaultDialogPiece.UnlockedMechanics;
+            StartDialogue();
+        }
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) // for testing purposes, press space to advance dialogue
+        if(Input.GetKeyDown(KeyCode.Space) && index < lines.Length) // for testing purposes, press space to advance dialogue
         {
             if(textComponent.text == lines[index]) // If the current line is fully displayed
             {
@@ -40,7 +50,10 @@ public class Dialogue : MonoBehaviour
 
     void StartDialogue()
     {
+        textComponent.text = string.Empty;
         index = 0;
+        dialogBox.SetActive(true);
+        StopAllCoroutines();
         StartCoroutine(TypeLine());  // Using coroutine to be able to wait between each letter
     }
 
@@ -64,7 +77,27 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            foreach (string unlockedMechanic in unlockedMechanics)
+            {
+                // TODO: Move this to another script
+                if(unlockedMechanic == "Enter game")
+                {
+                    Fade fade = FindFirstObjectByType<Fade>();
+                    fade.BeginFade(() =>
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    });
+                }
+                PlayerMechanicsUnlocker.Instance.AddMechanic(unlockedMechanic);
+            }
+            dialogBox.SetActive(false);
         }
+    }
+
+    public void SetDialogPiece(DialogPiece piece)
+    {
+        lines = piece.Lines;
+        unlockedMechanics = piece.UnlockedMechanics;
+        StartDialogue();
     }
 }
