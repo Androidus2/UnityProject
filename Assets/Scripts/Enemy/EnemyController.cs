@@ -23,12 +23,15 @@ public class EnemyController : MonoBehaviour
     [Header("References")]
     [SerializeField] 
     private EnemyHeadLook headLook;
+    [SerializeField]
+    private Animator anim;
 
     private Transform player;
     private EnemyMovement movement;
     private EnemyVision vision;
     private EnemyAttack attack;
     private EnemyHealth health;
+    private CapsuleCollider capsuleCollider;
 
     [Header("Ranges & Timing")]
     [SerializeField] private float followRange = 3f;       // The range where we always know the player's position
@@ -43,12 +46,16 @@ public class EnemyController : MonoBehaviour
     private float investigateTimer = 0f;
     private Vector3 lastSeenPlayerPos;
 
+
+
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
         attack = GetComponent<EnemyAttack>();
         vision = GetComponent<EnemyVision>();
         health = GetComponent<EnemyHealth>();
+
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     private void Start()
@@ -254,7 +261,24 @@ public class EnemyController : MonoBehaviour
     {
         if(movement)
             movement.Stop();
-        gameObject.SetActive(false);
+
+        // TODO: Make this system better instead of manually disabling these components
+        if (anim)
+            anim.SetTrigger("Die");
+        if (headLook)
+            headLook.enabled = false;
+        if (movement)
+            movement.enabled = false;
+        if(vision)
+            vision.enabled = false;
+        if(attack)
+            attack.enabled = false;
+        if(health)
+            health.enabled = false;
+        if(capsuleCollider)
+            capsuleCollider.enabled = false;
+
+        //gameObject.SetActive(false);
     }
 
     public void HearSound(Vector3 point)
