@@ -70,7 +70,7 @@ public class Interactor : MonoBehaviour
     //for testing purposes, we clear the inventory
     private void OnApplicationQuit()
     {
-        inventory.GetItems().Clear();
+        inventory.ClearInventory();
     }
 
 
