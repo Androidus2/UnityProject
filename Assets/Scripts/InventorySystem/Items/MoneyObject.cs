@@ -18,5 +18,11 @@ public class MoneyObject : ItemObject
         return coinValue;
     }
 
+    public override bool Use()
+    {
+        //money will work differently, no 'use' action
+        return true;
+    }
+
 
 }

@@ -6,17 +6,26 @@ public class InventoryObject : ScriptableObject
 {
     private int coinCount = 0;
 
+    [SerializeField]
+    private int inventorySize = 20;
+
     private List<InventorySlot> items = new List<InventorySlot>();
-    public void AddItem(ItemObject item)
+    public bool AddItem(ItemObject item)
     {
         //check if its money item
         if (item is MoneyObject moneyItem)
         {
             AddCoins(moneyItem.GetValue());
-            return;
+            return true;
         }
-        //else add to inventory
+        //else add to inventory 
+        if (items.Count >= inventorySize)
+        {
+            Debug.Log("Inventory Full");
+            return false;
+        }
         items.Add(new InventorySlot(item));
+        return true;
     }
 
     public List<InventorySlot> GetItems()
@@ -43,6 +52,12 @@ public class InventoryObject : ScriptableObject
     {
         items.Clear();
         coinCount = 0;
+    }
+
+    public bool RemoveItem(int index)
+    {
+        this.items.RemoveAt(index);
+        return true;
     }
 }
 

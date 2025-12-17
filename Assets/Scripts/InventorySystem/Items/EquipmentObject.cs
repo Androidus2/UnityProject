@@ -16,5 +16,12 @@ public class EquipmentObject : ItemObject
         type = ItemType.Equipment;
     }
 
-   
+    public override bool Use()
+    {
+        // inventory on click logic will call this function
+        Debug.Log($"Equipment Item: used.");
+        return true; 
+    }
+
+
 }

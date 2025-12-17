@@ -24,4 +24,6 @@ public abstract class ItemObject : ScriptableObject
     {
         return icon;
     }
+
+    public abstract bool Use();
 }

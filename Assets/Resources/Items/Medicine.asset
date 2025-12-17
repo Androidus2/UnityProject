@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eadbda0491f57ea459431b40ddcc3a15, type: 3}
   m_Name: Medicine
   m_EditorClassIdentifier: 
-  icon: {fileID: 2039747009769397215, guid: 55495cbc87b63fc499a22827bd589477, type: 3}
+  icon: {fileID: 1407907460528503710, guid: 4323a24a50c857d49b97577a5790229e, type: 3}
   type: 0
   description: A random pile of suspicious pills.
-  restoreHealthValue: 0
+  restoreHealthValue: 20
