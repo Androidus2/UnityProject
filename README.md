@@ -1,8 +1,8 @@
-# **Unity Project – Sprint 3**
+# **Unity Project – Sprint 4**
 
 ## **Overview**
 
-This project represents **Sprint 3** of our Unity game development process.  
+This project represents **Sprint 4** of our Unity game development process.  
 The game is developed using **Unity 6.0 LTS**.
 
 At this stage, the project contains:
@@ -27,7 +27,7 @@ At this stage, the project contains:
   * Investigates last known player location if LOS is broken
   * Attacks the player when close enough (player can dodge by moving quickly)
 * Player interaction system (using **E**):
-  * Includes a door and chest interactable (currently only prints messages)
+  * Includes a door and chest interactable
   * Stealing from enemies: player must be close to the enemy and press **E** to attempt stealing
 * Player inventory system:
   * Items can be picked up via interaction
@@ -43,7 +43,11 @@ At this stage, the project contains:
   * Tween-based UI/element animations
   * Player model added
   * Player animations added and hooked up
-* A scene called **`JuiceScene`** where all current mechanics can be tested
+  * Smooth scene transitions
+* A **Main Menu** scene that allows the tester to start the game normally  
+  * Starting from the **MainMenu** will guide the player through the **Tutorial** and **Sprint4Scene**
+
+---
 
 ### **Lockpick Feature (Separate Branch)**
 
@@ -58,11 +62,26 @@ The lockpick system currently includes:
 
 ---
 
+### **Inventory Update Feature (Separate Branch)**
+
+An expanded inventory prototype exists on the **`inventory-update`** branch.  
+It can be tested in the **`JuiceMoneyScene`** on that branch.
+
+This branch includes:
+
+* Items that can be **used** from the inventory
+* Functional **chests** that store and give items
+* A **coin system** for tracking player currency
+
+---
+
 ## **How to Run**
 
 1. Open the project in **Unity 6.0 LTS**  
-2. Navigate to **`JuiceScene`** (for current sprint)  
+2. Navigate to **`MainMenu`** to experience the game flow through the tutorial and demo level  
+   * Alternatively, open **`JuiceScene`** to test all current mechanics directly  
    * To test the lockpick prototype, switch to the **`Lockpick`** branch and open **`SampleScene`**  
+   * To test the inventory update prototype, switch to the **`inventory-update`** branch and open **`JuiceMoneyScene`**
 3. Press **Play** in the Unity Editor  
 4. Set the game resolution to **1920×1080** (inventory UI does not currently scale)  
 5. Click on the Game view to lock the cursor
