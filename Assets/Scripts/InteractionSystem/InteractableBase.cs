@@ -12,7 +12,7 @@ public abstract class InteractableBase : MonoBehaviour, IInteractable
     [SerializeField]
     private float tweenDuration = 0.15f; // Quick grow effect
 
-    private void Awake()
+    protected virtual void Awake()
     {
         outline = GetComponent<Outline>();
         outline.OutlineWidth = 0f; // Start with zero width
@@ -21,8 +21,6 @@ public abstract class InteractableBase : MonoBehaviour, IInteractable
 
     public void ShowOutline(bool enable)
     {
-        ///!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!! check with alex
-        outline = GetComponent<Outline>();
         outline.enabled = true;
 
         if (enable)

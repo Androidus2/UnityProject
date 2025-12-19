@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PopUpPanel : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Panel;
+    private GameObject panel;
     private InputAction inventoryButton;
 
     [SerializeField]
@@ -24,7 +24,7 @@ public class PopUpPanel : MonoBehaviour
         inventoryButton = InputSystem.actions.FindAction("Inventory");
         inventoryButton.performed += ctx => TogglePanel();
 
-        displayInventory = Panel.GetComponent<DisplayInventory>();
+        displayInventory = panel.GetComponent<DisplayInventory>();
     }
 
     void OnEnable()
@@ -54,10 +54,10 @@ public class PopUpPanel : MonoBehaviour
         scaleTween?.Kill();
 
         // Ensure panel is visible before animation
-        Panel.SetActive(true);
-        Panel.transform.localScale = Vector3.zero; 
+        panel.SetActive(true);
+        panel.transform.localScale = Vector3.zero; 
 
-        scaleTween = Panel.transform
+        scaleTween = panel.transform
             .DOScale(Vector3.one, scaleDuration)
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
@@ -78,13 +78,13 @@ public class PopUpPanel : MonoBehaviour
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
-        scaleTween = Panel.transform
+        scaleTween = panel.transform
             .DOScale(Vector3.zero, scaleDuration)
             .SetEase(Ease.InBack, 1.2f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time"
             .OnComplete(() =>
             {
-                Panel.SetActive(false);
+                panel.SetActive(false);
                 isPanelOpen = false; // Set panel state to closed after animation
             });
 

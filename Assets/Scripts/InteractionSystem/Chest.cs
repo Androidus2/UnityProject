@@ -5,9 +5,10 @@ public class Chest : InteractableBase
 {
     //inventory panel 
     [SerializeField]
-    private GameObject Panel;
+    private GameObject panel;
 
     //seeding for each chest respectively? tbd how we approach this for multiple chests
+    //TO DO  - possible solution - change into normal class, mark as System.Serializable and edit for each chest
     [SerializeField]
     private InventoryObject chestInventory;
 
@@ -20,9 +21,10 @@ public class Chest : InteractableBase
     private bool isPanelOpen = false;
 
 
-    public void Awake()
+    protected override void Awake()
     {
-        displayInventory = Panel.GetComponent<DisplayInventory>();
+        base.Awake();
+        displayInventory = panel.GetComponent<DisplayInventory>();
     }
 
 
@@ -61,10 +63,10 @@ public class Chest : InteractableBase
         scaleTween?.Kill();
 
         // Ensure panel is visible before animation
-        Panel.SetActive(true);
-        Panel.transform.localScale = Vector3.zero;
+        panel.SetActive(true);
+        panel.transform.localScale = Vector3.zero;
 
-        scaleTween = Panel.transform
+        scaleTween = panel.transform
             .DOScale(Vector3.one, scaleDuration)
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
@@ -85,13 +87,13 @@ public class Chest : InteractableBase
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
-        scaleTween = Panel.transform
+        scaleTween = panel.transform
             .DOScale(Vector3.zero, scaleDuration)
             .SetEase(Ease.InBack, 1.2f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time"
             .OnComplete(() =>
             {
-                Panel.SetActive(false);
+                panel.SetActive(false);
                 isPanelOpen = false; // Set panel state to closed after animation
             });
 
