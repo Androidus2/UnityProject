@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,9 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField]
     Animator animator;
+
+    [SerializeField]
+    private Transform hitEffect;
 
     float timeSinceLastAttack;
 
@@ -37,18 +41,32 @@ public class PlayerAttack : MonoBehaviour
         timeSinceLastAttack += Time.deltaTime;
         if(attackValue > 0f && timeSinceLastAttack >= attackCooldown && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Attacking"))
         {
-            timeSinceLastAttack = 0f;
-            Attack();
+            BeginAttack();
         }
     }
 
-    void Attack()
+    void BeginAttack()
     {
+        timeSinceLastAttack = 0f;
         animator.SetTrigger("Attack");
+        StartCoroutine(WaitBeforeDealingDamage());
+    }
+
+    void DoDamageEffect(Vector3 position)
+    {
+        Transform newHitEffect = Instantiate(hitEffect);
+        newHitEffect.position = position;
+        Destroy(newHitEffect.gameObject, 3f);
+    }
+
+    IEnumerator WaitBeforeDealingDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
         if (targets.Count > 0)
         {
             EnemyHealth hitEnemy = targets[0];
             hitEnemy.TakeDamage(attackDamage);
+            DoDamageEffect(hitEnemy.transform.position);
             if (hitEnemy.IsDead())
                 targets.RemoveAt(0);
         }

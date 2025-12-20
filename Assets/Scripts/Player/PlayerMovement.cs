@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     Transform cameraTransform;
 
     [SerializeField]
+    Transform gfxObject;
+
+    [SerializeField]
     float walkSpeed;
 
     [SerializeField]
@@ -35,6 +38,18 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     float gravity = -9.81f;
+
+    [SerializeField]
+    float hitboxHeightStanding;
+
+    [SerializeField]
+    float gfxOffsetStanding;
+
+    [SerializeField]
+    float hitboxHeightSneaking;
+
+    [SerializeField]
+    float gfxOffsetSneaking;
 
     EnemyController[] enemies;
     float movementSpeed;
@@ -138,7 +153,16 @@ public class PlayerMovement : MonoBehaviour
 
         bool isSneaking = movementSpeed == sneakSpeed;
         if (isSneaking)
+        {
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1, Time.deltaTime * 5f));
+            characterController.height = hitboxHeightSneaking;
+            gfxObject.localPosition = new Vector3(gfxObject.localPosition.x, gfxOffsetSneaking, gfxObject.localPosition.z);
+        }
+        else
+        {
+            characterController.height = hitboxHeightStanding;
+            gfxObject.localPosition = new Vector3(gfxObject.localPosition.x, gfxOffsetStanding, gfxObject.localPosition.z);
+        }
 
         animator.SetBool("IsSneaking", isSneaking);
 

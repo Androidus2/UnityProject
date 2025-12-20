@@ -1,4 +1,6 @@
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -25,6 +27,12 @@ public class EnemyController : MonoBehaviour
     private EnemyHeadLook headLook;
     [SerializeField]
     private Animator anim;
+    [SerializeField] // This could be extended to have a loot table to choose from
+    private Transform lootDrop;
+    [SerializeField]
+    private GameObject canvas;
+    [SerializeField]
+    private Transform deathEffect;
 
     private Transform player;
     private EnemyMovement movement;
@@ -92,23 +100,43 @@ public class EnemyController : MonoBehaviour
 
     private void UpdateIdle()
     {
-        if(movement)
+        if (movement)
+        {
             movement.Stop();
+            anim.SetFloat("Speed", 0f);
+        }
     }
 
 
     private void UpdatePatrol()
     {
+        anim.SetFloat("Speed", 3f);
         movement.Patrol();
+        // If we see the player while investigating, start chasing him
+        if (vision.CanSeePlayer())
+        {
+            state = EnemyState.Chase;
+            return;
+        }
+
+        float dist = Vector3.Distance(transform.position, player.position);
+
+        // If the player is very close, start chasing him
+        if (dist <= followRange)
+        {
+            state = EnemyState.Chase;
+            return;
+        }
     }
 
 
     private void UpdateChase()
     {
+        anim.SetFloat("Speed", 5f);
         float dist = Vector3.Distance(transform.position, player.position);
 
         // We always know when the player is super close to us, even if he is behind us
-        if (dist <= followRange)
+        if (dist <= followRange && vision.HasLineOfSight())
         {
             lastSeenPlayerPos = player.position;
             movement.Chase(player);
@@ -117,6 +145,7 @@ public class EnemyController : MonoBehaviour
             {
                 attack.EnterAttack();
                 state = EnemyState.Attack;
+                anim.SetFloat("Speed", 0f);
                 movement.Stop();
             }
 
@@ -133,6 +162,7 @@ public class EnemyController : MonoBehaviour
             {
                 attack.EnterAttack();
                 state = EnemyState.Attack;
+                anim.SetFloat("Speed", 0f);
                 movement.Stop();
                 return;
             }
@@ -159,7 +189,7 @@ public class EnemyController : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
 
         // If the player has moved too far, start chasing
-        if (dist > attackRange)
+        if (dist > attackRange || !vision.HasLineOfSight())
         {
             state = EnemyState.Chase;
             return;
@@ -192,6 +222,7 @@ public class EnemyController : MonoBehaviour
 
     private void UpdateInvestigate()
     {
+        anim.SetFloat("Speed", 3f);
         // If we see the player while investigating, start chasing him
         if (vision.CanSeePlayer())
         {
@@ -215,7 +246,13 @@ public class EnemyController : MonoBehaviour
             return;
 
         // If we reached the investigation point, look around in hopes we can gain LOS to player
+        if (investigateTimer == 0f)
+        {
+            headLook.StartLooking();
+            anim.SetBool("Looking Around", true);
+        }
         investigateTimer += Time.deltaTime;
+        anim.SetFloat("Speed", 0f);
 
         // If we looked around for too long, give up and go back to patrol
         if (investigateTimer >= investigateDuration)
@@ -233,22 +270,20 @@ public class EnemyController : MonoBehaviour
 
         movement.SetInvestigatePoint(point);
 
-        // If we weren't investigating already, look around too
-        if (state != EnemyState.Investigate)
-            headLook.StartLooking();
-
         state = EnemyState.Investigate;
     }
 
     private void ExitInvestigate()
     {
         headLook.StopLooking();
+        anim.SetBool("Looking Around", false);
 
         movement.Stop();
     }
 
     private void OnDamaged(float amt)
     {
+        anim.SetTrigger("Hit");
         if (isPassive)
             return;
 
@@ -259,12 +294,54 @@ public class EnemyController : MonoBehaviour
 
     private void OnDeath()
     {
-        if(movement)
+        if (movement)
             movement.Stop();
+
+        // Disable the collider and the agent to make it no longer interact with the world
+        if (capsuleCollider)
+            capsuleCollider.enabled = false;
+
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if (agent)
+            agent.enabled = false;
+
+        if (lootDrop)
+        {
+            Transform loot = Instantiate(lootDrop);
+            Vector3 startPos = transform.position;
+
+            // Start hidden and lower
+            loot.localScale = Vector3.zero;
+            loot.localPosition = new Vector3(startPos.x, startPos.y - 3f, startPos.z);
+
+            Sequence lootSeq = DOTween.Sequence();
+
+            lootSeq.AppendInterval(6f)
+               .Append(loot.DOScale(1.1f, 0.35f).SetEase(Ease.OutBack))
+               .Join(loot.DOLocalMoveY(startPos.y, 0.35f).SetEase(Ease.OutCubic))
+               .Append(loot.DOScale(1f, 0.1f).SetEase(Ease.OutQuad))
+               .SetUpdate(true);
+        }
+        if (deathEffect)
+        {
+            Transform onDeathEffect = Instantiate(deathEffect);
+            onDeathEffect.position = transform.position - new Vector3(0, 1, 0);
+            onDeathEffect.gameObject.SetActive(false);
+
+            Sequence seq = DOTween.Sequence()
+                .SetUpdate(true)
+                .AppendInterval(3.5f)
+                .AppendCallback(() => onDeathEffect.gameObject.SetActive(true));
+
+            Destroy(onDeathEffect.gameObject, 10f);
+        }
 
         // TODO: Make this system better instead of manually disabling these components
         if (anim)
+        {
+            anim.applyRootMotion = true;
             anim.SetTrigger("Die");
+        }
         else // If there is no animator yet, just disable the enemy so the player knows it died
             gameObject.SetActive(false);
 
@@ -279,8 +356,8 @@ public class EnemyController : MonoBehaviour
             attack.enabled = false;
         if(health)
             health.enabled = false;
-        if(capsuleCollider)
-            capsuleCollider.enabled = false;
+        if (canvas)
+            canvas.SetActive(false);
         // Also disable the controller
         enabled = false;
     }
@@ -324,6 +401,11 @@ public class EnemyController : MonoBehaviour
     public Transform GetPlayerTransform()
     {
         return player.transform;
+    }
+
+    public Animator GetAnimator()
+    {
+        return anim;
     }
 
     public void SetPlayer(Transform player)

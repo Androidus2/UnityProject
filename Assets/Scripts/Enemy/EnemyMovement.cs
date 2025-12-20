@@ -4,7 +4,14 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private BoxCollider patrolArea;
+    [SerializeField]
+    private BoxCollider patrolArea;
+
+    [SerializeField]
+    private float walkSpeed;
+
+    [SerializeField]
+    private float chaseSpeed;
 
     private NavMeshAgent agent;
     public Vector3 GetPatrolAreaCenter()
@@ -26,7 +33,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            agent.SetDestination(GenerateRandomPatrolPoint());
+            SetWalkTarget(GenerateRandomPatrolPoint());
         }
     }
 
@@ -48,9 +55,15 @@ public class EnemyMovement : MonoBehaviour
         return transform.position;
     }
 
+    void SetWalkTarget(Vector3 point)
+    {
+        agent.speed = walkSpeed;
+        agent.SetDestination(point);
+    }
+
     public void SetInvestigatePoint(Vector3 point)
     {
-        agent.SetDestination(point);
+        SetWalkTarget(point);
     }
 
     public bool ReachedInvestigatePoint(float tolerance)
@@ -60,6 +73,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void Chase(Transform target)
     {
+        agent.speed = chaseSpeed;
         if (target == null)
             Debug.LogError("Enemy " + gameObject.name + " is trying to chase null target!");
         agent.SetDestination(target.position);
