@@ -1,4 +1,6 @@
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class EnemyController : MonoBehaviour
     private EnemyHeadLook headLook;
     [SerializeField]
     private Animator anim;
+    [SerializeField] // This could be extended to have a loot table to choose from
+    private Transform lootDrop;
+    [SerializeField]
+    private GameObject canvas;
 
     private Transform player;
     private EnemyMovement movement;
@@ -260,6 +266,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnDamaged(float amt)
     {
+        anim.SetTrigger("Hit");
         if (isPassive)
             return;
 
@@ -272,6 +279,32 @@ public class EnemyController : MonoBehaviour
     {
         if (movement)
             movement.Stop();
+
+        // Disable the collider and the agent to make it no longer interact with the world
+        if (capsuleCollider)
+            capsuleCollider.enabled = false;
+
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if (agent)
+            agent.enabled = false;
+
+        if (lootDrop)
+        {
+            Transform loot = Instantiate(lootDrop);
+            Vector3 startPos = transform.position;
+
+            // Start hidden and lower
+            loot.localScale = Vector3.zero;
+            loot.localPosition = new Vector3(startPos.x, startPos.y - 3f, startPos.z);
+
+            Sequence seq = DOTween.Sequence();
+
+            seq.AppendInterval(3.5f)
+               .Append(loot.DOScale(1.1f, 0.35f).SetEase(Ease.OutBack))
+               .Join(loot.DOLocalMoveY(startPos.y, 0.35f).SetEase(Ease.OutCubic))
+               .Append(loot.DOScale(1f, 0.1f).SetEase(Ease.OutQuad))
+               .SetUpdate(true);
+        }
 
         // TODO: Make this system better instead of manually disabling these components
         if (anim)
@@ -293,8 +326,8 @@ public class EnemyController : MonoBehaviour
             attack.enabled = false;
         if(health)
             health.enabled = false;
-        if(capsuleCollider)
-            capsuleCollider.enabled = false;
+        if (canvas)
+            canvas.SetActive(false);
         // Also disable the controller
         enabled = false;
     }
