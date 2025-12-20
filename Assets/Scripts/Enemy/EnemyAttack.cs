@@ -9,6 +9,9 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private int attackDamage = 15;
 
+    [SerializeField]
+    private Transform hitEffect;
+
     EnemyController controller;
     Transform player;
     Animator anim;
@@ -61,6 +64,13 @@ public class EnemyAttack : MonoBehaviour
         StartCoroutine(WaitBeforeDealingDamage());
     }
 
+    void DoDamageEffect(Vector3 position)
+    {
+        Transform newHitEffect = Instantiate(hitEffect);
+        newHitEffect.position = position;
+        Destroy(newHitEffect.gameObject, 3f);
+    }
+
     IEnumerator WaitBeforeDealingDamage()
     {
         yield return new WaitForSeconds(0.5f);
@@ -70,7 +80,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 hp.TakeDamage(attackDamage);
             }
-
+            DoDamageEffect(player.position);
             // Since we don't have very good visual cues for now, leave a log to make sure everything works as it should
             Debug.Log("Enemy hit the player.");
         }

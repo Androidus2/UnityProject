@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,9 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField]
     private Fade fade;
+
+    [SerializeField]
+    private Transform deathEffect;
 
     void Start()
     {
@@ -47,6 +51,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // If we are already dead, don't keep taking damage and calling the Die method
+        if (currentHealth <= 0)
+            return;
+
         animator.SetTrigger("Hit");
         currentHealth -= damage;
      
@@ -66,8 +74,17 @@ public class PlayerHealth : MonoBehaviour
         animator.applyRootMotion = true;
         animator.SetTrigger("Die");
 
+        Transform onDeathEffect = Instantiate(deathEffect);
+        onDeathEffect.position = transform.position;
+        onDeathEffect.gameObject.SetActive(false);
+
+        Sequence seq = DOTween.Sequence()
+            .SetUpdate(true)
+            .AppendInterval(2f)
+            .AppendCallback(() => onDeathEffect.gameObject.SetActive(true));
+
         // TODO: Make a better way of disabling the player's inputs on death
-        foreach(var player in playerComponents) 
+        foreach (var player in playerComponents) 
             player.enabled = false;
 
         // TODO: Add a death screen instead of directly resetting the scene

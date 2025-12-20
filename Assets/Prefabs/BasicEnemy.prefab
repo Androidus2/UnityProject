@@ -161,6 +161,7 @@ MonoBehaviour:
   anim: {fileID: 7466715683764437887}
   lootDrop: {fileID: 0}
   canvas: {fileID: 5401323191882120013}
+  deathEffect: {fileID: 5640562698000028052, guid: b5c8ca7ed10b61e499cce8ec3b6e2e4c, type: 3}
   followRange: 1
   attackRange: 2
   lostSightDelay: 1.2
@@ -182,6 +183,7 @@ MonoBehaviour:
   attackAngle: 60
   attackCooldown: 1.25
   attackDamage: 15
+  hitEffect: {fileID: 4021103657954561942, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
 --- !u!114 &2370354256445493197
 MonoBehaviour:
   m_ObjectHideFlags: 0

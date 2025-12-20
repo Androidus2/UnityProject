@@ -432,6 +432,7 @@ MonoBehaviour:
   - {fileID: 3151742206084948921}
   - {fileID: 4679061467975111368}
   fade: {fileID: 0}
+  deathEffect: {fileID: 5985634496115995772, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
 --- !u!114 &8676168362487316014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,6 +650,7 @@ MonoBehaviour:
   attackDamage: 48
   attackCooldown: 1.25
   animator: {fileID: 946029003378555103}
+  hitEffect: {fileID: 1429954232896169630, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
 --- !u!114 &4679061467975111368
 MonoBehaviour:
   m_ObjectHideFlags: 0

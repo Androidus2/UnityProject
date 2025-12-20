@@ -31,6 +31,8 @@ public class EnemyController : MonoBehaviour
     private Transform lootDrop;
     [SerializeField]
     private GameObject canvas;
+    [SerializeField]
+    private Transform deathEffect;
 
     private Transform player;
     private EnemyMovement movement;
@@ -312,13 +314,26 @@ public class EnemyController : MonoBehaviour
             loot.localScale = Vector3.zero;
             loot.localPosition = new Vector3(startPos.x, startPos.y - 3f, startPos.z);
 
-            Sequence seq = DOTween.Sequence();
+            Sequence lootSeq = DOTween.Sequence();
 
-            seq.AppendInterval(3.5f)
+            lootSeq.AppendInterval(6f)
                .Append(loot.DOScale(1.1f, 0.35f).SetEase(Ease.OutBack))
                .Join(loot.DOLocalMoveY(startPos.y, 0.35f).SetEase(Ease.OutCubic))
                .Append(loot.DOScale(1f, 0.1f).SetEase(Ease.OutQuad))
                .SetUpdate(true);
+        }
+        if (deathEffect)
+        {
+            Transform onDeathEffect = Instantiate(deathEffect);
+            onDeathEffect.position = transform.position - new Vector3(0, 1, 0);
+            onDeathEffect.gameObject.SetActive(false);
+
+            Sequence seq = DOTween.Sequence()
+                .SetUpdate(true)
+                .AppendInterval(3.5f)
+                .AppendCallback(() => onDeathEffect.gameObject.SetActive(true));
+
+            Destroy(onDeathEffect.gameObject, 10f);
         }
 
         // TODO: Make this system better instead of manually disabling these components

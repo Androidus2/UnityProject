@@ -17,6 +17,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     Animator animator;
 
+    [SerializeField]
+    private Transform hitEffect;
+
     float timeSinceLastAttack;
 
     List<EnemyHealth> targets;
@@ -49,6 +52,13 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(WaitBeforeDealingDamage());
     }
 
+    void DoDamageEffect(Vector3 position)
+    {
+        Transform newHitEffect = Instantiate(hitEffect);
+        newHitEffect.position = position;
+        Destroy(newHitEffect.gameObject, 3f);
+    }
+
     IEnumerator WaitBeforeDealingDamage()
     {
         yield return new WaitForSeconds(0.5f);
@@ -56,6 +66,7 @@ public class PlayerAttack : MonoBehaviour
         {
             EnemyHealth hitEnemy = targets[0];
             hitEnemy.TakeDamage(attackDamage);
+            DoDamageEffect(hitEnemy.transform.position);
             if (hitEnemy.IsDead())
                 targets.RemoveAt(0);
         }
