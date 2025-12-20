@@ -5,7 +5,8 @@ public enum ItemType
     //what type of items we want in our game
     Health,
     Mission,
-    Equipment
+    Equipment,
+    Money
 }
 public abstract class ItemObject : ScriptableObject
 {
@@ -23,4 +24,6 @@ public abstract class ItemObject : ScriptableObject
     {
         return icon;
     }
+
+    public abstract bool Use();
 }
