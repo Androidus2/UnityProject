@@ -110,6 +110,21 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetFloat("Speed", 3f);
         movement.Patrol();
+        // If we see the player while investigating, start chasing him
+        if (vision.CanSeePlayer())
+        {
+            state = EnemyState.Chase;
+            return;
+        }
+
+        float dist = Vector3.Distance(transform.position, player.position);
+
+        // If the player is very close, start chasing him
+        if (dist <= followRange)
+        {
+            state = EnemyState.Chase;
+            return;
+        }
     }
 
 
@@ -119,7 +134,7 @@ public class EnemyController : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
 
         // We always know when the player is super close to us, even if he is behind us
-        if (dist <= followRange)
+        if (dist <= followRange && vision.HasLineOfSight())
         {
             lastSeenPlayerPos = player.position;
             movement.Chase(player);
@@ -172,7 +187,7 @@ public class EnemyController : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
 
         // If the player has moved too far, start chasing
-        if (dist > attackRange)
+        if (dist > attackRange || !vision.HasLineOfSight())
         {
             state = EnemyState.Chase;
             return;
