@@ -161,7 +161,7 @@ MonoBehaviour:
   anim: {fileID: 7466715683764437887}
   lootDrop: {fileID: 0}
   canvas: {fileID: 5401323191882120013}
-  followRange: 2
+  followRange: 1
   attackRange: 2
   lostSightDelay: 1.2
   investigateDuration: 3

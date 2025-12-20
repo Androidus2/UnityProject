@@ -380,7 +380,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -401,11 +401,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 946029003378555103}
   cameraTransform: {fileID: 259112251357655829}
+  gfxObject: {fileID: 6611517938944287397}
   walkSpeed: 3
   sprintSpeed: 5
   sneakSpeed: 1.5
   rotationSpeed: 10
   gravity: -9.81
+  hitboxHeightStanding: 2
+  gfxOffsetStanding: -1
+  hitboxHeightSneaking: 1
+  gfxOffsetSneaking: -0.5
 --- !u!114 &4208811195851466618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 48
-  attackCooldown: 1
+  attackCooldown: 1.25
   animator: {fileID: 946029003378555103}
 --- !u!114 &4679061467975111368
 MonoBehaviour:
@@ -838,7 +843,7 @@ Transform:
   m_GameObject: {fileID: 7542400989303952202}
   serializedVersion: 2
   m_LocalRotation: {x: 0.15212339, y: -0.000000027233664, z: 0.000000004191662, w: 0.98836154}
-  m_LocalPosition: {x: 0, y: 2.503529, z: -4.7685847}
+  m_LocalPosition: {x: 0, y: 1.9805794, z: -3.1090002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1513,7 +1518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146416746057084839, guid: 241e250ae7c639e4fa5849326e877ca3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.985
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6146416746057084839, guid: 241e250ae7c639e4fa5849326e877ca3, type: 3}
       propertyPath: m_LocalPosition.z

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - The actual game isn't quite ready yet, but feel free to play around with the
-    red cylinder.
+    red cylinder (which is now an actual enemy).
   unlockedMechanics: []
