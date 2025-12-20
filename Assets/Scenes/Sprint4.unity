@@ -3478,6 +3478,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dummy
       objectReference: {fileID: 0}
+    - target: {fileID: 4356815609906199752, guid: eaffc7195bcbe724d94fae8227ac98af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5126,10 +5130,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2301056040162014527, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: state
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4429289213280302391, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: patrolArea
       value: 
       objectReference: {fileID: 798148328}
+    - target: {fileID: 5528087548791365190, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466715683764437887, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'head'\n\tTransform 'head'\n\tFrom animation
+        clip 'Left'\n\tFrom animation clip 'Right'"
+      objectReference: {fileID: 0}
     - target: {fileID: 8420244804309175295, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.1396704

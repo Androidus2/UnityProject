@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyController))]
@@ -10,6 +11,7 @@ public class EnemyAttack : MonoBehaviour
 
     EnemyController controller;
     Transform player;
+    Animator anim;
 
     float cooldownTimer = 0f;
 
@@ -21,6 +23,7 @@ public class EnemyAttack : MonoBehaviour
     private void Start()
     {
         player = controller.GetPlayerTransform();
+        anim = controller.GetAnimator();
     }
 
     private void Update()
@@ -49,12 +52,18 @@ public class EnemyAttack : MonoBehaviour
         return angle <= attackAngle * 0.5f && distance <= attackRange;
     }
 
-    public bool TryAttack()
+    public void TryAttack()
     {
-        if (!IsReady()) return false;
-
+        anim.SetTrigger("Attack");
         cooldownTimer = 0f;
 
+        Debug.Log("Starting attack!");
+        StartCoroutine(WaitBeforeDealingDamage());
+    }
+
+    IEnumerator WaitBeforeDealingDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
         if (IsPlayerInFront())
         {
             if (player.TryGetComponent<PlayerHealth>(out var hp))
@@ -64,11 +73,9 @@ public class EnemyAttack : MonoBehaviour
 
             // Since we don't have very good visual cues for now, leave a log to make sure everything works as it should
             Debug.Log("Enemy hit the player.");
-            return true;
         }
 
         // Since we don't have very good visual cues for now, leave a log to make sure everything works as it should
         Debug.Log("Enemy missed the player.");
-        return false;
     }
 }

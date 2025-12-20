@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,14 +38,20 @@ public class PlayerAttack : MonoBehaviour
         timeSinceLastAttack += Time.deltaTime;
         if(attackValue > 0f && timeSinceLastAttack >= attackCooldown && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Attacking"))
         {
-            timeSinceLastAttack = 0f;
-            Attack();
+            BeginAttack();
         }
     }
 
-    void Attack()
+    void BeginAttack()
     {
+        timeSinceLastAttack = 0f;
         animator.SetTrigger("Attack");
+        StartCoroutine(WaitBeforeDealingDamage());
+    }
+
+    IEnumerator WaitBeforeDealingDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
         if (targets.Count > 0)
         {
             EnemyHealth hitEnemy = targets[0];

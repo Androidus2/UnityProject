@@ -92,19 +92,24 @@ public class EnemyController : MonoBehaviour
 
     private void UpdateIdle()
     {
-        if(movement)
+        if (movement)
+        {
             movement.Stop();
+            anim.SetFloat("Speed", 0f);
+        }
     }
 
 
     private void UpdatePatrol()
     {
+        anim.SetFloat("Speed", 3f);
         movement.Patrol();
     }
 
 
     private void UpdateChase()
     {
+        anim.SetFloat("Speed", 5f);
         float dist = Vector3.Distance(transform.position, player.position);
 
         // We always know when the player is super close to us, even if he is behind us
@@ -117,6 +122,7 @@ public class EnemyController : MonoBehaviour
             {
                 attack.EnterAttack();
                 state = EnemyState.Attack;
+                anim.SetFloat("Speed", 0f);
                 movement.Stop();
             }
 
@@ -133,6 +139,7 @@ public class EnemyController : MonoBehaviour
             {
                 attack.EnterAttack();
                 state = EnemyState.Attack;
+                anim.SetFloat("Speed", 0f);
                 movement.Stop();
                 return;
             }
@@ -192,6 +199,7 @@ public class EnemyController : MonoBehaviour
 
     private void UpdateInvestigate()
     {
+        anim.SetFloat("Speed", 3f);
         // If we see the player while investigating, start chasing him
         if (vision.CanSeePlayer())
         {
@@ -215,7 +223,13 @@ public class EnemyController : MonoBehaviour
             return;
 
         // If we reached the investigation point, look around in hopes we can gain LOS to player
+        if (investigateTimer == 0f)
+        {
+            headLook.StartLooking();
+            anim.SetBool("Looking Around", true);
+        }
         investigateTimer += Time.deltaTime;
+        anim.SetFloat("Speed", 0f);
 
         // If we looked around for too long, give up and go back to patrol
         if (investigateTimer >= investigateDuration)
@@ -233,16 +247,13 @@ public class EnemyController : MonoBehaviour
 
         movement.SetInvestigatePoint(point);
 
-        // If we weren't investigating already, look around too
-        if (state != EnemyState.Investigate)
-            headLook.StartLooking();
-
         state = EnemyState.Investigate;
     }
 
     private void ExitInvestigate()
     {
         headLook.StopLooking();
+        anim.SetBool("Looking Around", false);
 
         movement.Stop();
     }
@@ -259,12 +270,15 @@ public class EnemyController : MonoBehaviour
 
     private void OnDeath()
     {
-        if(movement)
+        if (movement)
             movement.Stop();
 
         // TODO: Make this system better instead of manually disabling these components
         if (anim)
+        {
+            anim.applyRootMotion = true;
             anim.SetTrigger("Die");
+        }
         else // If there is no animator yet, just disable the enemy so the player knows it died
             gameObject.SetActive(false);
 
@@ -324,6 +338,11 @@ public class EnemyController : MonoBehaviour
     public Transform GetPlayerTransform()
     {
         return player.transform;
+    }
+
+    public Animator GetAnimator()
+    {
+        return anim;
     }
 
     public void SetPlayer(Transform player)
