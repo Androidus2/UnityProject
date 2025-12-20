@@ -22,6 +22,7 @@ public class PopUpPanel : MonoBehaviour
     void Awake()
     {
         inventoryButton = InputSystem.actions.FindAction("Inventory");
+        // TODO: Make this unsubscribe when the scene is changed so that we don't constantly get errors whenever opening the inventory after being killed
         inventoryButton.performed += ctx => TogglePanel();
 
         displayInventory = panel.GetComponent<DisplayInventory>();
@@ -65,6 +66,8 @@ public class PopUpPanel : MonoBehaviour
                 isPanelOpen = true;
             });
 
+        //TO DO - you can open both chest and inventory, close one and have the time be active !!
+        //same w/ pause menu
         // Pause the game time
         Time.timeScale = 0f;
 
