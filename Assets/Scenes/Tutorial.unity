@@ -127,6 +127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 259112251357655829, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.503529
+      objectReference: {fileID: 0}
+    - target: {fileID: 259112251357655829, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.7685847
+      objectReference: {fileID: 0}
     - target: {fileID: 1798077373409315264, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -219,7 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e4058d03449aa4eb4ee2db111bd534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: 78b77aa034dfb134da1a1d2499eba11f, type: 2}
   xStart: -570
   yStart: 130
   xSpaceBetweenItems: 120
@@ -3227,7 +3234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d0ed82faec77f242806ab967520c2be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Panel: {fileID: 65169344}
+  panel: {fileID: 65169344}
+  playerInventory: {fileID: 11400000, guid: 78b77aa034dfb134da1a1d2499eba11f, type: 2}
   scaleDuration: 0.15
 --- !u!1 &1821482131
 GameObject:

@@ -35,6 +35,7 @@ public class HealthBar : MonoBehaviour
 
         healthTween = slider.DOValue(targetValue, tweenDuration)
             .SetEase(Ease.OutCubic)
+            .SetUpdate(true)
             .OnUpdate(() =>
             {
                 fill.color = gradient.Evaluate(slider.normalizedValue);
