@@ -32,6 +32,9 @@ At this stage, the project contains:
 * Player inventory system:
   * Items can be picked up via interaction
   * Items are added to the player’s inventory, which can be opened/closed with **I**
+  * Items that can be **used** from the inventory
+  * Functional **chests** that store and give items
+  * A **coin system** for tracking player currency
 * Item and interaction systems are easily expandable using **ScriptableObjects** and **interfaces**
 * **Stealing system**:
   * Player can steal from an enemy by getting close and pressing **E**
@@ -42,10 +45,13 @@ At this stage, the project contains:
   * Outlines for interactables
   * Tween-based UI/element animations
   * Player model added
+  * Enemy model with randomly generated outfits / armor
   * Player animations added and hooked up
+  * Enemy animations added and hooked up
+  * Player and enemy hit and death effects
   * Smooth scene transitions
 * A **Main Menu** scene that allows the tester to start the game normally  
-  * Starting from the **MainMenu** will guide the player through the **Tutorial** and **Sprint4Scene**
+  * Starting from the **MainMenu** will guide the player through the **Tutorial** and **Sprint4**
 
 ---
 
@@ -59,19 +65,6 @@ The lockpick system currently includes:
 * A random number of lockpick uses/attempts
 * Player can move left/right to search for the correct lockpick spot
 * Failure triggers a lockpick-fail animation and other feedback
-
----
-
-### **Inventory Update Feature (Separate Branch)**
-
-An expanded inventory prototype exists on the **`inventory-update`** branch.  
-It can be tested in the **`JuiceMoneyScene`** on that branch.
-
-This branch includes:
-
-* Items that can be **used** from the inventory
-* Functional **chests** that store and give items
-* A **coin system** for tracking player currency
 
 ---
 
