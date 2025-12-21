@@ -159,7 +159,7 @@ MonoBehaviour:
   isStealable: 1
   headLook: {fileID: 8816332376567002196}
   anim: {fileID: 7466715683764437887}
-  lootDrop: {fileID: 0}
+  lootDrop: {fileID: 4632546214049338789, guid: 2f94164f9caa21c47b180577f3e25984, type: 3}
   canvas: {fileID: 5401323191882120013}
   deathEffect: {fileID: 5640562698000028052, guid: b5c8ca7ed10b61e499cce8ec3b6e2e4c, type: 3}
   followRange: 1
