@@ -18,8 +18,6 @@ public class Chest : InteractableBase
     [SerializeField]
     private float scaleDuration = 0.15f;
 
-    private bool isPanelOpen = false;
-
 
     protected override void Awake()
     {
@@ -49,7 +47,8 @@ public class Chest : InteractableBase
 
     void TogglePanel()
     {
-        if (isPanelOpen)
+        
+        if (PanelManager.instance.isChestPanelOpen)
             ClosePanel();
         else
             OpenPanel();
@@ -57,6 +56,7 @@ public class Chest : InteractableBase
 
     void OpenPanel()
     {
+        //this script is specifically for the player's inventory
         displayInventory.SetInventoryObject(chestInventory);
 
         // Kill any ongoing tween to avoid conflicts with animation
@@ -71,7 +71,7 @@ public class Chest : InteractableBase
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
             .OnComplete(() => {
-                isPanelOpen = true;
+                PanelManager.instance.isChestPanelOpen = true;
             });
 
         // Pause the game time
@@ -84,6 +84,8 @@ public class Chest : InteractableBase
 
     void ClosePanel()
     {
+        PanelManager.instance.isChestPanelOpen = false;
+        
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
@@ -94,14 +96,18 @@ public class Chest : InteractableBase
             .OnComplete(() =>
             {
                 panel.SetActive(false);
-                isPanelOpen = false; // Set panel state to closed after animation
             });
 
-        // Resume the game time
-        Time.timeScale = 1f;
+        //we resume time ONLY if all panels are closed
+        if (!(PanelManager.instance.isPauseMenuOpen || PanelManager.instance.isInventoryPanelOpen))
+        {
+            // Resume the game time
+            Time.timeScale = 1f;
 
-        // Hide cursor and lock it
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+            // Hide cursor and lock it
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
     }
 }
