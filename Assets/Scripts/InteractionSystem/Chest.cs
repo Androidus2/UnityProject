@@ -31,8 +31,10 @@ public class Chest : InteractableBase
         //for testing purposes only
         //initializing chest inventory with items
         var med = Resources.Load<ItemObject>("Items/Medicine");
+        var coins = Resources.Load<ItemObject>("Items/Coins");
         chestInventory.GetItems().Clear();
         chestInventory.AddItem(med);
+        chestInventory.AddCoinItem(coins);
     }
 
     public override void Interact(Interactor interactor, InventoryObject inventory)
