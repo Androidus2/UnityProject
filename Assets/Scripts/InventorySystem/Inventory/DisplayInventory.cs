@@ -152,33 +152,47 @@ public class DisplayInventory : MonoBehaviour
                 //dropdown menu for use/equip/sell could go here
                 //for now, its just use for medicine - need to decide on equipment mechanics
 
-                //dropdown menu activation
-                Transform panelTransform = obj.transform.Find("DropdownUse");
-                panelTransform.gameObject.SetActive(!panelTransform.gameObject.activeSelf);
+                //find dropdown menu
+                Transform panelTransform = obj.transform.Find("DropdownMenu");
 
                 //add listener for the item
-                //drop / delete - all of them
-                //health items - use (then delete if used)
-                //equipment - equip (not implemented yet) / auto switch with equipped 
-                //mission items - no action? will get called to be used from other scripts
+                //health items - use (then delete if used) + drop
+                //equipment - equip (not implemented yet) / auto switch with equipped + drop
+                //mission items - no action, will get called to be used from other scripts
 
-                Button useButton = panelTransform.GetComponent<Button>();
-                useButton.onClick.RemoveAllListeners(); //clear previous listeners to avoid stacking
-                useButton.onClick.AddListener(() =>
+                if(item.GetItem() is MissionObject)
+                { return; } //no action for mission items
+
+                //find first button + make visibile
+                Transform firstButtonTransform = panelTransform.Find("FirstButton");
+                firstButtonTransform.gameObject.SetActive(!firstButtonTransform.gameObject.activeSelf);
+
+                Button firstButton = firstButtonTransform.GetComponent<Button>();
+
+                //set listener depending on item type
+
+                if(item.GetItem() is HealthObject)
                 {
-                    Debug.Log("Used " + inventory.GetItems(index).GetItem().name);
-                    var item = inventory.GetItems(index);
+                    AddButtonListener(firstButton, firstButtonTransform, "Use", index);
+                }
+                else if(item.GetItem() is EquipmentObject)
+                {
+                    AddButtonListener(firstButton, firstButtonTransform, "Equip", index);
+                }
 
-                    bool okToDelete = item.GetItem().Use();
-                    panelTransform.gameObject.SetActive(false);
+                //set drop button listener
+                Transform secondButtonTransform = panelTransform.Find("SecondButton");
+                secondButtonTransform.gameObject.SetActive(!secondButtonTransform.gameObject.activeSelf);
 
-                    if (okToDelete)
-                    {
-                        inventory.GetItems().RemoveAt(index);
-                        RefreshDisplay();
-                    }
+                Button secondButton = secondButtonTransform.GetComponent<Button>();
 
-                });
+                if(item.GetItem() is HealthObject || item.GetItem() is EquipmentObject)
+                {
+                    AddButtonListener(secondButton, secondButtonTransform, "Drop", index);
+                }
+
+
+
             });
             itemsDisplayed.Add(inventory.GetItems(i), obj);
         }
@@ -190,7 +204,6 @@ public class DisplayInventory : MonoBehaviour
         for (int i = 0; i < inventory.GetItems().Count; i++) //loading up the inventory on game start
         {
             int index = i; // capture the current value of i for the closure
-            var item = inventory.GetItems(index); //cache the item for use in the listener
             var obj = Instantiate(inventory.GetItems(i).GetItem().GetIcon(), Vector3.zero, Quaternion.identity, transform);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.GetItems(i).GetItem().name;
@@ -199,15 +212,73 @@ public class DisplayInventory : MonoBehaviour
             {
                 Debug.Log("Clicked on " + inventory.GetItems(index).GetItem().name);
 
-                //dropdown menu for 'take'
-                Transform panelTransform = obj.transform.Find("DropdownUse");
-                panelTransform.gameObject.SetActive(!panelTransform.gameObject.activeSelf);
+                //find dropdown menu, make sure its active
+                Transform panelTransform = obj.transform.Find("DropdownMenu");
+
+                //get first button + make visibile - take item
+                Transform buttonTransform = panelTransform.Find("FirstButton");
+                buttonTransform.gameObject.SetActive(!buttonTransform.gameObject.activeSelf);
 
                 //chest inventory - add to player inventory
-                panelTransform.GetComponentInChildren<TextMeshProUGUI>().text = "Take";
-                Button takeButton = panelTransform.GetComponent<Button>();
-                takeButton.onClick.RemoveAllListeners(); //clear previous listeners to avoid stacking
-                takeButton.onClick.AddListener(() =>
+                
+                Button takeButton = buttonTransform.GetComponent<Button>();
+                AddButtonListener(takeButton, panelTransform, "Take", index);
+            });
+
+            itemsDisplayed.Add(inventory.GetItems(i), obj);
+        }
+
+    }
+
+    private void AddButtonListener(Button button, Transform buttonTransform, string action, int index)
+    {
+        button.onClick.RemoveAllListeners(); //clear previous listeners to avoid stacking
+        var item = inventory.GetItems(index); //cache the item 
+
+        //set the text
+        buttonTransform.GetComponentInChildren<TextMeshProUGUI>().text = action;
+
+        switch (action)
+        {
+            case "Use":
+                button.onClick.AddListener(() =>
+                {
+                    Debug.Log("Used " + inventory.GetItems(index).GetItem().name);
+
+                    bool okToDelete = item.GetItem().Use();
+                    buttonTransform.gameObject.SetActive(false);
+
+                    if (okToDelete)
+                    {
+                        inventory.GetItems().RemoveAt(index);
+                        RefreshDisplay();
+                    }
+
+                });
+                break;
+            case "Equip":
+                button.onClick.AddListener(() =>
+                {
+                    Debug.Log("Equipped " + inventory.GetItems(index).GetItem().name);
+
+                    //equip logic here
+                    buttonTransform.gameObject.SetActive(false);
+
+                    //swap items logic here
+
+                });
+                break;
+            case "Drop":
+                button.onClick.AddListener(() =>
+                {
+                    Debug.Log("Dropped " + inventory.GetItems(index).GetItem().name);
+                    inventory.GetItems().RemoveAt(index);
+                    RefreshDisplay();
+                    buttonTransform.gameObject.SetActive(false);
+                });
+                break;
+            case "Take":
+                button.onClick.AddListener(() =>
                 {
                     Debug.Log("Took " + item.GetItem().name);
 
@@ -220,14 +291,15 @@ public class DisplayInventory : MonoBehaviour
                     {
                         Debug.Log("Not enough space in player inventory to take " + item.GetItem().name);
                     }
-                    panelTransform.gameObject.SetActive(false);
+                    buttonTransform.gameObject.SetActive(false);
 
                 });
-            });
-
-            itemsDisplayed.Add(inventory.GetItems(i), obj);
+                break;
+            default:
+                Debug.LogWarning("Action " + action + " not recognized.");
+                break;
         }
-
+        
     }
 
 }
