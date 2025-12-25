@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class DisplayInventory : MonoBehaviour
 {
-
-    //154 x  84 y   -68y  equipped items
-
     private InventoryObject inventory;
 
     [SerializeField]
@@ -31,6 +28,9 @@ public class DisplayInventory : MonoBehaviour
 
     [SerializeField]
     private float itemScaleDuration = 0.15f;
+
+    private InventorySlot weaponSlot = null;
+    private InventorySlot armourSlot = null;
 
 
     public void Awake() //for chest automatic attribution
@@ -138,6 +138,63 @@ public class DisplayInventory : MonoBehaviour
         itemsDisplayed.Add(new InventorySlot(null), coinObj); //using a dummy InventorySlot to hold the coin display so it can be cleared later
 
 
+        //equipped weapon
+        if (weaponSlot != null)
+        {
+            Vector3 weaponPosition = new Vector3(154, 84, 0f); //fixed position for weapon slot
+            var weaponObj = Instantiate(weaponSlot.GetItem().GetIcon(), Vector3.zero, Quaternion.identity, transform);
+            weaponObj.GetComponent<RectTransform>().localPosition = weaponPosition;
+            weaponObj.GetComponentInChildren<TextMeshProUGUI>().text = weaponSlot.GetItem().name;
+            itemsDisplayed.Add(weaponSlot, weaponObj);
+
+            //add unequip and drop buttons
+            weaponObj.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                //find dropdown menu
+                Transform panelTransform = weaponObj.transform.Find("DropdownMenu");
+                //find first button + make visibile - unequip
+                Transform firstButtonTransform = panelTransform.Find("FirstButton");
+                firstButtonTransform.gameObject.SetActive(!firstButtonTransform.gameObject.activeSelf);
+                Button firstButton = firstButtonTransform.GetComponent<Button>();
+                AddButtonListener(firstButton, "Unequip", weaponSlot, 0); //index wont be used, using 0 as dummy
+                //set drop button listener
+                Transform secondButtonTransform = panelTransform.Find("SecondButton");
+                secondButtonTransform.gameObject.SetActive(!secondButtonTransform.gameObject.activeSelf);
+                Button secondButton = secondButtonTransform.GetComponent<Button>();
+                AddButtonListener(secondButton, "DropEquippedW", weaponSlot, 0); //index wont be used
+            });
+
+        }
+
+        //equipped armour
+        if (armourSlot != null)
+        {
+            Vector3 armourPosition = new Vector3(154, -68, 0f); //fixed position for armour slot
+            var armourObj = Instantiate(armourSlot.GetItem().GetIcon(), Vector3.zero, Quaternion.identity, transform);
+            armourObj.GetComponent<RectTransform>().localPosition = armourPosition;
+            armourObj.GetComponentInChildren<TextMeshProUGUI>().text = armourSlot.GetItem().name;
+            itemsDisplayed.Add(armourSlot, armourObj);
+
+            //add unequip and drop buttons
+            armourObj.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                //find dropdown menu
+                Transform panelTransform = armourObj.transform.Find("DropdownMenu");
+                //find first button + make visibile - unequip
+                Transform firstButtonTransform = panelTransform.Find("FirstButton");
+                firstButtonTransform.gameObject.SetActive(!firstButtonTransform.gameObject.activeSelf);
+                Button firstButton = firstButtonTransform.GetComponent<Button>();
+                AddButtonListener(firstButton, "Unequip", armourSlot, 0); //index wont be used, using 0 as dummy
+                //set drop button listener
+                Transform secondButtonTransform = panelTransform.Find("SecondButton");
+                secondButtonTransform.gameObject.SetActive(!secondButtonTransform.gameObject.activeSelf);
+                Button secondButton = secondButtonTransform.GetComponent<Button>();
+                AddButtonListener(secondButton, "DropEquippedA", armourSlot, 0); //index wont be used
+            });
+        }
+
+
+
         for (int i = 0; i < inventory.GetItems().Count; i++) //loading up the inventory on game start
         {
             int index = i; // capture the current value of i for the closure
@@ -148,10 +205,6 @@ public class DisplayInventory : MonoBehaviour
 
             obj.GetComponent<Button>().onClick.AddListener(() =>
             {
-                Debug.Log("Clicked on " + inventory.GetItems(index).GetItem().name);
-                //dropdown menu for use/equip/sell could go here
-                //for now, its just use for medicine - need to decide on equipment mechanics
-
                 //find dropdown menu
                 Transform panelTransform = obj.transform.Find("DropdownMenu");
 
@@ -173,11 +226,11 @@ public class DisplayInventory : MonoBehaviour
 
                 if(item.GetItem() is HealthObject)
                 {
-                    AddButtonListener(firstButton, firstButtonTransform, "Use", index);
+                    AddButtonListener(firstButton, "Use", item, index);
                 }
                 else if(item.GetItem() is EquipmentObject)
                 {
-                    AddButtonListener(firstButton, firstButtonTransform, "Equip", index);
+                    AddButtonListener(firstButton, "Equip", item, index);
                 }
 
                 //set drop button listener
@@ -188,7 +241,7 @@ public class DisplayInventory : MonoBehaviour
 
                 if(item.GetItem() is HealthObject || item.GetItem() is EquipmentObject)
                 {
-                    AddButtonListener(secondButton, secondButtonTransform, "Drop", index);
+                    AddButtonListener(secondButton, "Drop", item,  index);
                 }
 
 
@@ -204,6 +257,7 @@ public class DisplayInventory : MonoBehaviour
         for (int i = 0; i < inventory.GetItems().Count; i++) //loading up the inventory on game start
         {
             int index = i; // capture the current value of i for the closure
+            var item = inventory.GetItems(index); //cache the item for use in the listener
             var obj = Instantiate(inventory.GetItems(i).GetItem().GetIcon(), Vector3.zero, Quaternion.identity, transform);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.GetItems(i).GetItem().name;
@@ -212,17 +266,15 @@ public class DisplayInventory : MonoBehaviour
             {
                 Debug.Log("Clicked on " + inventory.GetItems(index).GetItem().name);
 
-                //find dropdown menu, make sure its active
+                //find dropdown menu
                 Transform panelTransform = obj.transform.Find("DropdownMenu");
 
                 //get first button + make visibile - take item
                 Transform buttonTransform = panelTransform.Find("FirstButton");
                 buttonTransform.gameObject.SetActive(!buttonTransform.gameObject.activeSelf);
 
-                //chest inventory - add to player inventory
-                
                 Button takeButton = buttonTransform.GetComponent<Button>();
-                AddButtonListener(takeButton, panelTransform, "Take", index);
+                AddButtonListener(takeButton, "Take", item, index);
             });
 
             itemsDisplayed.Add(inventory.GetItems(i), obj);
@@ -230,76 +282,170 @@ public class DisplayInventory : MonoBehaviour
 
     }
 
-    private void AddButtonListener(Button button, Transform buttonTransform, string action, int index)
+    private void AddButtonListener(Button button, string action, InventorySlot item, int index)
     {
         button.onClick.RemoveAllListeners(); //clear previous listeners to avoid stacking
-        var item = inventory.GetItems(index); //cache the item 
 
         //set the text
-        buttonTransform.GetComponentInChildren<TextMeshProUGUI>().text = action;
+        if(action != "DropEquippedW" && action != "DropEquippedA")
+            button.GetComponentInChildren<TextMeshProUGUI>().text = action;
+        else
+            button.GetComponentInChildren<TextMeshProUGUI>().text = "Drop";
+
 
         switch (action)
-        {
-            case "Use":
-                button.onClick.AddListener(() =>
-                {
-                    Debug.Log("Used " + inventory.GetItems(index).GetItem().name);
-
-                    bool okToDelete = item.GetItem().Use();
-                    buttonTransform.gameObject.SetActive(false);
-
-                    if (okToDelete)
+            {
+                case "Use":
+                    button.onClick.AddListener(() =>
                     {
+
+                        bool okToDelete = item.GetItem().Use();
+
+                        if (okToDelete)
+                        {
+                            inventory.GetItems().RemoveAt(index);
+                            RefreshDisplay();
+                        }
+
+
+                        Debug.Log("Used " + item.GetItem().name);
+
+                    });
+                    break;
+                case "Equip":
+                    button.onClick.AddListener(() =>
+                    {
+
+                        bool okToEquip = item.GetItem().Use();
+
+
+                        if (okToEquip)
+                        {
+
+                            //auto swap with currently equipped item
+                            EquipmentObject equipment = (EquipmentObject)item.GetItem();
+                            if (equipment.GetEquipmentType() == EquipmentType.Weapon)
+                            {
+
+                                if (weaponSlot != null) //swap
+                                {
+                                    inventory.Insert(weaponSlot.GetItem(), index);
+                                    weaponSlot = item;
+                                }
+                                else //first time equipping
+                                {
+                                    weaponSlot = item;
+                                    inventory.GetItems().RemoveAt(index);
+                                }
+
+                                //find text and modify to show equipped weapon
+                                GameObject.Find("WeaponText").GetComponent<TextMeshProUGUI>().text = $"+{equipment.GetBonusValue()} damage";
+                            }
+                            else if (equipment.GetEquipmentType() == EquipmentType.Armour)
+                            {
+                                if (armourSlot != null) //swap
+                                {
+                                    inventory.Insert(armourSlot.GetItem(), index);
+                                    armourSlot = item;
+                                }
+                                else //first time equipping
+                                {
+                                    armourSlot = item;
+                                    inventory.GetItems().RemoveAt(index);
+                                }
+
+                                //find text and modify to show equipped armour
+                                GameObject.Find("ArmourText").GetComponent<TextMeshProUGUI>().text = $"+{equipment.GetBonusValue()} armour";
+
+                            }
+                            Debug.Log("Equipped " + item.GetItem().name);
+
+                            RefreshDisplay();
+                        }
+
+
+
+                    });
+                    break;
+                case "Unequip":
+                    button.onClick.AddListener(() =>
+                    {
+
+                        bool okToUnequip = inventory.AddItem(item.GetItem());
+                        if (okToUnequip)
+                        {
+                            if (item.GetItem() is EquipmentObject) //should be always true here
+                            {
+                                EquipmentObject equipment = (EquipmentObject)item.GetItem();
+                                if (equipment.GetEquipmentType() == EquipmentType.Weapon)
+                                {
+                                    weaponSlot = null;
+                                    //find text and modify to show no equipped weapon
+                                    GameObject.Find("WeaponText").GetComponent<TextMeshProUGUI>().text = "no weapon equipped";
+                                }
+                                else if (equipment.GetEquipmentType() == EquipmentType.Armour)
+                                {
+                                    armourSlot = null;
+                                    //find text and modify to show no equipped armour
+                                    GameObject.Find("ArmourText").GetComponent<TextMeshProUGUI>().text = "no armour equipped";
+                                }
+                            }
+                            RefreshDisplay();
+                        }
+
+                        Debug.Log("Unequipped " + item.GetItem().name);
+                    });
+                    break;
+                case "Drop":
+                    button.onClick.AddListener(() =>
+                    {
+                        Debug.Log("Dropped " + item.GetItem().name);
                         inventory.GetItems().RemoveAt(index);
                         RefreshDisplay();
-                    }
-
-                });
-                break;
-            case "Equip":
-                button.onClick.AddListener(() =>
-                {
-                    Debug.Log("Equipped " + inventory.GetItems(index).GetItem().name);
-
-                    //equip logic here
-                    buttonTransform.gameObject.SetActive(false);
-
-                    //swap items logic here
-
-                });
-                break;
-            case "Drop":
-                button.onClick.AddListener(() =>
-                {
-                    Debug.Log("Dropped " + inventory.GetItems(index).GetItem().name);
-                    inventory.GetItems().RemoveAt(index);
-                    RefreshDisplay();
-                    buttonTransform.gameObject.SetActive(false);
-                });
-                break;
+                    });
+                    break;
+                case "DropEquippedW":
+                    button.onClick.AddListener(() =>
+                    {
+                        Debug.Log("Dropped equipped " + item.GetItem().name);
+                        weaponSlot = null;
+                        //find text and modify to show no equipped weapon
+                        GameObject.Find("WeaponText").GetComponent<TextMeshProUGUI>().text = "no weapon equipped";
+                        RefreshDisplay();
+                    });
+                    break;
+                case "DropEquippedA":
+                    button.onClick.AddListener(() =>
+                    {
+                        Debug.Log("Dropped equipped " + item.GetItem().name);
+                        armourSlot = null;
+                        //find text and modify to show no equipped armour
+                        GameObject.Find("ArmourText").GetComponent<TextMeshProUGUI>().text = "no armour equipped";
+                        RefreshDisplay();
+                    });
+                    break;
             case "Take":
-                button.onClick.AddListener(() =>
-                {
-                    Debug.Log("Took " + item.GetItem().name);
-
-                    if (playerInventory.AddItem(item.GetItem()))
+                    button.onClick.AddListener(() =>
                     {
-                        inventory.GetItems().RemoveAt(index);
-                        RefreshDisplay();
-                    }
-                    else
-                    {
-                        Debug.Log("Not enough space in player inventory to take " + item.GetItem().name);
-                    }
-                    buttonTransform.gameObject.SetActive(false);
+                        if (playerInventory.AddItem(item.GetItem()))
+                        {
+                            inventory.GetItems().RemoveAt(index);
+                            RefreshDisplay();
+                            Debug.Log("Took " + item.GetItem().name);
+                        }
+                        else
+                        {
+                            Debug.Log("Not enough space in player inventory to take " + item.GetItem().name);
+                        }
 
-                });
-                break;
-            default:
-                Debug.LogWarning("Action " + action + " not recognized.");
-                break;
-        }
-        
+                    });
+                    break;
+                default:
+                    Debug.LogWarning("Action " + action + " not recognized.");
+                    break;
+            }
+
+
     }
 
 }

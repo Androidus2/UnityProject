@@ -1,15 +1,20 @@
 using UnityEngine;
 
+public enum EquipmentType
+{
+    Weapon,
+    Armour
+    
+}
+
 [CreateAssetMenu(fileName = "New Mission Object", menuName = "Scripts/InventorySystem/Items/Equipment")]
 public class EquipmentObject : ItemObject
 {
     [SerializeField]
-    private float attackBonus;
+    private EquipmentType equipmentType;
 
     [SerializeField]
-    private float defenseBonus;
-
-    //these can be altered when we get to the attack mechanism as a whole
+    private float bonusValue; //attack bonus for weapon, defense bonus for armour
 
     public void Awake()
     {
@@ -19,8 +24,35 @@ public class EquipmentObject : ItemObject
     public override bool Use()
     {
         // inventory on click logic will call this function
-        Debug.Log($"Equipment Item: used.");
+        if(this.equipmentType is EquipmentType.Armour)
+            {
+            PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.SetDefenseBonus(bonusValue);
+            }
+        }
+        else if(this.equipmentType is EquipmentType.Weapon)
+        {
+            PlayerAttack playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+            if (playerAttack != null)
+            {
+                playerAttack.SetAttackBonus(bonusValue);
+            }
+        }
+
+        Debug.Log($"Equipment Item: equipped for {bonusValue} {equipmentType} bonus" );
         return true; 
+    }
+
+    public EquipmentType GetEquipmentType()
+    {
+        return equipmentType;
+    }
+
+    public float GetBonusValue()
+    {
+        return bonusValue;
     }
 
 

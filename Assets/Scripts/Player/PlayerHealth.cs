@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
-    private int maxHealth;
+    private float maxHealth;
 
-    private int currentHealth;
+    private float currentHealth;
+
+    private float defenseBonus;
 
     [SerializeField]
     private HealthBar healthBar;
@@ -49,16 +51,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         // If we are already dead, don't keep taking damage and calling the Die method
         if (currentHealth <= 0)
             return;
 
         animator.SetTrigger("Hit");
-        currentHealth -= damage;
+        currentHealth -= damage - defenseBonus;
      
-        Debug.Log("Player took " + damage + " damage. Current health: " + currentHealth);
+        Debug.Log("Player took " + (damage - defenseBonus) + " damage. Current health: " + currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -100,7 +102,7 @@ public class PlayerHealth : MonoBehaviour
         });
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         if (currentHealth >= maxHealth)
         {
@@ -116,5 +118,10 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Player healed " + amount + " health. Current health: " + currentHealth);
     }
-   
+
+    public void SetDefenseBonus(float bonus)
+    {
+        defenseBonus = bonus;
+    }
+
 }

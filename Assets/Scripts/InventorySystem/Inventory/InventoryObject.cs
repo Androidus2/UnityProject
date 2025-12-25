@@ -36,6 +36,12 @@ public class InventoryObject : ScriptableObject
         return true;
     }
 
+    public void Insert(ItemObject item, int index) //for swapping items
+    {
+        items.RemoveAt(index);
+        items.Insert(index, new InventorySlot(item));
+    }
+
     public bool AddCoinItem(ItemObject item) //for chest inventories
     {
         if (items.Count >= inventorySize)

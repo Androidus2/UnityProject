@@ -4,7 +4,7 @@ using UnityEngine;
 public class HealthObject : ItemObject
 {
     [SerializeField]
-    private int restoreHealthValue; //positive or negative value, if we want 'fake' health items
+    private float restoreHealthValue; //positive or negative value, if we want 'fake' health items
 
     private PlayerHealth playerHealth;
 

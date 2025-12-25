@@ -11,6 +11,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     float attackDamage;
 
+    private float attackBonus;
+
     [SerializeField]
     float attackCooldown;
 
@@ -65,7 +67,7 @@ public class PlayerAttack : MonoBehaviour
         if (targets.Count > 0)
         {
             EnemyHealth hitEnemy = targets[0];
-            hitEnemy.TakeDamage(attackDamage);
+            hitEnemy.TakeDamage(attackDamage + attackBonus);
             DoDamageEffect(hitEnemy.transform.position);
             if (hitEnemy.IsDead())
                 targets.RemoveAt(0);
@@ -100,5 +102,10 @@ public class PlayerAttack : MonoBehaviour
 
             targets.Remove(enemy);
         }
+    }
+
+    public void SetAttackBonus(float bonus)
+    {
+        attackBonus = bonus;
     }
 }
