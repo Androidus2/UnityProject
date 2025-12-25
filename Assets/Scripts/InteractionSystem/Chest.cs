@@ -36,6 +36,12 @@ public class Chest : InteractableBase
         var coins = Resources.Load<ItemObject>("Items/Coins");
         chestInventory.GetItems().Clear();
         chestInventory.AddItem(med);
+        chestInventory.AddItem(med);
+        chestInventory.AddItem(med);
+        chestInventory.AddItem(med);
+        chestInventory.AddItem(med);
+        chestInventory.AddItem(med);
+        chestInventory.AddItem(med);
         chestInventory.AddCoinItem(coins);
     }
 

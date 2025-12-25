@@ -260,11 +260,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3062636432665512918}
   - component: {fileID: 174379549281413018}
-  - component: {fileID: 3507135750454544696}
-  - component: {fileID: 2679173257203320044}
-  m_Layer: 0
+  - component: {fileID: 1492939360097932494}
+  - component: {fileID: 4380071534312409242}
+  m_Layer: 6
   m_Name: Dummy
-  m_TagString: Enemy
+  m_TagString: Vendor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,7 +309,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &3507135750454544696
+--- !u!114 &1492939360097932494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,12 +318,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4356815609906199752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5964f5d28ff905f469cee1f54b3a9b31, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  healthBar: {fileID: 8443354843241302811}
---- !u!114 &2679173257203320044
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &4380071534312409242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,21 +336,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4356815609906199752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1acffd32f51f04a46a74ae49403ddf2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 210496da141ec6a4fbbe71ac0fc56531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
-  isPassive: 1
-  isStealable: 1
-  headLook: {fileID: 0}
-  anim: {fileID: 2518973263254039847}
-  lootDrop: {fileID: 0}
-  canvas: {fileID: 1607831204104113595}
-  followRange: 3
-  attackRange: 2
-  lostSightDelay: 1
-  investigateDuration: 4
-  investigateTolerance: 0.6
+  targetWidth: 6
+  tweenDuration: 0.15
+  panel: {fileID: 0}
+  vendorInventory: {fileID: 11400000, guid: d37e8dcadae516f45bf27254b10134c2, type: 2}
+  vendorType: 0
+  scaleDuration: 0.15
 --- !u!1 &5281126352938821809
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,11 +552,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}
---- !u!95 &2518973263254039847 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5615497917579445399, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}
-  m_PrefabInstance: {fileID: 8006117336710015408}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2702029670374086360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5360683131785772904, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}

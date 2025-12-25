@@ -8,8 +8,8 @@ public class Item : InteractableBase
     public override void Interact(Interactor interactor, InventoryObject inventory)
     {
         Debug.Log("Adding item: " + item.name + " to inventory");
-        inventory.AddItem(this.GetItem());
-        Destroy(gameObject); //destroy the item
+        if(inventory.AddItem(this.GetItem()))
+            Destroy(gameObject); //destroy the item
     }
     public ItemObject GetItem()
     {
