@@ -92,7 +92,7 @@ public class PopUpPanel : MonoBehaviour
             });
 
         //we resume time ONLY if all panels are closed
-        if (!(PanelManager.instance.isPauseMenuOpen || PanelManager.instance.isChestPanelOpen))
+        if (PanelManager.instance.AreAllPanelsClosed())
         {
             // Resume the game time
             Time.timeScale = 1f;

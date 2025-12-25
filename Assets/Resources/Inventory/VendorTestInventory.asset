@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f2896307002d04287a8a4904da362b, type: 3}
-  m_Name: Sword
+  m_Script: {fileID: 11500000, guid: 9a9d811d143bc2f4dae03ab187357c95, type: 3}
+  m_Name: VendorTestInventory
   m_EditorClassIdentifier: 
-  icon: {fileID: 1407907460528503710, guid: 4323a24a50c857d49b97577a5790229e, type: 3}
+  inventoryName: Blacksmith
   type: 2
-  price: 50
-  equipmentType: 0
-  bonusValue: 5
+  inventorySize: 5

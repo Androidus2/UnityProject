@@ -9,10 +9,10 @@ public class DisplayInventory : MonoBehaviour
     private InventoryObject inventory;
 
     [SerializeField]
-    private InventoryObject playerInventory; //to allow chest inventory to add to player inventory
+    private InventoryObject playerInventory; //to allow chest /vendor inventory to interact w/ player inventory
 
     [SerializeField]
-    private int xStart;
+    private int xStart; //starting position for displaying items
 
     [SerializeField]
     private int yStart;
@@ -29,7 +29,7 @@ public class DisplayInventory : MonoBehaviour
     [SerializeField]
     private float itemScaleDuration = 0.15f;
 
-    private InventorySlot weaponSlot = null;
+    private InventorySlot weaponSlot = null; //for equipped weapon / armour in player inventory
     private InventorySlot armourSlot = null;
 
 
@@ -74,6 +74,9 @@ public class DisplayInventory : MonoBehaviour
 
             case InventoryType.Chest:
                 CreateDisplayChest();
+                break;
+            case InventoryType.Vendor:
+                CreateDisplayVendor();
                 break;
         }
     }
@@ -124,9 +127,8 @@ public class DisplayInventory : MonoBehaviour
     }
 
 
-    public void CreateDisplayPlayer() 
-    { 
-    
+    public void CreateCoinDisplay() //player's coin display
+    {
         //display the coin count
         Vector3 coinPosition = new Vector3(435, -230, 0f); //fixed position for coin display, down right corner
         GameObject coinPrefab = Resources.Load<GameObject>("Items/CoinDisplay");
@@ -134,9 +136,15 @@ public class DisplayInventory : MonoBehaviour
         coinObj.GetComponent<RectTransform>().localPosition = coinPosition;
         //clean previous text
         coinObj.GetComponentInChildren<TextMeshProUGUI>().text = "";
-        coinObj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.GetCoinCount().ToString();
+        coinObj.GetComponentInChildren<TextMeshProUGUI>().text = playerInventory.GetCoinCount().ToString();
         itemsDisplayed.Add(new InventorySlot(null), coinObj); //using a dummy InventorySlot to hold the coin display so it can be cleared later
 
+    }
+
+    public void CreateDisplayPlayer() 
+    {
+
+        CreateCoinDisplay();
 
         //equipped weapon
         if (weaponSlot != null)
@@ -282,12 +290,55 @@ public class DisplayInventory : MonoBehaviour
 
     }
 
+    public void CreateDisplayVendor()
+    {
+        //display title up top (weapons / armour / pharmacy)
+        GetComponentInChildren<TextMeshProUGUI>().text = inventory.GetInventoryName();
+
+        CreateCoinDisplay();
+
+        //have the item name,bonus value under it, and price in buy menu
+        for (int i = 0; i < inventory.GetItems().Count; i++)
+        {
+            int index = i; // capture the current value of i for the closure
+            var item = inventory.GetItems(index); //cache the item for use in the listener
+            var obj = Instantiate(inventory.GetItems(i).GetItem().GetIcon(), Vector3.zero, Quaternion.identity, transform);
+            obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+            string bonusText = "";
+            if (item.GetItem() is HealthObject @healthObject)
+                bonusText = $"+{@healthObject.GetRestoreHealthValue()} HP";
+            else if (item.GetItem() is EquipmentObject @equipmentObject)
+                bonusText = $"+{@equipmentObject.GetBonusValue()} {((@equipmentObject.GetEquipmentType() == EquipmentType.Weapon) ? "damage" : "armour")}";
+
+
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.GetItems(i).GetItem().name + "\n" + bonusText;
+
+            obj.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                Debug.Log("Clicked on " + inventory.GetItems(index).GetItem().name);
+
+                //find dropdown menu
+                Transform panelTransform = obj.transform.Find("DropdownMenu");
+
+                Transform buttonTransform = panelTransform.Find("FirstButton");
+                buttonTransform.gameObject.SetActive(!buttonTransform.gameObject.activeSelf);
+
+                Button takeButton = buttonTransform.GetComponent<Button>();
+                AddButtonListener(takeButton, "Buy", item, index);
+            });
+
+            itemsDisplayed.Add(inventory.GetItems(i), obj);
+        }
+    }
+
     private void AddButtonListener(Button button, string action, InventorySlot item, int index)
     {
         button.onClick.RemoveAllListeners(); //clear previous listeners to avoid stacking
 
         //set the text
-        if(action != "DropEquippedW" && action != "DropEquippedA")
+        if (action == "Buy")
+            button.GetComponentInChildren<TextMeshProUGUI>().text = $"Buy({item.GetItem().GetPrice()})";
+        else if (action != "DropEquippedW" && action != "DropEquippedA")
             button.GetComponentInChildren<TextMeshProUGUI>().text = action;
         else
             button.GetComponentInChildren<TextMeshProUGUI>().text = "Drop";
@@ -440,7 +491,32 @@ public class DisplayInventory : MonoBehaviour
 
                     });
                     break;
-                default:
+            case "Buy":
+                    button.onClick.AddListener(() =>
+                    {
+                        //check if player has enough coins
+                        int itemPrice = item.GetItem().GetPrice();
+                        if (playerInventory.GetCoinCount() >= itemPrice)
+                        {
+                            if (playerInventory.AddItem(item.GetItem()))
+                            {
+                                playerInventory.SetCoinCount(playerInventory.GetCoinCount() - itemPrice);
+                                Debug.Log("Bought " + item.GetItem().name);
+                                inventory.GetItems().RemoveAt(index); //remove from the vendor
+                                RefreshDisplay();
+                            }
+                            else
+                            {
+                                Debug.Log("Not enough space in player inventory to buy " + item.GetItem().name);
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("Not enough coins to buy " + item.GetItem().name);
+                        }
+                    });
+                    break;
+            default:
                     Debug.LogWarning("Action " + action + " not recognized.");
                     break;
             }

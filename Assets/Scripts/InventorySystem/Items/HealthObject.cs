@@ -22,4 +22,9 @@ public class HealthObject : ItemObject
         return true; //indicate that the item was used and can be removed from inventory
     }
 
+    public float GetRestoreHealthValue()
+    {
+        return restoreHealthValue;
+    }
+
 }

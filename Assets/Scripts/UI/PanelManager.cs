@@ -10,4 +10,11 @@ public class PanelManager : MonoBehaviour
     public bool isPauseMenuOpen = false;
     public bool isChestPanelOpen = false;
     public bool isInventoryPanelOpen = false;
+    public bool isVendorPanelOpen = false;
+
+    public bool AreAllPanelsClosed()
+    {
+        return !isPauseMenuOpen && !isChestPanelOpen && !isInventoryPanelOpen && !isVendorPanelOpen;
+    }
+
 }

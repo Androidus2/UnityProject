@@ -3,12 +3,16 @@ using UnityEngine;
 public enum InventoryType
 {
     Player,
-    Chest
+    Chest,
+    Vendor
 }
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Scripts/InventorySystem/Inventory")]
 public class InventoryObject : ScriptableObject
 {
+    [SerializeField]
+    private string inventoryName; //for identification, espcially for chests / vendors
+
     [SerializeField]
     private InventoryType type;
 
@@ -73,6 +77,10 @@ public class InventoryObject : ScriptableObject
         coinCount += amount;
     }
 
+    public void SetCoinCount(int amount)
+    {
+        coinCount = amount;
+    }
     public void ClearInventory()
     {
         items.Clear();
@@ -88,6 +96,21 @@ public class InventoryObject : ScriptableObject
     public InventoryType GetInventoryType()
     {
         return type;
+    }
+
+    public string GetInventoryName()
+    {
+        return inventoryName;
+    }
+
+    public void SetType(InventoryType inventoryType)
+    {
+        type = inventoryType;
+    }
+
+    public void SetSize(int size)
+    {
+        inventorySize = size;
     }
 }
 

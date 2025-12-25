@@ -1,58 +1,65 @@
 using DG.Tweening;
 using UnityEngine;
+public enum VendorType
+{
+    Blacksmith,
+    Armourer,
+    Pharmacist
+}
 
-public class Chest : InteractableBase
+public class Vendor : InteractableBase
 {
     //inventory panel 
     [SerializeField]
     private GameObject panel;
 
-    //seeding for each chest respectively? tbd how we approach this for multiple chests
-    //TO DO  - possible solution - change into normal class, mark as System.Serializable and edit for each chest
+    //TO DO  - possible solution - change into normal class, mark as System.Serializable and edit for each vendor
     [SerializeField]
-    private InventoryObject chestInventory;
+    private InventoryObject vendorInventory;
 
     private DisplayInventory displayInventory;
+
+    [SerializeField]
+    protected VendorType vendorType;
 
     Tweener scaleTween;
     [SerializeField]
     private float scaleDuration = 0.15f;
 
+    private GameObject background = null;
 
     protected override void Awake()
     {
         base.Awake();
         displayInventory = panel.GetComponent<DisplayInventory>();
-        chestInventory.SetType(InventoryType.Chest); //for safety
-        chestInventory.SetSize(15);
+        vendorInventory.SetType(InventoryType.Vendor); //for safety
+        vendorInventory.SetSize(5);
     }
-
 
     public void Start()
     {
         //for testing purposes only
-        //initializing chest inventory with items
-        var med = Resources.Load<ItemObject>("Items/Medicine");
-        var coins = Resources.Load<ItemObject>("Items/Coins");
-        chestInventory.GetItems().Clear();
-        chestInventory.AddItem(med);
-        chestInventory.AddCoinItem(coins);
+        //initializing vendor inventory with items
+        var med = Resources.Load<ItemObject>("Items/Sword");
+        var coins = Resources.Load<ItemObject>("Items/Dagger");
+        vendorInventory.GetItems().Clear();
+        vendorInventory.AddItem(med);
+        vendorInventory.AddCoinItem(coins);
     }
 
     public override void Interact(Interactor interactor, InventoryObject inventory)
     {
-        //if chest is unlocked
+        //if vendor is available
         //opening inventory panel
-        
         TogglePanel();
 
-        Debug.Log("Opening chest");
+        Debug.Log("Opening vendor display");
     }
 
     void TogglePanel()
     {
-        
-        if (PanelManager.instance.isChestPanelOpen)
+
+        if (PanelManager.instance.isVendorPanelOpen)
             ClosePanel();
         else
             OpenPanel();
@@ -60,13 +67,33 @@ public class Chest : InteractableBase
 
     void OpenPanel()
     {
-        displayInventory.SetInventoryObject(chestInventory);
+        displayInventory.SetInventoryObject(vendorInventory);
 
         // Kill any ongoing tween to avoid conflicts with animation
         scaleTween?.Kill();
 
         // Ensure panel is visible before animation
         panel.SetActive(true);
+
+        //pick correct background based on vendor type
+        //will have Blacksmith, Armourer and Pharmacist
+        
+        if (vendorType == VendorType.Pharmacist)
+        {
+            background = panel.transform.Find("PharmacistBackground").gameObject;
+        }
+        else if (vendorType == VendorType.Armourer)
+        {
+            background = panel.transform.Find("ArmourerBackground").gameObject;
+
+        }
+        else //default for now in case of anything
+        {
+            background = panel.transform.Find("BlacksmithBackground").gameObject;
+
+        }
+        background.SetActive(!background.gameObject.activeSelf);
+
         panel.transform.localScale = Vector3.zero;
 
         scaleTween = panel.transform
@@ -74,7 +101,7 @@ public class Chest : InteractableBase
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
             .OnComplete(() => {
-                PanelManager.instance.isChestPanelOpen = true;
+                PanelManager.instance.isVendorPanelOpen = true;
             });
 
         // Pause the game time
@@ -87,8 +114,8 @@ public class Chest : InteractableBase
 
     void ClosePanel()
     {
-        PanelManager.instance.isChestPanelOpen = false;
-        
+        PanelManager.instance.isVendorPanelOpen = false;
+
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
@@ -98,6 +125,7 @@ public class Chest : InteractableBase
             .SetUpdate(true) // Ensures tween runs in "unscaled time"
             .OnComplete(() =>
             {
+                background.SetActive(!background.gameObject.activeSelf);
                 panel.SetActive(false);
             });
 
@@ -113,4 +141,10 @@ public class Chest : InteractableBase
         }
 
     }
+
+    public VendorType GetVendorType()
+    {
+        return vendorType;
+    }
+
 }

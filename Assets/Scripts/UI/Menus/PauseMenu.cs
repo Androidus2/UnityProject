@@ -116,7 +116,7 @@ public class PauseMenu : MonoBehaviour
 
 
         // Only resume time if no other panels are open
-        if (!(PanelManager.instance.isChestPanelOpen || PanelManager.instance.isInventoryPanelOpen))
+        if (PanelManager.instance.AreAllPanelsClosed())
         {
             Time.timeScale = 1f; // Resume game time
 
