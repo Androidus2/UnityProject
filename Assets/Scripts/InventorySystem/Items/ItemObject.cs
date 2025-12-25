@@ -26,8 +26,7 @@ public abstract class ItemObject : ScriptableObject
 
     public int GetPrice()
     {
-        //karma markup implementation could go here!!
-        return price;
+        return price + price * Karma.instance.KarmaPrice() / 100; //+karma% markup;
     }
 
     public abstract bool Use();
