@@ -58,7 +58,7 @@ public class Chest : InteractableBase
     void TogglePanel()
     {
         
-        if (PanelManager.instance.isChestPanelOpen)
+        if (PanelManager.GetInstance().IsChestPanelOpen())
             ClosePanel();
         else
             OpenPanel();
@@ -80,7 +80,7 @@ public class Chest : InteractableBase
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
             .OnComplete(() => {
-                PanelManager.instance.isChestPanelOpen = true;
+                PanelManager.GetInstance().SetChestPanelState(true);
             });
 
         // Pause the game time
@@ -93,8 +93,8 @@ public class Chest : InteractableBase
 
     void ClosePanel()
     {
-        PanelManager.instance.isChestPanelOpen = false;
-        
+        PanelManager.GetInstance().SetChestPanelState(false);
+
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
@@ -108,7 +108,7 @@ public class Chest : InteractableBase
             });
 
         //we resume time ONLY if all panels are closed
-        if (PanelManager.instance.AreAllPanelsClosed())
+        if (PanelManager.GetInstance().AreAllPanelsClosed())
         {
             // Resume the game time
             Time.timeScale = 1f;

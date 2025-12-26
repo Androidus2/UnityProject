@@ -52,7 +52,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (pauseAction.triggered)
         {
-            if (PanelManager.instance.isPauseMenuOpen)
+            if (PanelManager.GetInstance().IsPauseMenuOpen())
                 ResumeGame();
             else
                 PauseGame();
@@ -84,12 +84,12 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        PanelManager.instance.isPauseMenuOpen = true;
+        PanelManager.GetInstance().SetPauseMenuState(true);
     }
 
     public void ResumeGame()
     {
-        PanelManager.instance.isPauseMenuOpen = false;
+        PanelManager.GetInstance().SetPauseMenuState(false);
 
         KillTweens();
 
@@ -116,7 +116,7 @@ public class PauseMenu : MonoBehaviour
 
 
         // Only resume time if no other panels are open
-        if (PanelManager.instance.AreAllPanelsClosed())
+        if (PanelManager.GetInstance().AreAllPanelsClosed())
         {
             Time.timeScale = 1f; // Resume game time
 

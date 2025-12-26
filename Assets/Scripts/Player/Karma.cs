@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class Karma : MonoBehaviour
 {
-    public static Karma instance { get; private set; }
+    private static Karma instance;
     private void Awake()
     {
         instance = this;
+        
     }
-    public int killCount = 0;
-    public int stealCount = 0;
+    private int killCount = 0;
+    private int stealCount = 0;
+
+    public static Karma GetInstance()
+    {
+        return instance;
+    }
+
+
     public void AddKarmaKill(int amount)
     {
        killCount += amount;

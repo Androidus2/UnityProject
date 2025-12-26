@@ -28,6 +28,7 @@ public class Vendor : InteractableBase
 
     private GameObject background = null;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -59,7 +60,7 @@ public class Vendor : InteractableBase
     void TogglePanel()
     {
 
-        if (PanelManager.instance.isVendorPanelOpen)
+        if (PanelManager.GetInstance().IsVendorPanelOpen())
             ClosePanel();
         else
             OpenPanel();
@@ -101,7 +102,7 @@ public class Vendor : InteractableBase
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
             .OnComplete(() => {
-                PanelManager.instance.isVendorPanelOpen = true;
+                PanelManager.GetInstance().SetVendorPanelState(true);
             });
 
         // Pause the game time
@@ -114,7 +115,7 @@ public class Vendor : InteractableBase
 
     void ClosePanel()
     {
-        PanelManager.instance.isVendorPanelOpen = false;
+        PanelManager.GetInstance().SetVendorPanelState(false);
 
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
@@ -130,7 +131,7 @@ public class Vendor : InteractableBase
             });
 
         //we resume time ONLY if all panels are closed
-        if (PanelManager.instance.AreAllPanelsClosed())
+        if (PanelManager.GetInstance().AreAllPanelsClosed())
         {
             // Resume the game time
             Time.timeScale = 1f;

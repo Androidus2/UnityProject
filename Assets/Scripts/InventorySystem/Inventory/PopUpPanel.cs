@@ -18,7 +18,6 @@ public class PopUpPanel : MonoBehaviour
     private DisplayInventory displayInventory;
 
 
-
     void Awake()
     {
         inventoryButton = InputSystem.actions.FindAction("Inventory");
@@ -41,7 +40,7 @@ public class PopUpPanel : MonoBehaviour
     void TogglePanel()
     {
         
-        if (PanelManager.instance.isInventoryPanelOpen)
+        if (PanelManager.GetInstance().IsInventoryPanelOpen())
             ClosePanel();
         else
             OpenPanel();
@@ -64,7 +63,7 @@ public class PopUpPanel : MonoBehaviour
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
             .OnComplete(() => {
-                PanelManager.instance.isInventoryPanelOpen = true;
+                PanelManager.GetInstance().SetInventoryPanelState(true);
             });
 
         // Pause the game time
@@ -77,8 +76,8 @@ public class PopUpPanel : MonoBehaviour
 
     void ClosePanel()
     {
-        PanelManager.instance.isInventoryPanelOpen = false;
-        
+        PanelManager.GetInstance().SetInventoryPanelState(false);
+
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
@@ -92,7 +91,7 @@ public class PopUpPanel : MonoBehaviour
             });
 
         //we resume time ONLY if all panels are closed
-        if (PanelManager.instance.AreAllPanelsClosed())
+        if (PanelManager.GetInstance().AreAllPanelsClosed())
         {
             // Resume the game time
             Time.timeScale = 1f;

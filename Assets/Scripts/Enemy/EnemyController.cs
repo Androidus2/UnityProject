@@ -56,8 +56,6 @@ public class EnemyController : MonoBehaviour
     private float investigateTimer = 0f;
     private Vector3 lastSeenPlayerPos;
 
-
-
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
@@ -377,7 +375,7 @@ public class EnemyController : MonoBehaviour
         enabled = false;
 
         //karma system
-        Karma.instance.AddKarmaKill(1);
+        Karma.GetInstance().AddKarmaKill(1);
     }
 
     public void HearSound(Vector3 point)
@@ -418,7 +416,7 @@ public class EnemyController : MonoBehaviour
         Debug.Log(gameObject.name + " was stolen from!");
 
         //karma system
-        Karma.instance.AddKarmaSteal(1);
+        Karma.GetInstance().AddKarmaSteal(1);
     }
 
     public Transform GetPlayerTransform()
