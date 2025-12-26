@@ -1,13 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
+public enum InventoryType
+{
+    Player,
+    Chest,
+    Vendor
+}
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Scripts/InventorySystem/Inventory")]
 public class InventoryObject : ScriptableObject
 {
+    [SerializeField]
+    private string inventoryName; //for identification, espcially for chests / vendors
+
+    [SerializeField]
+    private InventoryType type;
+
     private int coinCount = 0;
 
     [SerializeField]
-    private int inventorySize = 20;
+    private int inventorySize = 9;
 
     private List<InventorySlot> items = new List<InventorySlot>();
     public bool AddItem(ItemObject item)
@@ -19,6 +31,23 @@ public class InventoryObject : ScriptableObject
             return true;
         }
         //else add to inventory 
+        if (items.Count >= inventorySize)
+        {
+            Debug.Log("Inventory Full");
+            return false;
+        }
+        items.Add(new InventorySlot(item));
+        return true;
+    }
+
+    public void Insert(ItemObject item, int index) //for swapping items
+    {
+        items.RemoveAt(index);
+        items.Insert(index, new InventorySlot(item));
+    }
+
+    public bool AddCoinItem(ItemObject item) //for chest inventories
+    {
         if (items.Count >= inventorySize)
         {
             Debug.Log("Inventory Full");
@@ -48,6 +77,10 @@ public class InventoryObject : ScriptableObject
         coinCount += amount;
     }
 
+    public void SetCoinCount(int amount)
+    {
+        coinCount = amount;
+    }
     public void ClearInventory()
     {
         items.Clear();
@@ -58,6 +91,26 @@ public class InventoryObject : ScriptableObject
     {
         this.items.RemoveAt(index);
         return true;
+    }
+
+    public InventoryType GetInventoryType()
+    {
+        return type;
+    }
+
+    public string GetInventoryName()
+    {
+        return inventoryName;
+    }
+
+    public void SetType(InventoryType inventoryType)
+    {
+        type = inventoryType;
+    }
+
+    public void SetSize(int size)
+    {
+        inventorySize = size;
     }
 }
 

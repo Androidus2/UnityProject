@@ -11,18 +11,22 @@ public enum ItemType
 public abstract class ItemObject : ScriptableObject
 {
     [SerializeField]
-    protected GameObject icon; //TO DO - Change to image / sprite in the future
+    protected GameObject icon; 
 
     [SerializeField]
     protected ItemType type;
 
-    [TextArea(15,20)]
     [SerializeField]
-    protected string description;
+    protected int price; //for vendors
 
     public GameObject GetIcon()
     {
         return icon;
+    }
+
+    public int GetPrice()
+    {
+        return price + price * Karma.GetInstance().KarmaPrice() / 100; //+karma% markup;
     }
 
     public abstract bool Use();

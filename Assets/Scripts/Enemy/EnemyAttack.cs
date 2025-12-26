@@ -7,7 +7,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float attackAngle = 60f;
     [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private int attackDamage = 15;
+    [SerializeField] private float attackDamage = 15;
 
     [SerializeField]
     private Transform hitEffect;

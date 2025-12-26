@@ -4,7 +4,7 @@ using UnityEngine;
 public class HealthObject : ItemObject
 {
     [SerializeField]
-    private int restoreHealthValue; //positive or negative value, if we want 'fake' health items
+    private float restoreHealthValue; //positive or negative value, if we want 'fake' health items
 
     private PlayerHealth playerHealth;
 
@@ -20,6 +20,11 @@ public class HealthObject : ItemObject
         playerHealth.Heal(restoreHealthValue);
         Debug.Log($"Restored {restoreHealthValue} health.");
         return true; //indicate that the item was used and can be removed from inventory
+    }
+
+    public float GetRestoreHealthValue()
+    {
+        return restoreHealthValue;
     }
 
 }

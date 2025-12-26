@@ -17,7 +17,6 @@ public class PopUpPanel : MonoBehaviour
 
     private DisplayInventory displayInventory;
 
-    private bool isPanelOpen = false;
 
     void Awake()
     {
@@ -40,7 +39,8 @@ public class PopUpPanel : MonoBehaviour
 
     void TogglePanel()
     {
-        if (isPanelOpen)
+        
+        if (PanelManager.GetInstance().IsInventoryPanelOpen())
             ClosePanel();
         else
             OpenPanel();
@@ -63,11 +63,9 @@ public class PopUpPanel : MonoBehaviour
             .SetEase(Ease.OutBack, 1.4f)
             .SetUpdate(true) // Ensures tween runs in "unscaled time" so it doesnt freeze
             .OnComplete(() => {
-                isPanelOpen = true;
+                PanelManager.GetInstance().SetInventoryPanelState(true);
             });
 
-        //TO DO - you can open both chest and inventory, close one and have the time be active !!
-        //same w/ pause menu
         // Pause the game time
         Time.timeScale = 0f;
 
@@ -78,6 +76,8 @@ public class PopUpPanel : MonoBehaviour
 
     void ClosePanel()
     {
+        PanelManager.GetInstance().SetInventoryPanelState(false);
+
         // Kill any ongoing tween before starting a new one
         scaleTween?.Kill();
 
@@ -88,14 +88,18 @@ public class PopUpPanel : MonoBehaviour
             .OnComplete(() =>
             {
                 panel.SetActive(false);
-                isPanelOpen = false; // Set panel state to closed after animation
             });
 
-        // Resume the game time
-        Time.timeScale = 1f;
+        //we resume time ONLY if all panels are closed
+        if (PanelManager.GetInstance().AreAllPanelsClosed())
+        {
+            // Resume the game time
+            Time.timeScale = 1f;
 
-        // Hide cursor and lock it
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+            // Hide cursor and lock it
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
     }
 }

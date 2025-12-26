@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField]
     private bool isStealable = true;
+    private int stealValue;
+    private InventoryObject playerInventory; //for stealing coins
 
     [Header("References")]
     [SerializeField] 
@@ -54,8 +56,6 @@ public class EnemyController : MonoBehaviour
     private float investigateTimer = 0f;
     private Vector3 lastSeenPlayerPos;
 
-
-
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
@@ -64,7 +64,20 @@ public class EnemyController : MonoBehaviour
         health = GetComponent<EnemyHealth>();
 
         capsuleCollider = GetComponent<CapsuleCollider>();
-    }
+
+
+        
+        if (playerInventory == null)
+        {
+            playerInventory = Resources.Load<InventoryObject>("Inventory/PlayerInventory");
+        }
+
+        if (playerInventory == null)
+        {
+            Debug.LogError("PlayerInventory ScriptableObject NOT FOUND");
+        }
+    
+}
 
     private void Start()
     {
@@ -360,6 +373,9 @@ public class EnemyController : MonoBehaviour
             canvas.SetActive(false);
         // Also disable the controller
         enabled = false;
+
+        //karma system
+        Karma.GetInstance().AddKarmaKill(1);
     }
 
     public void HearSound(Vector3 point)
@@ -395,7 +411,12 @@ public class EnemyController : MonoBehaviour
     public void MarkStolen()
     {
         isStealable = false;
+        stealValue = Random.Range(3, 7);
+        playerInventory.AddCoins(stealValue);
         Debug.Log(gameObject.name + " was stolen from!");
+
+        //karma system
+        Karma.GetInstance().AddKarmaSteal(1);
     }
 
     public Transform GetPlayerTransform()
