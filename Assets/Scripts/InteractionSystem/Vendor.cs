@@ -7,14 +7,13 @@ public enum VendorType
     Pharmacist
 }
 
+[RequireComponent(typeof(InventoryObject))]
 public class Vendor : InteractableBase
 {
     //inventory panel 
     [SerializeField]
     private GameObject panel;
 
-    //TO DO  - possible solution - change into normal class, mark as System.Serializable and edit for each vendor
-    [SerializeField]
     private InventoryObject vendorInventory;
 
     private DisplayInventory displayInventory;
@@ -33,6 +32,7 @@ public class Vendor : InteractableBase
     {
         base.Awake();
         displayInventory = panel.GetComponent<DisplayInventory>();
+        vendorInventory = GetComponent<InventoryObject>();
         vendorInventory.SetType(InventoryType.Vendor); //for safety
         vendorInventory.SetSize(5);
     }

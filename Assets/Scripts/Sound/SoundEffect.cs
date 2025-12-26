@@ -24,7 +24,10 @@ public class SoundEffect : MonoBehaviour
             minimumPitch = source.pitch;
             maximumPitch = source.pitch;
         }
+    }
 
+    private void Start()
+    {
         SetVolume();
         SetPitch();
     }

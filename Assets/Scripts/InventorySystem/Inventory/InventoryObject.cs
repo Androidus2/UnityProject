@@ -7,8 +7,7 @@ public enum InventoryType
     Vendor
 }
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "Scripts/InventorySystem/Inventory")]
-public class InventoryObject : ScriptableObject
+public class InventoryObject : MonoBehaviour
 {
     [SerializeField]
     private string inventoryName; //for identification, espcially for chests / vendors
@@ -36,18 +35,21 @@ public class InventoryObject : ScriptableObject
         //check if its money item
         if (item is MoneyObject moneyItem)
         {
-            coinSound.Play();
+            if (type == InventoryType.Player)
+                coinSound.Play();
             AddCoins(moneyItem.GetValue());
             return true;
         }
         //else add to inventory 
         if (items.Count >= inventorySize)
         {
-            forbiddenSound.Play();
+            if (type == InventoryType.Player)
+                forbiddenSound.Play();
             Debug.Log("Inventory Full");
             return false;
         }
-        pickupSound.Play();
+        if(type == InventoryType.Player)
+            pickupSound.Play();
         items.Add(new InventorySlot(item));
         return true;
     }
