@@ -21,21 +21,33 @@ public class InventoryObject : ScriptableObject
     [SerializeField]
     private int inventorySize = 9;
 
+    [SerializeField]
+    private SoundEffect forbiddenSound;
+
+    [SerializeField]
+    private SoundEffect pickupSound;
+
+    [SerializeField]
+    private SoundEffect coinSound;
+
     private List<InventorySlot> items = new List<InventorySlot>();
     public bool AddItem(ItemObject item)
     {
         //check if its money item
         if (item is MoneyObject moneyItem)
         {
+            coinSound.Play();
             AddCoins(moneyItem.GetValue());
             return true;
         }
         //else add to inventory 
         if (items.Count >= inventorySize)
         {
+            forbiddenSound.Play();
             Debug.Log("Inventory Full");
             return false;
         }
+        pickupSound.Play();
         items.Add(new InventorySlot(item));
         return true;
     }

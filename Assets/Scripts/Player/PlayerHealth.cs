@@ -27,6 +27,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private Transform deathEffect;
 
+    [SerializeField]
+    private SoundEffect hitSound;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -57,6 +60,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
             return;
 
+        hitSound.Play();
         animator.SetTrigger("Hit");
         currentHealth -= damage - defenseBonus;
      

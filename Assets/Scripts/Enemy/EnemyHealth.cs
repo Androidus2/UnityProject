@@ -9,6 +9,9 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField]
     private HealthBar healthBar;
 
+    [SerializeField]
+    private SoundEffect hitSound;
+
     private float currentHealth;
 
     // Callbacks that the controller subscribes to, to allow us to pass the message forward
@@ -49,8 +52,10 @@ public class EnemyHealth : MonoBehaviour
     {
         if (IsDead()) return;
 
+        if(hitSound)
+            hitSound.Play();
         currentHealth -= amount;
-        healthBar.SetHealth(((int)currentHealth));
+        healthBar.SetHealth(currentHealth);
         onDamage?.Invoke(amount);
 
         if (currentHealth <= 0f)

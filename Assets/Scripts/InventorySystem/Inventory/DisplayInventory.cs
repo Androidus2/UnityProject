@@ -29,6 +29,12 @@ public class DisplayInventory : MonoBehaviour
     [SerializeField]
     private float itemScaleDuration = 0.15f;
 
+    [SerializeField]
+    private SoundEffect purchaseSound;
+
+    [SerializeField]
+    private SoundEffect forbiddenSound;
+
     private InventorySlot weaponSlot = null; //for equipped weapon / armour in player inventory
     private InventorySlot armourSlot = null;
 
@@ -502,6 +508,7 @@ public class DisplayInventory : MonoBehaviour
                             {
                                 playerInventory.SetCoinCount(playerInventory.GetCoinCount() - itemPrice);
                                 Debug.Log("Bought " + item.GetItem().name);
+                                purchaseSound.Play();
                                 inventory.GetItems().RemoveAt(index); //remove from the vendor
                                 RefreshDisplay();
                             }
@@ -512,6 +519,7 @@ public class DisplayInventory : MonoBehaviour
                         }
                         else
                         {
+                            forbiddenSound.Play();
                             Debug.Log("Not enough coins to buy " + item.GetItem().name);
                         }
                     });

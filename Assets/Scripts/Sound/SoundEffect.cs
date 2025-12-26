@@ -24,16 +24,37 @@ public class SoundEffect : MonoBehaviour
             minimumPitch = source.pitch;
             maximumPitch = source.pitch;
         }
+
+        SetVolume();
+        SetPitch();
+    }
+
+    private void SetVolume()
+    {
+        float volumeMultiplier = SoundManager.GetInstance().GetSFXVolume();
+        source.volume = volumeMultiplier * originalVolume;
+    }
+
+    private void SetPitch()
+    {
+        float selectedPitch = Random.Range(minimumPitch, maximumPitch);
+        source.pitch = selectedPitch;
+    }
+
+    public bool IsPlaying()
+    {
+        return source.isPlaying;
     }
 
     public void Play()
     {
-        float volumeMultiplier = SoundManager.GetInstance().GetSFXVolume();
-        source.volume = volumeMultiplier * originalVolume;
-
-        float selectedPitch = Random.Range(minimumPitch, maximumPitch);
-        source.pitch = selectedPitch;
-
+        SetVolume();
+        SetPitch();
         source.Play();
+    }
+
+    public void Stop()
+    {
+        source.Stop();
     }
 }
