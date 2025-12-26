@@ -22,6 +22,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private Transform hitEffect;
 
+    [SerializeField]
+    private SoundEffect airSound;
+
+    [SerializeField]
+    private SoundEffect punchSound;
+
     float timeSinceLastAttack;
 
     List<EnemyHealth> targets;
@@ -41,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
     {
         attackValue = attackAction.ReadValue<float>();
         timeSinceLastAttack += Time.deltaTime;
-        if(attackValue > 0f && timeSinceLastAttack >= attackCooldown && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Attacking"))
+        if(attackValue > 0f && timeSinceLastAttack >= attackCooldown && PlayerMechanicsUnlocker.Instance.IsMechanicUnlocked("Attacking") && PanelManager.GetInstance().AreAllPanelsClosed())
         {
             BeginAttack();
         }
@@ -63,9 +69,11 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator WaitBeforeDealingDamage()
     {
+        airSound.Play();
         yield return new WaitForSeconds(0.5f);
         if (targets.Count > 0)
         {
+            punchSound.Play();
             EnemyHealth hitEnemy = targets[0];
             hitEnemy.TakeDamage(attackDamage + attackBonus);
             DoDamageEffect(hitEnemy.transform.position);

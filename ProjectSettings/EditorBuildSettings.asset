@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: b05da0ae0d492ff4db400658a5e0c2d1
   - enabled: 1
-    path: Assets/Scenes/Sprint4.unity
-    guid: 33501bcaae94dfd47b8cec7f2232d367
+    path: Assets/Scenes/DEMO.unity
+    guid: 7a2b2c05fb1302d45a7af596fba3f3d6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

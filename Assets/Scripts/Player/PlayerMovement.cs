@@ -52,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float gfxOffsetSneaking;
 
+    [SerializeField]
+    private SoundEffect footstepsSound;
+
     EnemyController[] enemies;
     float movementSpeed;
     Vector3 moveDirection;
@@ -151,6 +154,12 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
         else
             animator.SetFloat("Speed", movementSpeed, 0.1f, Time.deltaTime);
+
+        // Update footsteps sound
+        if (moveInput == Vector2.zero && footstepsSound.IsPlaying())
+            footstepsSound.Stop();
+        else if(moveInput != Vector2.zero && !footstepsSound.IsPlaying())
+            footstepsSound.Play();
 
         bool isSneaking = movementSpeed == sneakSpeed;
         if (isSneaking)

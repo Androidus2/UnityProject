@@ -1,15 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(InventoryObject))]
 public class Chest : InteractableBase
 {
     //inventory panel 
     [SerializeField]
     private GameObject panel;
 
-    //seeding for each chest respectively? tbd how we approach this for multiple chests
-    //TO DO  - possible solution - change into normal class, mark as System.Serializable and edit for each chest
-    [SerializeField]
     private InventoryObject chestInventory;
 
     private DisplayInventory displayInventory;
@@ -23,26 +21,9 @@ public class Chest : InteractableBase
     {
         base.Awake();
         displayInventory = panel.GetComponent<DisplayInventory>();
+        chestInventory = GetComponent<InventoryObject>();
         chestInventory.SetType(InventoryType.Chest); //for safety
         chestInventory.SetSize(15);
-    }
-
-
-    public void Start()
-    {
-        //for testing purposes only
-        //initializing chest inventory with items
-        var med = Resources.Load<ItemObject>("Items/Medicine");
-        var coins = Resources.Load<ItemObject>("Items/Coins");
-        chestInventory.GetItems().Clear();
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddCoinItem(coins);
     }
 
     public override void Interact(Interactor interactor, InventoryObject inventory)

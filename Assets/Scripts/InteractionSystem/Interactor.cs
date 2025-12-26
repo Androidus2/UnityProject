@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(InventoryObject))]
 public class Interactor : MonoBehaviour
 {
     private InputAction interactButton;
@@ -21,12 +22,15 @@ public class Interactor : MonoBehaviour
 
 
     //inventory system
-
-    [SerializeField]
     private InventoryObject inventory;
 
     private InteractableBase currentlyOutlined;
-    
+
+    private void Awake()
+    {
+        inventory = GetComponent<InventoryObject>();
+    }
+
     private void Start()
     {
         interactButton = InputSystem.actions.FindAction("Interact");

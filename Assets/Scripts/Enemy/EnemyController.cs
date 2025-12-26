@@ -35,6 +35,10 @@ public class EnemyController : MonoBehaviour
     private GameObject canvas;
     [SerializeField]
     private Transform deathEffect;
+    [SerializeField]
+    private SoundEffect investigateSound;
+    [SerializeField]
+    private SoundEffect chaseSound;
 
     private Transform player;
     private EnemyMovement movement;
@@ -55,6 +59,8 @@ public class EnemyController : MonoBehaviour
     private float lostSightTimer = 0f;
     private float investigateTimer = 0f;
     private Vector3 lastSeenPlayerPos;
+
+    private float lastInvestigateSoundTimer = 0f;
 
     private void Awake()
     {
@@ -100,6 +106,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        lastInvestigateSoundTimer += Time.deltaTime;
         switch (state)
         {
             case EnemyState.Idle: UpdateIdle(); break;
@@ -129,6 +136,7 @@ public class EnemyController : MonoBehaviour
         if (vision.CanSeePlayer())
         {
             state = EnemyState.Chase;
+            chaseSound.Play();
             return;
         }
 
@@ -138,6 +146,7 @@ public class EnemyController : MonoBehaviour
         if (dist <= followRange)
         {
             state = EnemyState.Chase;
+            chaseSound.Play();
             return;
         }
     }
@@ -241,6 +250,7 @@ public class EnemyController : MonoBehaviour
         {
             ExitInvestigate();
             state = EnemyState.Chase;
+            chaseSound.Play();
             return;
         }
 
@@ -251,6 +261,7 @@ public class EnemyController : MonoBehaviour
         {
             ExitInvestigate();
             state = EnemyState.Chase;
+            chaseSound.Play();
             return;
         }
 
@@ -275,12 +286,23 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void TryPlayInvestigateSound()
+    {
+        if (lastInvestigateSoundTimer >= 1f)
+        {
+            lastInvestigateSoundTimer = 0f;
+            investigateSound.Play();
+        }
+    }
+
     private void EnterInvestigate(Vector3 point)
     {
+
         investigateTimer = 0f;
         lostSightTimer = 0f;
         lastSeenPlayerPos = point;
 
+        TryPlayInvestigateSound();
         movement.SetInvestigatePoint(point);
 
         state = EnemyState.Investigate;

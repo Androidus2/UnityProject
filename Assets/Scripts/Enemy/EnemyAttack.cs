@@ -12,6 +12,12 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     private Transform hitEffect;
 
+    [SerializeField]
+    private SoundEffect airSound;
+
+    [SerializeField]
+    private SoundEffect punchSound;
+
     EnemyController controller;
     Transform player;
     Animator anim;
@@ -73,9 +79,11 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator WaitBeforeDealingDamage()
     {
+        airSound.Play();
         yield return new WaitForSeconds(0.5f);
         if (IsPlayerInFront())
         {
+            punchSound.Play();
             if (player.TryGetComponent<PlayerHealth>(out var hp))
             {
                 hp.TakeDamage(attackDamage);
