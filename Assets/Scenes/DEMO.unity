@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 32980205606474120, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+      propertyPath: items.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1798077373409315264, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -9047,6 +9051,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vendor
       objectReference: {fileID: 0}
+    - target: {fileID: 4472532175317188166, guid: 53e0e05aff9fa1649ab2442466190ef6, type: 3}
+      propertyPath: items.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4472532175317188166, guid: 53e0e05aff9fa1649ab2442466190ef6, type: 3}
+      propertyPath: items.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 9dc107ee3bd53f04799151a95fd75570, type: 2}
+    - target: {fileID: 4472532175317188166, guid: 53e0e05aff9fa1649ab2442466190ef6, type: 3}
+      propertyPath: items.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 69cd69f93c1dd28479f972db751b2537, type: 2}
     - target: {fileID: 6977186295303669383, guid: 53e0e05aff9fa1649ab2442466190ef6, type: 3}
       propertyPath: panel
       value: 
@@ -9169,6 +9185,42 @@ PrefabInstance:
       propertyPath: panel
       value: 
       objectReference: {fileID: 944879605}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: ba4b11ed68463114c96d591883e94b07, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[4].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[5].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[6].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
+    - target: {fileID: 8345874420975278039, guid: d837a488c9110e6408926c329ab36bb2, type: 3}
+      propertyPath: items.Array.data[7].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 03cbeb53bc069b84fb1b871b9203b438, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9185,6 +9237,14 @@ PrefabInstance:
     - target: {fileID: 464935524173545579, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: m_Name
       value: BasicEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972026583130417448, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972026583130417448, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4429289213280302391, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: patrolArea

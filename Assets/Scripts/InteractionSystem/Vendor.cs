@@ -37,17 +37,6 @@ public class Vendor : InteractableBase
         vendorInventory.SetSize(5);
     }
 
-    public void Start()
-    {
-        //for testing purposes only
-        //initializing vendor inventory with items
-        var med = Resources.Load<ItemObject>("Items/Sword");
-        var coins = Resources.Load<ItemObject>("Items/Dagger");
-        vendorInventory.GetItems().Clear();
-        vendorInventory.AddItem(med);
-        vendorInventory.AddCoinItem(coins);
-    }
-
     public override void Interact(Interactor interactor, InventoryObject inventory)
     {
         //if vendor is available

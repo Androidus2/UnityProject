@@ -26,24 +26,6 @@ public class Chest : InteractableBase
         chestInventory.SetSize(15);
     }
 
-
-    public void Start()
-    {
-        //for testing purposes only
-        //initializing chest inventory with items
-        var med = Resources.Load<ItemObject>("Items/Medicine");
-        var coins = Resources.Load<ItemObject>("Items/Coins");
-        chestInventory.GetItems().Clear();
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddItem(med);
-        chestInventory.AddCoinItem(coins);
-    }
-
     public override void Interact(Interactor interactor, InventoryObject inventory)
     {
         //if chest is unlocked

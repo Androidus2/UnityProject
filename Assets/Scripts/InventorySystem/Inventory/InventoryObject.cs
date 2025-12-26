@@ -29,6 +29,7 @@ public class InventoryObject : MonoBehaviour
     [SerializeField]
     private SoundEffect coinSound;
 
+    [SerializeField]
     private List<InventorySlot> items = new List<InventorySlot>();
     public bool AddItem(ItemObject item)
     {
