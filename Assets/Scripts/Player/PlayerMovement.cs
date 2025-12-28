@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
     float sneakInput;
 
     CharacterController characterController;
+
+    [SerializeField]
+    CinemachineInputAxisController axisController;
 
     [SerializeField]
     Animator animator;
@@ -75,6 +79,19 @@ public class PlayerMovement : MonoBehaviour
         enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
         foreach (EnemyController enemy in enemies)
             enemy.SetPlayer(transform);
+    }
+
+    private void Start()
+    {
+        foreach (var c in axisController.Controllers)
+        {
+            if (c.Name == "Look Orbit X")
+                c.Input.Gain = GameManager.GetInstance().GetSensitivity();
+
+            if (c.Name == "Look Orbit Y")
+                c.Input.Gain = -GameManager.GetInstance().GetSensitivity();
+
+        }
     }
 
     void Update()
