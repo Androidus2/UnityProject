@@ -7,7 +7,6 @@ public static class SaveSystem
 
     public static void Save(Data data)
     {
-        Debug.Log(Path);
         string json = JsonUtility.ToJson(data, prettyPrint: true);
         File.WriteAllText(Path, json);
     }

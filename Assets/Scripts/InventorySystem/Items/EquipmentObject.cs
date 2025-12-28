@@ -34,7 +34,7 @@ public class EquipmentObject : ItemObject
         }
         else if(this.equipmentType is EquipmentType.Weapon)
         {
-            PlayerAttack playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+            PlayerAttack playerAttack = FindFirstObjectByType<PlayerAttack>();
             if (playerAttack != null)
             {
                 playerAttack.SetAttackBonus(bonusValue);
