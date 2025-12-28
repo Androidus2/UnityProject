@@ -60,6 +60,18 @@ public class MainMenu : MonoBehaviour
         GameManager.GetInstance().SetSensitivity(newSensitivity);
     }
 
+    public void ResetSettings()
+    {
+        soundEffectsSlider.value = 1f;
+        ChangeSFXVolume();
+
+        musicSlider.value = 1f;
+        ChangeMusicVolume();
+
+        sensitivitySlider.value = 1f;
+        ChangeSensitivity();
+    }
+
     public void QuitGame()
     {
         fade.BeginFade(() =>
