@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f2896307002d04287a8a4904da362b, type: 3}
   m_Name: Armour
   m_EditorClassIdentifier: 
-  icon: {fileID: 1407907460528503710, guid: 4323a24a50c857d49b97577a5790229e, type: 3}
+  icon: {fileID: 1407907460528503710, guid: 0a8cef63ac3e9664e87b40818c112438, type: 3}
   type: 2
-  description: 
+  price: 0
   equipmentType: 1
   bonusValue: 3
