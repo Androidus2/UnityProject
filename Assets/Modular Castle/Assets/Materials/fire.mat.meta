@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1320fca685b5006429e82a5962b29313
+timeCreated: 1529426120
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/Materials/fire.mat
+  uploadId: 255539

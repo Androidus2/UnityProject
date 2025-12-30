@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cedd1289634600b4f9df04d76c4c2b4b
+timeCreated: 1529419702
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/floor2.prefab
+  uploadId: 255539

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 43672fd8c9f63724ca03d766c52c8568
+timeCreated: 1529419727
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/stand for weapons.prefab
+  uploadId: 255539

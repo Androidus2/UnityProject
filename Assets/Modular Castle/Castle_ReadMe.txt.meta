@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3b059073509253449bd8081eae281bea
+timeCreated: 1529597023
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Castle_ReadMe.txt
+  uploadId: 255539

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 16b050d469263fb4199ffa2bcf18bc6e
+timeCreated: 1529419180
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/axe.prefab
+  uploadId: 255539

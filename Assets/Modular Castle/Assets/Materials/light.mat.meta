@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2f9423c83026ebb4fa30338b0fc7c8f3
+timeCreated: 1529416031
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/Materials/light.mat
+  uploadId: 255539

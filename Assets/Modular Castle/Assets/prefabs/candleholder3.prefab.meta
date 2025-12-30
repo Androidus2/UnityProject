@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3f4cd64e876070c40b64e92d6ad7daf0
+timeCreated: 1529419664
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/candleholder3.prefab
+  uploadId: 255539
