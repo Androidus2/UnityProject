@@ -70,7 +70,7 @@ public class Vendor : InteractableBase
         
         if (vendorType == VendorType.Pharmacist)
         {
-            background = panel.transform.Find("PharmacistBackground").gameObject;
+            background = panel.transform.Find("PharmacyBackground").gameObject;
         }
         else if (vendorType == VendorType.Armourer)
         {
