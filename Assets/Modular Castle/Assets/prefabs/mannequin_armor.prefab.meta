@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e6188d8b8dc4a3648b2d90a9707953dc
+timeCreated: 1529419713
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/mannequin_armor.prefab
+  uploadId: 255539

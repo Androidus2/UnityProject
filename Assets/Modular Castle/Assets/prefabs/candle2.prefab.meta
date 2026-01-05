@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a3eea591edd85e94e9c893525e335cb0
+timeCreated: 1529419655
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/candle2.prefab
+  uploadId: 255539

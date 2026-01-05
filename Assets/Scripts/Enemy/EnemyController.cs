@@ -75,7 +75,16 @@ public class EnemyController : MonoBehaviour
         
         if (playerInventory == null)
         {
-            playerInventory = Resources.Load<InventoryObject>("Inventory/PlayerInventory");
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                InventoryObject playerInv = player.GetComponent<InventoryObject>();
+                if (playerInv != null)
+                {
+                    playerInventory = playerInv;
+                }
+            }
+
         }
 
         if (playerInventory == null)

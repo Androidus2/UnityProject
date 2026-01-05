@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cc099d4b9ab7d3b4287693466cb6ff9e
+timeCreated: 1529419149
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/box2.prefab
+  uploadId: 255539

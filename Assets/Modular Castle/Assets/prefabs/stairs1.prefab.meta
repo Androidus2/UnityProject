@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 996c5ca3ae0ceae41aeba2b1f9f7ec9d
+timeCreated: 1529419724
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/stairs1.prefab
+  uploadId: 255539

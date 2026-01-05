@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 818577aaab88326478572f55c6d42f14
+timeCreated: 1529419671
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/decoration1.prefab
+  uploadId: 255539
