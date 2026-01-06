@@ -16,4 +16,4 @@ MonoBehaviour:
   type: 2
   price: 50
   equipmentType: 0
-  bonusValue: 5
+  bonusValue: 25

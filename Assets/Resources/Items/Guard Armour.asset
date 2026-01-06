@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eadbda0491f57ea459431b40ddcc3a15, type: 3}
-  m_Name: Medicine
+  m_Script: {fileID: 11500000, guid: 42f2896307002d04287a8a4904da362b, type: 3}
+  m_Name: Guard Armour
   m_EditorClassIdentifier: 
-  icon: {fileID: 1407907460528503710, guid: 77dcb0bd10db6ca4e833913cc69f1cf2, type: 3}
-  type: 0
-  price: 0
-  restoreHealthValue: 20
+  icon: {fileID: 1407907460528503710, guid: 0a8cef63ac3e9664e87b40818c112438, type: 3}
+  type: 2
+  price: 125
+  equipmentType: 1
+  bonusValue: 12

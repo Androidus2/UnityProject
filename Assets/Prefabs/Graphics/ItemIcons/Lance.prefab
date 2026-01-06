@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1042971918705858322}
   - component: {fileID: 6979948298625238239}
   m_Layer: 5
-  m_Name: Med
+  m_Name: Lance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d6cf101b0a1d7ef4dbfa2163391c2e47, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 88ecbb32cdaf3794f9b7007df383daba, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
