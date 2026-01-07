@@ -33,4 +33,9 @@ public class Karma : MonoBehaviour
     }
 
     //for endings, we will will care more about kills than steals
+
+    public int getKillScore()
+    {
+        return killCount;
+    }
 }

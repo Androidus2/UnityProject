@@ -151,6 +151,7 @@ public class PauseMenu : MonoBehaviour
         fade.BeginFade(() =>
         {
             Debug.Log("Quit pressed"); //for testing in editor
+            //SceneManager.LoadScene("Ending");    //something is wrong, we could leave the option of quitting just from main menu
             Application.Quit();
         });
     }
