@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42f2896307002d04287a8a4904da362b, type: 3}
-  m_Name: Lance
+  m_Name: Traveler's Hat
   m_EditorClassIdentifier: 
-  icon: {fileID: 1407907460528503710, guid: 52194cf35ba0cad438cb2b67c6963b76, type: 3}
+  icon: {fileID: 1407907460528503710, guid: 0a8cef63ac3e9664e87b40818c112438, type: 3}
   type: 2
-  price: 35
-  equipmentType: 0
-  bonusValue: 15
+  price: 10
+  equipmentType: 1
+  bonusValue: 2

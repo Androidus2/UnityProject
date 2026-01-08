@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f2896307002d04287a8a4904da362b, type: 3}
   m_Name: Guard Armour
   m_EditorClassIdentifier: 
-  icon: {fileID: 1407907460528503710, guid: 0a8cef63ac3e9664e87b40818c112438, type: 3}
+  icon: {fileID: 1407907460528503710, guid: 0ac22546236fbbc43aa6ef4e2da9d6a7, type: 3}
   type: 2
   price: 125
   equipmentType: 1

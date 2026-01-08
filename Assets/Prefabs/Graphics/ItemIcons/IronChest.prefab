@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1042971918705858322}
   - component: {fileID: 6979948298625238239}
   m_Layer: 5
-  m_Name: Armour 1
+  m_Name: IronChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -535,7 +535,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 47, y: -72}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5098010783929326946
 CanvasRenderer:
