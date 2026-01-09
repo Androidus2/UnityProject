@@ -40,8 +40,7 @@ public class Ending : MonoBehaviour
         }
 
 
-        //int kills = Karma.GetInstance().getKillScore();
-        int kills = 0; // Placeholder for testing until Karma system is integrated
+        int kills = Karma.GetInstance().getKillScore();
         
 
         if (kills <= 0)
@@ -50,8 +49,8 @@ public class Ending : MonoBehaviour
                 "<b>THE END</b>\n" +
                 "Your choices have shaped who you became.\n\n" +
                 "<b>SAINT</b>\n\n" +
-                "The angels fear your goodness; afraid you’re a saint in disguise and will shut down their playground, " +
-                "but ultimately send you ‘up’.";
+                "The angels fear your goodness; afraid youâ€™re a saint in disguise and will shut down their playground, " +
+                "but ultimately send you â€˜upâ€™.";
         }
         else if (kills <= kill_limit)
         {
@@ -67,7 +66,7 @@ public class Ending : MonoBehaviour
                 "<b>THE END</b>\n" +
                 "Your choices have shaped who you became.\n\n" +
                 "<b>ONE OF THEM</b>\n\n" +
-                "The angels offer you to join them in running the playground – you seem to enjoy torture as much as they do.";
+                "The angels offer you to join them in running the playground â€“ you seem to enjoy torture as much as they do.";
         }
 
         if (textSection != null)

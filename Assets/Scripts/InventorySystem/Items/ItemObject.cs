@@ -29,5 +29,10 @@ public abstract class ItemObject : ScriptableObject
         return price + price * Karma.GetInstance().KarmaPrice() / 100; //+karma% markup;
     }
 
+    public int GetBasePrice()
+    {
+        return price;
+    }   
+
     public abstract bool Use();
 }
