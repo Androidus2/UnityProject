@@ -40,8 +40,7 @@ public class Ending : MonoBehaviour
         }
 
 
-        //int kills = Karma.GetInstance().getKillScore();
-        int kills = 0; // Placeholder for testing until Karma system is integrated
+        int kills = Karma.GetInstance().getKillScore();
         
 
         if (kills <= 0)

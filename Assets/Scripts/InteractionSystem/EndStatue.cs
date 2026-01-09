@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndStatue : InteractableBase
 {
@@ -41,6 +42,12 @@ public class EndStatue : InteractableBase
             //cinematic view?
             //transition to end scene
             Debug.Log("You have the Angel Wings! Game Over!");
+
+            // Example of a simple fade-out effect using DOTween
+            Camera.main.DOOrthoSize(1, 2f).OnComplete(() =>
+            {
+                SceneManager.LoadScene("Ending");
+            });
 
         }
         else
