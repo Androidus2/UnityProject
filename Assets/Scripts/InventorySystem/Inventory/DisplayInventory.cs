@@ -502,6 +502,11 @@ public class DisplayInventory : MonoBehaviour
                     {
                         //check if player has enough coins
                         int itemPrice = item.GetItem().GetPrice();
+                        //if its the guard, base price
+                        if(inventory.GetInventoryName() == "Old Guard")
+                        {
+                            itemPrice = item.GetItem().GetBasePrice();
+                        }
                         if (playerInventory.GetCoinCount() >= itemPrice)
                         {
                             if (playerInventory.AddItem(item.GetItem()))
@@ -509,7 +514,7 @@ public class DisplayInventory : MonoBehaviour
                                 playerInventory.SetCoinCount(playerInventory.GetCoinCount() - itemPrice);
                                 Debug.Log("Bought " + item.GetItem().name);
                                 purchaseSound.Play();
-                                inventory.GetItems().RemoveAt(index); //remove from the vendor
+                                //inventory.GetItems().RemoveAt(index); //remove from the vendor
                                 RefreshDisplay();
                             }
                             else

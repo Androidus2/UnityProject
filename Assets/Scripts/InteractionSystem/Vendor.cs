@@ -4,7 +4,8 @@ public enum VendorType
 {
     Blacksmith,
     Armourer,
-    Pharmacist
+    Pharmacist,
+    GuardNPC
 }
 
 [RequireComponent(typeof(InventoryObject))]
@@ -34,7 +35,7 @@ public class Vendor : InteractableBase
         displayInventory = panel.GetComponent<DisplayInventory>();
         vendorInventory = GetComponent<InventoryObject>();
         vendorInventory.SetType(InventoryType.Vendor); //for safety
-        vendorInventory.SetSize(5);
+        vendorInventory.SetSize(4);
     }
 
     public override void Interact(Interactor interactor, InventoryObject inventory)
@@ -67,7 +68,8 @@ public class Vendor : InteractableBase
 
         //pick correct background based on vendor type
         //will have Blacksmith, Armourer and Pharmacist
-        
+
+
         if (vendorType == VendorType.Pharmacist)
         {
             background = panel.transform.Find("PharmacyBackground").gameObject;
@@ -76,6 +78,10 @@ public class Vendor : InteractableBase
         {
             background = panel.transform.Find("ArmourerBackground").gameObject;
 
+        }
+        else if (vendorType == VendorType.GuardNPC)
+        {
+            background = panel.transform.Find("GuardNPCBackground").gameObject;
         }
         else //default for now in case of anything
         {
