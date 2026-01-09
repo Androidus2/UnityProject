@@ -77,7 +77,9 @@ public class MainMenu : MonoBehaviour
         fade.BeginFade(() =>
         {
             Debug.Log("Quit pressed"); //for testing in editor
-            Application.Quit();
+            EndingContext.SetQuit();
+            SceneManager.LoadScene("Ending");
+            //Application.Quit();
         });
     }
 }
