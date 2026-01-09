@@ -23,6 +23,8 @@ MonoBehaviour:
     around)'
   - When you get to the banner you'll want to interact with it.
   - '(Mechanic discovered: press E near an interactable to interact with it)'
+  - '(Mechanic discovered: press I anywhere to check your inventory)'
   unlockedMechanics:
   - Movement
   - Interact
+  - Inventory
