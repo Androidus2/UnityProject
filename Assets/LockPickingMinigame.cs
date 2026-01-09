@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 // interfata optionala pentru sistemul de inventar (de ex. pentru a gestiona speraclurile)
@@ -11,6 +11,22 @@ public interface ILockpickInventory
 
 public class LockPickingMinigame : MonoBehaviour
 {
+    // --- ADAUGARE NOUA: Variabile pentru sunet (Generate automat) ---
+    [Header("Audio Clips (Drag & Drop here)")]
+    [SerializeField] private AudioClip unlockClip; // Trage sunetul de succes aici
+    [SerializeField] private AudioClip breakClip;  // Trage sunetul de rupere aici
+    [SerializeField] private AudioClip rattleClip; // Trage sunetul de tremurat aici
+
+    private AudioSource audioSource;
+
+    // --- ADAUGARE NECESARA: Referinte pentru noul sistem de inventar ---
+    [Header("New Inventory System")]
+    [SerializeField]
+    private ItemObject lockpickItemReference; // TRAGE AICI ItemObject-ul tau "Lockpick"
+    private InventoryObject connectedInventory; // Aici primim inventarul de la Chest
+
+    // -------------------------------------------------------------------
+
     // Variabile pentru pozitia speraclului (Pick)
     float pickPosition;
     // Ne asiguram ca pozitia speraclului ramane intre 0 si 1 si nu iese din ecran
@@ -49,7 +65,6 @@ public class LockPickingMinigame : MonoBehaviour
     float maxOpenCap = 0.95f;
 
     // sistem de durabilitate speraclu 
-
     [Header("Pick Durability")]
     [SerializeField]
     int minPickUses = 7; // Minimul de utilizari posibile /speraclu
@@ -88,7 +103,7 @@ public class LockPickingMinigame : MonoBehaviour
         }
     }
 
-  
+
     float lastVerticalInput;// variabile de stare ( ca sa tin minte ce s-a intamplat frame-ul trecut)
     bool isApplyingTorque; // true = jucatorul apasa si e in zona buna (butucul se invarte)
     bool wasApplyingTorque; // tine minte daca frame-ul trecut se invartea
@@ -97,12 +112,35 @@ public class LockPickingMinigame : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        // --- FIX PENTRU PARENT: Folosim GetComponentInChildren ---
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
     {
+        // 1. Facem rost de componenta audio
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
+
+        // --- AM STERS GENERAREA AUTOMATA ---
+        // Nu mai avem nevoie de GenerateMechanicalUnlock(), etc.
+        // Asigura-te doar ca ai pus sunetele in Inspectorul din Unity!
+
+        if (unlockClip == null) Debug.LogWarning("Nu ai pus sunetul de Unlock in Inspector!");
+        if (breakClip == null) Debug.LogWarning("Nu ai pus sunetul de Break in Inspector!");
+        if (rattleClip == null) Debug.LogWarning("Nu ai pus sunetul de Rattle in Inspector!");
+
         Init();
+    }
+
+    // --- FUNCTIE NOUA: Primim inventarul de la Chest ---
+    public void SetInventory(InventoryObject inventory)
+    {
+        this.connectedInventory = inventory;
     }
 
     // Resetarea jocului la valorile initiale
@@ -203,6 +241,16 @@ public class LockPickingMinigame : MonoBehaviour
     private void TriggerSimpleShake()
     {
         shakeTimeRemaining = shakeDuration;
+
+        // --- PLAY AUDIO TREMURAT ---
+        if (audioSource != null && rattleClip != null && !audioSource.isPlaying)
+        {
+            // Randomizam putin pitch-ul ca sa nu sune identic de fiecare data
+            audioSource.pitch = UnityEngine.Random.Range(0.85f, 1.15f);
+            audioSource.PlayOneShot(rattleClip);
+            audioSource.pitch = 1f; // Resetam la normal
+        }
+        // ---------------------------
     }
 
     // Calculeaza efectiv cat de mult sa tremure speraclu frame-ul asta/discutie daca esti mai aproape de SS ar trebui sa tremure mai putin sau mai mult???
@@ -273,6 +321,14 @@ public class LockPickingMinigame : MonoBehaviour
         if (paused) return;
         paused = true;
         Debug.Log(success ? "You picked the lock!" : "You failed the lockpick.");
+
+        // --- PLAY AUDIO SUCCESS ---
+        if (success && audioSource != null && unlockClip != null)
+        {
+            audioSource.PlayOneShot(unlockClip);
+        }
+        // --------------------------
+
         OnFinished?.Invoke(success);
     }
 
@@ -300,7 +356,8 @@ public class LockPickingMinigame : MonoBehaviour
     // Trimite valorile catre Animator in Unity
     private void UpdateAnimator()
     {
-        if (animator != null)
+        // --- FIX PENTRU EROARE CONSOLA: Verificam daca are controller inainte sa setam valori ---
+        if (animator != null && animator.runtimeAnimatorController != null)
         {
             // Aici combinam pozitia reala cu tremuratul (visualPickOffset) doar vizual
             float visual = Mathf.Clamp(PickPosition + visualPickOffset, 0f, 1f);
@@ -328,36 +385,46 @@ public class LockPickingMinigame : MonoBehaviour
     // Se apeleaza cand speraclul s-a rupt
     public void BreakPick()
     {
+        // --- PLAY AUDIO RUPERE ---
+        if (audioSource != null && breakClip != null)
+        {
+            audioSource.PlayOneShot(breakClip);
+        }
+        // -------------------------
+
         // animator?.SetTrigger("BreakPick");
         // AudioSource.PlayClipAtPoint(breakClip, transform.position);
 
         Debug.Log("Lockpick broken");
 
-        /*
-        // initializam lockpick-ul din inventar daca exista inventar
-        if (inventoryProvider is ILockpickInventory inv)
+        // --- INTEGRARE NOUA CU INVENTARUL TAU ---
+        if (connectedInventory != null && lockpickItemReference != null)
         {
-            bool consumed = inv.ConsumeLockpick();
-            if (!consumed)
-            {
-                // nu are ce sa consume deci pierde 
-                Lose();
-                return;
-            }
+            // Incercam sa stergem 1 bucata din inventar
+            bool removed = connectedInventory.RemoveItem(lockpickItemReference);
 
-            if (inv.GetLockpickCount() > 0)
+            if (removed)
             {
-                ReplacePick();
+                // Verificam daca jucatorul mai are ALTE speracluri ramase
+                bool hasMore = false;
+                foreach (var slot in connectedInventory.GetItems())
+                {
+                    if (slot.GetItem() == lockpickItemReference)
+                    {
+                        hasMore = true;
+                        break;
+                    }
+                }
+
+                if (hasMore) ReplacePick();
+                else Lose();
             }
             else
             {
-                // a consumat ultimul speraclu deci pierde
                 Lose();
             }
-
             return;
         }
-        */
 
         // Daca nu avem inventar scadem din variabila de test
         if (fallbackLockpickCount > 0)
@@ -376,6 +443,7 @@ public class LockPickingMinigame : MonoBehaviour
     // Inlocuieste speraclul rupt cu unul nou
     public void ReplacePick()
     {
+        // AICI URMEAZA SA PUI ALTE ANIMATII
         // animator?.SetTrigger("ReplacePick");
         // AudioSource.PlayClipAtPoint(replaceClip, transform.position);
 
@@ -397,5 +465,105 @@ public class LockPickingMinigame : MonoBehaviour
         wasApplyingTorque = false;
         wasAttemptingTorque = false;
         consumedThisAttempt = false;
+    }
+
+    // --- FUNCTII GENERATOARE DE SUNET (ACTUALIZATE - FIZICA METALICA) ---
+
+    // Sunet de succes: "Clunk" + "Ping" metalic cu decay rapid
+    private AudioClip GenerateMechanicalUnlock()
+    {
+        int sampleRate = 44100;
+        float duration = 0.4f; // Puternic si scurt
+        int sampleCount = (int)(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = (float)i / sampleRate;
+
+            // 1. Lovitura joasa a mecanismului (Low Thud) - scade in frecventa
+            float freqLow = 150f - (t * 300f);
+            float thud = Mathf.Sin(2 * Mathf.PI * freqLow * t) * Mathf.Exp(-15f * t);
+
+            // 2. Rezonanta metalica (High Ping)
+            float metal = Mathf.Sin(2 * Mathf.PI * 1200 * t)
+                        + 0.5f * Mathf.Sin(2 * Mathf.PI * 1740 * t)
+                        + 0.3f * Mathf.Sin(2 * Mathf.PI * 3200 * t);
+
+            // Envelope foarte scurt (se stinge repede)
+            metal *= Mathf.Exp(-20f * t);
+
+            // Combinam:
+            samples[i] = (thud * 0.6f) + (metal * 0.4f);
+        }
+
+        AudioClip clip = AudioClip.Create("RealUnlock", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    // Sunet de rupere: Snap scurt, zgomotos
+    private AudioClip GenerateMetalSnap()
+    {
+        int sampleRate = 44100;
+        float duration = 0.15f; // Foarte scurt
+        int sampleCount = (int)(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+
+        System.Random rng = new System.Random();
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = (float)i / sampleRate;
+
+            // Zgomot alb
+            float noise = ((float)rng.NextDouble() * 2f - 1f);
+
+            // Textura metalica (modulam zgomotul)
+            float texture = Mathf.Sin(2 * Mathf.PI * 800 * t);
+
+            // Anvelopa brutala (se opreste brusc)
+            float envelope = Mathf.Exp(-40f * t);
+
+            samples[i] = noise * texture * envelope;
+        }
+
+        AudioClip clip = AudioClip.Create("MetalSnap", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    // REPARAT: Sunet de tremurat (Rattle) - Fara zgomot alb (TV), folosim vibratie
+    private AudioClip GenerateMetalScrape()
+    {
+        int sampleRate = 44100;
+        float duration = 0.25f;
+        int sampleCount = (int)(sampleRate * duration);
+        float[] samples = new float[sampleCount];
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = (float)i / sampleRate;
+
+            // 1. Tonul metalic de baza (ca o coarda de chitara foarte scurta)
+            float metalTone = Mathf.Sin(2 * Mathf.PI * 1000 * t);
+
+            // 2. Vibratia (Tremuratul) - 40 de ori pe secunda
+            // Asta face sunetul sa fie "Drrr-Drrr-Drrr" in loc de "Fâââș"
+            float vibration = Mathf.Sin(2 * Mathf.PI * 40 * t);
+
+            // Adaugam o usoara distorsiune (Square wave approximation) ca sa sune mai dur
+            if (vibration > 0) vibration = 1f; else vibration = -1f;
+
+            // Combinam: Tonul metalic este intrerupt de vibratie
+            samples[i] = metalTone * vibration * 0.3f; // 0.3 volum mai mic
+
+            // Fade out
+            if (i > sampleCount - 1000) samples[i] *= (sampleCount - i) / 1000f;
+        }
+
+        AudioClip clip = AudioClip.Create("MetalRattle", sampleCount, 1, sampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
     }
 }
