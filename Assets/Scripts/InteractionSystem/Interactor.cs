@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +21,10 @@ public class Interactor : MonoBehaviour
     [SerializeField]
     protected int numFound; //number of colliders found - serialized for viewing
 
+    [SerializeField]
+    private GameObject interactTextObject; // The E to interact button
+
+    private Tween interactTextTween;
 
     //inventory system
     private InventoryObject inventory;
@@ -38,10 +43,23 @@ public class Interactor : MonoBehaviour
 
     private void Update()
     {
+        int previousNumFound = numFound;
         //interactables
         numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, interactionPointRadius, colliders, interactableMask);
 
-        InteractableBase interactable = null;
+        if(previousNumFound == 0 && numFound > 0)
+        {
+            interactTextObject.SetActive(true);
+            interactTextTween?.Kill();
+            interactTextTween = interactTextObject.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+        }
+        else if(previousNumFound > 0 && numFound == 0)
+        {
+            interactTextTween?.Kill();
+            interactTextTween = interactTextObject.transform.DOScale(0, 0.2f).SetEase(Ease.InBack).OnComplete(() => interactTextObject.SetActive(false));
+        }
+
+            InteractableBase interactable = null;
         if (numFound > 0)
             interactable = colliders[0].GetComponent<InteractableBase>();
 

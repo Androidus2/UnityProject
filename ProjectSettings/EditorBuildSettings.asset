@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: b05da0ae0d492ff4db400658a5e0c2d1
   - enabled: 1
-    path: Assets/Scenes/DEMO.unity
-    guid: 7a2b2c05fb1302d45a7af596fba3f3d6
+    path: Assets/Scenes/DEMO MAP.unity
+    guid: cd0f86fe12d106f42b1df40efa86c8a2
   - enabled: 1
     path: Assets/Scenes/Ending.unity
     guid: c4849ed8ac447254c912088c5f3ac59e

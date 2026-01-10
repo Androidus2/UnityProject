@@ -15,6 +15,7 @@ public class InventoryObject : MonoBehaviour
     [SerializeField]
     private InventoryType type;
 
+    [SerializeField] //for testing
     private int coinCount = 0;
 
     [SerializeField]
