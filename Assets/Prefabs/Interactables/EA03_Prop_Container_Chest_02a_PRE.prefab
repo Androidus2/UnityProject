@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryName: 
   type: 1
+  coinCount: 0
   inventorySize: 9
   forbiddenSound: {fileID: 0}
   pickupSound: {fileID: 0}
@@ -427,7 +428,7 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7010056805012108723}
-  - screenRelativeHeight: 0.18
+  - screenRelativeHeight: 0
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2501832254631152528}
