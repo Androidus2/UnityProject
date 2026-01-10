@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyController))]
@@ -6,10 +7,20 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float attackAngle = 60f;
     [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private int attackDamage = 15;
+    [SerializeField] private float attackDamage = 15;
+
+    [SerializeField]
+    private Transform hitEffect;
+
+    [SerializeField]
+    private SoundEffect airSound;
+
+    [SerializeField]
+    private SoundEffect punchSound;
 
     EnemyController controller;
     Transform player;
+    Animator anim;
 
     float cooldownTimer = 0f;
 
@@ -21,6 +32,7 @@ public class EnemyAttack : MonoBehaviour
     private void Start()
     {
         player = controller.GetPlayerTransform();
+        anim = controller.GetAnimator();
     }
 
     private void Update()
@@ -49,26 +61,39 @@ public class EnemyAttack : MonoBehaviour
         return angle <= attackAngle * 0.5f && distance <= attackRange;
     }
 
-    public bool TryAttack()
+    public void TryAttack()
     {
-        if (!IsReady()) return false;
-
+        anim.SetTrigger("Attack");
         cooldownTimer = 0f;
 
+        Debug.Log("Starting attack!");
+        StartCoroutine(WaitBeforeDealingDamage());
+    }
+
+    void DoDamageEffect(Vector3 position)
+    {
+        Transform newHitEffect = Instantiate(hitEffect);
+        newHitEffect.position = position;
+        Destroy(newHitEffect.gameObject, 3f);
+    }
+
+    IEnumerator WaitBeforeDealingDamage()
+    {
+        airSound.Play();
+        yield return new WaitForSeconds(0.5f);
         if (IsPlayerInFront())
         {
+            punchSound.Play();
             if (player.TryGetComponent<PlayerHealth>(out var hp))
             {
                 hp.TakeDamage(attackDamage);
             }
-
+            DoDamageEffect(player.position);
             // Since we don't have very good visual cues for now, leave a log to make sure everything works as it should
             Debug.Log("Enemy hit the player.");
-            return true;
         }
 
         // Since we don't have very good visual cues for now, leave a log to make sure everything works as it should
         Debug.Log("Enemy missed the player.");
-        return false;
     }
 }

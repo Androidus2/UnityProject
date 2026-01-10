@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0b7f3b033306b6d4b956436528383403
+timeCreated: 1529419685
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/doorway1.prefab
+  uploadId: 255539

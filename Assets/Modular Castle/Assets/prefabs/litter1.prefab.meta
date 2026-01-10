@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d2bf29c4c2836f1439107ad7e08dd160
+timeCreated: 1529419709
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/litter1.prefab
+  uploadId: 255539

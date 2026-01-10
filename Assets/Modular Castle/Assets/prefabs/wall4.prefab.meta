@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c83073190e4a3614b9dbac2cf9c47f32
+timeCreated: 1529419740
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/wall4.prefab
+  uploadId: 255539

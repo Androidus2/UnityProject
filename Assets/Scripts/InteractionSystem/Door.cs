@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Door : MonoBehaviour, IInteractable
+public class Door : InteractableBase
 {
     [Header("Setari")]
     public bool isLocked = true;
@@ -11,7 +11,8 @@ public class Door : MonoBehaviour, IInteractable
 
     private bool isOpen = false;
 
-    public void Interact(Interactor interactor, InventoryObject inventory)
+    public override void Interact(Interactor interactor, InventoryObject inventory)
+    
     {
         // 1. Daca usa e deja deschisa, nu facem nimic
         if (isOpen) return;

@@ -3,15 +3,30 @@ using System;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] private float health = 100f;
+    [SerializeField] 
+    private float maxHealth = 100f;
+
+    [SerializeField]
+    private HealthBar healthBar;
+
+    [SerializeField]
+    private SoundEffect hitSound;
+
+    private float currentHealth;
 
     // Callbacks that the controller subscribes to, to allow us to pass the message forward
     event Action<float> onDamage;
     event Action onDeath;
 
+    private void Start()
+    {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(((int)maxHealth));
+    }
+
     public bool IsDead()
     {
-        return health <= 0f;
+        return currentHealth <= 0f;
     }
 
     public void SubscribeToDamage(Action<float> callback) 
@@ -37,10 +52,13 @@ public class EnemyHealth : MonoBehaviour
     {
         if (IsDead()) return;
 
-        health -= amount;
+        if(hitSound)
+            hitSound.Play();
+        currentHealth -= amount;
+        healthBar.SetHealth(currentHealth);
         onDamage?.Invoke(amount);
 
-        if (health <= 0f)
+        if (currentHealth <= 0f)
             onDeath?.Invoke();
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(InventoryObject))]
 public class Interactor : MonoBehaviour
 {
     private InputAction interactButton;
@@ -21,11 +22,15 @@ public class Interactor : MonoBehaviour
 
 
     //inventory system
-
-    [SerializeField]
     private InventoryObject inventory;
 
-    
+    private InteractableBase currentlyOutlined;
+
+    private void Awake()
+    {
+        inventory = GetComponent<InventoryObject>();
+    }
+
     private void Start()
     {
         interactButton = InputSystem.actions.FindAction("Interact");
@@ -36,20 +41,29 @@ public class Interactor : MonoBehaviour
         //interactables
         numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, interactionPointRadius, colliders, interactableMask);
 
-        if(numFound > 0)
+        InteractableBase interactable = null;
+        if (numFound > 0)
+            interactable = colliders[0].GetComponent<InteractableBase>();
+
+        // Only disable the previous outline if it's different from the new one
+        if (currentlyOutlined != null && currentlyOutlined != interactable)
         {
-           
-            var interactable = colliders[0].GetComponent<IInteractable>(); //find the mono behaviour which implements the interface
-
-            if (interactable != null && interactButton.WasPressedThisFrame()) { //to add controller key?
-                interactable.Interact(this, inventory);
-
-            
-            }
-
+            currentlyOutlined.ShowOutline(false);
+            currentlyOutlined = null;
         }
 
+        // Enable the new outline if there is one
+        if (interactable != null)
+        {
+            interactable.ShowOutline(true);
+            currentlyOutlined = interactable;
+
+            // Check if we have interacted
+            if (interactButton.WasPressedThisFrame())
+                interactable.Interact(this, inventory);
+        }
     }
+
 
     private void OnDrawGizmos() //to view the interaction sphere
     {
@@ -60,7 +74,7 @@ public class Interactor : MonoBehaviour
     //for testing purposes, we clear the inventory
     private void OnApplicationQuit()
     {
-        inventory.GetItems().Clear();
+        inventory.ClearInventory();
     }
 
 

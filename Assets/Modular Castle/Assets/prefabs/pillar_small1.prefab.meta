@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f18c80e40f3eae04a943a2e61d870d14
+timeCreated: 1529419720
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/pillar_small1.prefab
+  uploadId: 255539

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2b28d52e9282f5844af4fa29dc0c1032
+timeCreated: 1529426796
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs2/torch.prefab
+  uploadId: 255539

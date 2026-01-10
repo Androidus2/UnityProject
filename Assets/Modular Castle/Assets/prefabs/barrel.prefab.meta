@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8c2b62e7246b8be418a40cb56f42685a
+timeCreated: 1529419177
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 121360
+  packageName: Modular Castle
+  packageVersion: 1.0
+  assetPath: Assets/Modular Castle/Assets/prefabs/barrel.prefab
+  uploadId: 255539
