@@ -3,69 +3,67 @@
 public class Door : InteractableBase
 {
     [Header("Setari")]
-    public bool isLocked = true;
+    [SerializeField] bool isLocked = true;
 
     [Header("Referinte")]
-    public Animator animator;
-    public LockPickingMinigame minigame; // Referinta la scriptul minigame-ului
+    [SerializeField] Animator animator;
+    [SerializeField] MonoBehaviour playerControllerScript;
 
     private bool isOpen = false;
 
+    // Optional: Auto-find la start, la fel ca la chest, daca vrei
+    private void Awake()
+    {
+        // if (playerControllerScript == null) playerControllerScript = FindFirstObjectByType<PlayerMovement>();
+    }
+
     public override void Interact(Interactor interactor, InventoryObject inventory)
-    
     {
         // 1. Daca usa e deja deschisa, nu facem nimic
         if (isOpen) return;
 
-        // 2. Daca e incuiata
+        // 2. Verificam starea
         if (isLocked)
         {
-            if (minigame != null)
-            {
-                Debug.Log("Usa e incuiata. Pornesc minigame-ul...");
-
-                // --- AICI ERA EROAREA ---
-                // Nu apelam StartMinigame, ci doar activam obiectul vizual
-                minigame.gameObject.SetActive(true);
-
-                // Ii trimitem inventarul jucatorului
-                minigame.SetInventory(inventory);
-
-                // Ne abonam la evenimentul de final (Win/Lose)
-                // (Intai scoatem abonarea veche ca sa fim siguri, apoi o punem pe cea noua)
-                minigame.OnFinished -= HandleMinigameResult;
-                minigame.OnFinished += HandleMinigameResult;
-            }
-            else
-            {
-                Debug.LogError("LIPSA: Nu ai pus scriptul LockPickingMinigame pe Ușă in Inspector!");
-            }
+            StartLockpicking();
         }
         else
         {
-            // 3. Daca nu e incuiata, o deschidem
             OpenDoor();
         }
     }
 
-    // Aceasta functie se apeleaza automat cand termini minigame-ul
-    private void HandleMinigameResult(bool success)
+    void StartLockpicking()
     {
-        // Ne dezabonam
-        minigame.OnFinished -= HandleMinigameResult;
+        // Safety check simplu, exact ca la Chest
+        if (LockPickingMinigame.Instance == null) return;
 
-        // Ascundem minigame-ul la loc
-        minigame.gameObject.SetActive(false);
+        // A. Oprim timpul si jucatorul
+        Time.timeScale = 0f;
+        if (playerControllerScript != null) playerControllerScript.enabled = false;
 
+        // B. Apelam Minigame-ul Singleton
+        LockPickingMinigame.Instance.StartMinigame(HandleMinigameResult);
+    }
+
+    // Callback-ul care se executa cand se termina minigame-ul
+    void HandleMinigameResult(bool success)
+    {
+        // 1. Repornim jocul (Timpul si Player-ul)
+        Time.timeScale = 1f;
+        if (playerControllerScript != null) playerControllerScript.enabled = true;
+
+        // 2. Verificam rezultatul
         if (success)
         {
-            Debug.Log("Ai descuiat usa!");
-            isLocked = false; // Usa acum e descuiata permanent
+            Debug.Log("USA DESCUIATA!");
+            isLocked = false; // Usa ramane descuiata permanent
             OpenDoor();
         }
         else
         {
-            Debug.Log("Ai esuat. Mai incearca.");
+            Debug.Log("Lockpick esuat.");
+            // Usa ramane incuiata, nu facem nimic altceva
         }
     }
 

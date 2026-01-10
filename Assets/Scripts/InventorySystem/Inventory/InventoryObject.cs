@@ -130,19 +130,4 @@ public class InventoryObject : MonoBehaviour
 }
 
 
-    // --- MODIFICARE NOUA: Functia pentru a sterge un item specific ---
-    public bool RemoveItem(ItemObject itemToRemove)
-    {
-        // Cautam prin toate sloturile
-        for (int i = 0; i < items.Count; i++)
-        {
-            // Daca gasim itemul cautat
-            if (items[i].GetItem() == itemToRemove)
-            {
-                items.RemoveAt(i); // Il stergem din lista
-                return true; // Returnam true (am reusit sa stergem)
-            }
-        }
-        return false; // Nu am gasit itemul, deci nu am sters nimic
-    }
-}
+ 
