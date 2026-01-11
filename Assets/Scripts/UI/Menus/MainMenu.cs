@@ -58,6 +58,15 @@ public class MainMenu : MonoBehaviour
         });
     }
 
+    public void GoToTutorial()
+    {
+        fade.BeginFade(() =>
+        {
+            // Load scene by incrementing the current scene's build index - from scene list in build profile/settings
+            SceneManager.LoadScene("Tutorial");
+        });
+    }
+
     private void UpdateSensitivityText(float newSensitivity)
     {
         sensitivityText.text = "Sensitivity: " + newSensitivity.ToString("F1");
