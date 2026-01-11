@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,25 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI sensitivityText;
+
+    private Dictionary<string, bool> unlockedEndings;
+
+    [SerializeField]
+    private GameObject EndingTextBoxSaint;
+
+
+    [SerializeField]
+    private GameObject EndingTextBoxDelinquent;
+
+
+
+    [SerializeField]
+    private GameObject EndingTextBoxOneOfUs;
+
+
+    [SerializeField]
+    private GameObject EndingTextBoxLoser;
+
 
     private void Start()
     {
@@ -81,5 +101,47 @@ public class MainMenu : MonoBehaviour
             SceneManager.LoadScene("Ending");
             //Application.Quit();
         });
+    }
+
+    public void ChangeEndingsDisplay()
+    {
+        Dictionary<string, bool> endings = Ending.GetInstance().GetEndingsState();
+
+        if (endings["Saint"])
+        {
+            UnlockAchievement(EndingTextBoxSaint);
+        }
+
+        if (endings["Delinquent"])
+        {
+            UnlockAchievement(EndingTextBoxDelinquent);
+        }
+        if (endings["OneOfUs"])
+        {
+            UnlockAchievement(EndingTextBoxOneOfUs);
+        }
+        if (endings["Loser"])
+        {
+            UnlockAchievement(EndingTextBoxLoser);
+            EndingTextBoxLoser.GetComponentInChildren<TextMeshProUGUI>().text = "LOSER";
+        }
+       
+    }
+
+    private void UnlockAchievement(GameObject endingTextBox)
+    {
+        Transform unlockedTransform = endingTextBox.transform.Find("UNLOCKED");
+        if (unlockedTransform != null)
+        {
+            GameObject unlocked = unlockedTransform.gameObject;
+            unlocked.SetActive(true);
+        }
+
+        Transform lockedTransform = endingTextBox.transform.Find("LOCKED");
+        if (lockedTransform != null)
+        {
+            GameObject locked = lockedTransform.gameObject;
+            locked.SetActive(true);
+        }
     }
 }

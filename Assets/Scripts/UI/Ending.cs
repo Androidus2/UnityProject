@@ -2,18 +2,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using System.Collections.Generic;
 
 
 public class Ending : MonoBehaviour
 {
-    [SerializeField] 
+    private static Ending instance;
+
+    [SerializeField]
     private Fade fade;
 
-    [SerializeField] 
+    [SerializeField]
     private TMP_Text textSection;
 
     [SerializeField]
     private int kill_limit;
+
+    private Dictionary<string, bool> unlockedEndings;
 
     private void Start()
     {
@@ -21,6 +26,19 @@ public class Ending : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        unlockedEndings = new Dictionary<string, bool>
+        {
+            { "Saint", false },
+            { "Delinquent", false },
+            { "OneOfUs", false },
+            {  "Loser", false }
+        };
+    }
+
+    public static Ending GetInstance()
+    {
+        return instance;
     }
 
     private void UpdateEndingText()
@@ -34,14 +52,15 @@ public class Ending : MonoBehaviour
                 "<b>YOU QUIT.</b>\n" +
                 "Your choices have shaped who you became.\n\n" +
                 "<b>LOSER</b>\n\n" +
-                "No wings, so no afterlife for you...your body unthreads into dust, pixel by pixel and the angels have never been more delighted."; 
+                "No wings, so no afterlife for you...your body unthreads into dust, pixel by pixel and the angels have never been more delighted.";
             textSection.text = endingText;
+            unlockedEndings["Loser"] = true;
             return;
         }
 
 
         int kills = Karma.GetInstance().getKillScore();
-        
+
 
         if (kills <= 0)
         {
@@ -51,6 +70,7 @@ public class Ending : MonoBehaviour
                 "<b>SAINT</b>\n\n" +
                 "The angels fear your goodness; afraid you’re a saint in disguise and will shut down their playground, " +
                 "but ultimately send you ‘up’.";
+            unlockedEndings["Saint"] = true;
         }
         else if (kills <= kill_limit)
         {
@@ -59,6 +79,7 @@ public class Ending : MonoBehaviour
                 "Your choices have shaped who you became.\n\n" +
                 "<b>DELINQUENT</b>\n\n" +
                 "The angels make fun of you, berate you, guilttrip you for taking the easy route and send you down in flames.";
+            unlockedEndings["Delinquent"] = true;
         }
         else
         {
@@ -67,6 +88,7 @@ public class Ending : MonoBehaviour
                 "Your choices have shaped who you became.\n\n" +
                 "<b>ONE OF THEM</b>\n\n" +
                 "The angels offer you to join them in running the playground – you seem to enjoy torture as much as they do.";
+            unlockedEndings["OneOfUs"] = true;
         }
 
         if (textSection != null)
@@ -94,5 +116,15 @@ public class Ending : MonoBehaviour
             EndingContext.SetCompleted();
             SceneManager.LoadScene("MainMenu");
         }
+    }
+
+    public Dictionary<string, bool> GetEndingsState()
+    {
+        return unlockedEndings;
+    }
+
+    public void SetUnlockedEndings(Dictionary<string, bool> endings)
+    {
+        unlockedEndings = endings;
     }
 }

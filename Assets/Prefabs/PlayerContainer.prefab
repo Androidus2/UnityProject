@@ -889,6 +889,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   numFound: 0
+  interactTextObject: {fileID: 0}
 --- !u!114 &4308904125691550524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,11 +916,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryName: Player
   type: 0
+  coinCount: 0
   inventorySize: 9
   forbiddenSound: {fileID: 721813497067443688}
   pickupSound: {fileID: 3055459377826504518}
   coinSound: {fileID: 2601256898979762587}
-  items: []
+  items:
+  - item: {fileID: 11400000, guid: a22fa3e2f1bd34646a3a735cc64c0063, type: 2}
 --- !u!1 &3749185218587484645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,7 +1983,7 @@ Transform:
   m_GameObject: {fileID: 7542400989303952202}
   serializedVersion: 2
   m_LocalRotation: {x: 0.15212339, y: -0.000000027233664, z: 0.000000004191662, w: 0.98836154}
-  m_LocalPosition: {x: 0, y: 1.9805794, z: -3.1090002}
+  m_LocalPosition: {x: -25, y: 1.81353, z: -4.7685847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

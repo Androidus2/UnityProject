@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if(instance == this)
+        if (instance == this)
         {
             // We are loading in Start instead of Awake so we make sure SoundManager exists
             LoadGame();
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if(instance == this)
+        if (instance == this)
             SaveGame();
     }
 
@@ -46,6 +47,11 @@ public class GameManager : MonoBehaviour
             SoundManager soundManager = SoundManager.GetInstance();
             soundManager.SetMusicVolume(musicVolume);
             soundManager.SetSFXVolume(sfxVolume);
+
+
+            Ending endingManager = Ending.GetInstance();
+            Dictionary<string, bool> endings = loadedData.GetUnlockedEndings();
+            endingManager.SetUnlockedEndings(endings);
         }
     }
 
@@ -55,8 +61,10 @@ public class GameManager : MonoBehaviour
         SoundManager soundManager = SoundManager.GetInstance();
         float musicVolume = soundManager.GetMusicVolume();
         float sfxVolume = soundManager.GetSFXVolume();
+        Ending endingManager = Ending.GetInstance();
+        Dictionary<string, bool> endings = endingManager.GetEndingsState();
 
-        Data saveData = new Data(musicVolume, sfxVolume, sensitivity);
+        Data saveData = new Data(musicVolume, sfxVolume, sensitivity, endings);
         SaveSystem.Save(saveData);
     }
 

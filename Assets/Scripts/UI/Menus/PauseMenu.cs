@@ -148,6 +148,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        Time.timeScale = 1f; // Ensure time scale is reset
         fade.BeginFade(() =>
         {
             Debug.Log("Quit pressed"); //for testing in editor
