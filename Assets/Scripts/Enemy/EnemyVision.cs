@@ -50,6 +50,11 @@ public class EnemyVision : MonoBehaviour
         if (!IsInRange()) return false;
         if (!IsInFOV()) return false;
         if (!HasLineOfSight()) return false;
+        if (PlayerDisguise.GetInstance() != null && PlayerDisguise.GetInstance().GetIsWearingGuardArmour())
+        {
+            Debug.Log("Player is wearing guard armour, enemy cannot see player.");
+            return false;
+        }
 
         return true;
     }

@@ -414,6 +414,13 @@ public class DisplayInventory : MonoBehaviour
                                 //find text and modify to show equipped armour
                                 GameObject.Find("ArmourText").GetComponent<TextMeshProUGUI>().text = $"+{equipment.GetBonusValue()} armour";
 
+                                bool isGuardArmour = armourSlot.GetItem().name == "Guard Armour";
+                                if (PlayerDisguise.GetInstance() != null)
+                                {
+                                    PlayerDisguise.GetInstance().SetGuardArmour(isGuardArmour);
+                                    Debug.Log("PlayerDisguise: Guard Armour equipped status set to " + isGuardArmour);
+                                }
+
                             }
                             Debug.Log("Equipped " + item.GetItem().name);
 
@@ -445,6 +452,13 @@ public class DisplayInventory : MonoBehaviour
                                     armourSlot = null;
                                     //find text and modify to show no equipped armour
                                     GameObject.Find("ArmourText").GetComponent<TextMeshProUGUI>().text = "no armour equipped";
+
+                                    if (PlayerDisguise.GetInstance() != null)
+                                    {
+                                        PlayerDisguise.GetInstance().SetGuardArmour(false);
+                                        Debug.Log("PlayerDisguise: Guard Armour removed on unequip.");
+                                    }
+
                                 }
                             }
                             RefreshDisplay();
