@@ -5,8 +5,7 @@ using UnityEngine;
 public class Chest : InteractableBase
 {
     [SerializeField] GameObject panel;
-    [SerializeField] bool isLocked = true;
-    [SerializeField] MonoBehaviour playerControllerScript;
+    [SerializeField] bool isLocked = false;
 
     private InventoryObject chestInventory;
     private DisplayInventory displayInventory;
@@ -39,7 +38,7 @@ public class Chest : InteractableBase
 
         // Oprim timpul si player-ul
         Time.timeScale = 0f;
-        if (playerControllerScript != null) playerControllerScript.enabled = false;
+        PanelManager.GetInstance().SetLockPickPanelState(true);
 
         // Apelam Singleton-ul si ii dam functia noastra de raspuns
         LockPickingMinigame.Instance.StartMinigame(HandleMinigameResult);
@@ -49,7 +48,7 @@ public class Chest : InteractableBase
     {
         // 1. Repornim jocul
         Time.timeScale = 1f;
-        if (playerControllerScript != null) playerControllerScript.enabled = true;
+        PanelManager.GetInstance().SetLockPickPanelState(false);
 
         // 2. Verificam daca a castigat
         if (success)

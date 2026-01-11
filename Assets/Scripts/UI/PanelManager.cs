@@ -12,6 +12,7 @@ public class PanelManager : MonoBehaviour
     private bool isChestPanelOpen = false;
     private bool isInventoryPanelOpen = false;
     private bool isVendorPanelOpen = false;
+    private bool isLockPickPanelOpen = false;
 
     public static PanelManager GetInstance()
     {
@@ -57,9 +58,19 @@ public class PanelManager : MonoBehaviour
         isVendorPanelOpen = isOpen;
     }
 
+    public bool IsLockPickPanelOpen()
+    {
+        return isLockPickPanelOpen;
+    }
+
+    public void SetLockPickPanelState(bool isOpen)
+    {
+        isLockPickPanelOpen = isOpen;
+    }
+
     public bool AreAllPanelsClosed()
     {
-        return !isPauseMenuOpen && !isChestPanelOpen && !isInventoryPanelOpen && !isVendorPanelOpen;
+        return !isPauseMenuOpen && !isChestPanelOpen && !isInventoryPanelOpen && !isVendorPanelOpen && !isLockPickPanelOpen;
     }
 
 }
