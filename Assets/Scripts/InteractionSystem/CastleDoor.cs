@@ -1,28 +1,30 @@
 ﻿using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public class Door : InteractableBase
+public class CastleDoor : InteractableBase
 {
-    [Header("Setari")]
     [SerializeField] bool isLocked = true;
 
-    [Header("Referinte")]
-    [SerializeField] Animator animator;
-    [SerializeField] MonoBehaviour playerControllerScript;
+    [SerializeField]
+    GameObject OpenDoorObject;
 
-    private bool isOpen = false;
+    [SerializeField]
+    GameObject CloseDoorObject;
 
-    // Optional: Auto-find la start, la fel ca la chest, daca vrei
-    private void Awake()
+
+    protected override void Awake()
     {
-        // if (playerControllerScript == null) playerControllerScript = FindFirstObjectByType<PlayerMovement>();
+        base.Awake();
+        //make sure the door is closed at start
+        OpenDoorObject.SetActive(false);
+        CloseDoorObject.SetActive(true);
     }
 
     public override void Interact(Interactor interactor, InventoryObject inventory)
     {
-        // 1. Daca usa e deja deschisa, nu facem nimic
-        if (isOpen) return;
+        
 
-        // 2. Verificam starea
+        //Verificam starea
         if (isLocked)
         {
             StartLockpicking();
@@ -40,7 +42,7 @@ public class Door : InteractableBase
 
         // A. Oprim timpul si jucatorul
         Time.timeScale = 0f;
-        if (playerControllerScript != null) playerControllerScript.enabled = false;
+        PanelManager.GetInstance().SetLockPickPanelState(true);
 
         // B. Apelam Minigame-ul Singleton
         LockPickingMinigame.Instance.StartMinigame(HandleMinigameResult);
@@ -51,7 +53,7 @@ public class Door : InteractableBase
     {
         // 1. Repornim jocul (Timpul si Player-ul)
         Time.timeScale = 1f;
-        if (playerControllerScript != null) playerControllerScript.enabled = true;
+        PanelManager.GetInstance().SetLockPickPanelState(false);
 
         // 2. Verificam rezultatul
         if (success)
@@ -69,12 +71,7 @@ public class Door : InteractableBase
 
     private void OpenDoor()
     {
-        isOpen = true;
-
-        // Declansam animatia
-        if (animator != null)
-        {
-            animator.SetTrigger("Open");
-        }
+        OpenDoorObject.SetActive(true);
+        CloseDoorObject.SetActive(false);
     }
 }
