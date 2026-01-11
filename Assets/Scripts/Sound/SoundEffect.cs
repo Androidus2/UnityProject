@@ -34,7 +34,7 @@ public class SoundEffect : MonoBehaviour
 
     private void SetVolume()
     {
-        float volumeMultiplier = SoundManager.GetInstance().GetSFXVolume();
+        float volumeMultiplier = SoundManager.GetInstance().GetSFXVolume();                                  
         source.volume = volumeMultiplier * originalVolume;
     }
 

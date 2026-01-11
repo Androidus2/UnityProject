@@ -31,12 +31,12 @@ public class EnemyLookRandomizer : MonoBehaviour
 
     private void Awake()
     {
-        // Armor isn't mandatory
-        Generate(chests, false);
-        Generate(arms, false);
-        Generate(belts, false);
-        Generate(legs, false);
-        Generate(feet, false);
+        // Armor is mandatory
+        Generate(chests, true);
+        Generate(arms, true);
+        Generate(belts, true);
+        Generate(legs, true);
+        Generate(feet, true);
 
         // Facial details are mandatory
         Generate(noses, true);
