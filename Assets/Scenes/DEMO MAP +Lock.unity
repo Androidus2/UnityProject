@@ -35067,11 +35067,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 499586, guid: 0b7f3b033306b6d4b956436528383403, type: 3}
   m_PrefabInstance: {fileID: 1237472461}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &874272268 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 154972, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
-  m_PrefabInstance: {fileID: 1353006978}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &874508009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53595,7 +53590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 154972, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 154972, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -53684,15 +53679,6 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 1945593013}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 154972, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1353006983}
-    - targetCorrespondingSourceObject: {fileID: 154972, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1353006982}
-    - targetCorrespondingSourceObject: {fileID: 154972, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1353006984}
     - targetCorrespondingSourceObject: {fileID: 160242, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 544831853}
@@ -53705,62 +53691,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 475668, guid: eda319de497b2a4449c2ab39265a3ac5, type: 3}
   m_PrefabInstance: {fileID: 1353006978}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1353006982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874272268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cee80d2917e1005488962247bc809de6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetWidth: 6
-  tweenDuration: 0.15
-  isLocked: 1
-  OpenDoorObject: {fileID: 544831849}
-  CloseDoorObject: {fileID: 1945593012}
---- !u!114 &1353006983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874272268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 6
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!65 &1353006984
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874272268}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 11.999997, y: 10.563771, z: 4.5172653}
-  m_Center: {x: -0.0000076293945, y: 5.265817, z: 0}
 --- !u!1001 &1353048747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71431,7 +71361,9 @@ GameObject:
   - component: {fileID: 1945593015}
   - component: {fileID: 1945593014}
   - component: {fileID: 1945593016}
-  m_Layer: 0
+  - component: {fileID: 1945593018}
+  - component: {fileID: 1945593017}
+  m_Layer: 6
   m_Name: CLOSED
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71527,6 +71459,41 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9962192, y: 8.734682, z: 1.3577527}
   m_Center: {x: -1.9981172, y: 4.632657, z: 0.0038828254}
+--- !u!114 &1945593017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945593012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee80d2917e1005488962247bc809de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWidth: 6
+  tweenDuration: 0.15
+  isLocked: 1
+  OpenDoorObject: {fileID: 544831849}
+  CloseDoorObject: {fileID: 1945593012}
+--- !u!114 &1945593018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945593012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &1945794844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3823895050064728043, guid: bc4381cc307df834ab345610a1e61b99, type: 3}
