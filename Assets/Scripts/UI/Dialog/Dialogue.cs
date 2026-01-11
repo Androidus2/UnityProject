@@ -92,7 +92,7 @@ public class Dialogue : MonoBehaviour
                     Fade fade = FindFirstObjectByType<Fade>();
                     fade.BeginFade(() =>
                     {
-                        SceneManager.LoadScene("DEMO MAP");
+                        SceneManager.LoadScene("DEMO MAP +Lock");
                     });
                 }
                 PlayerMechanicsUnlocker.Instance.AddMechanic(unlockedMechanic);
