@@ -141,7 +141,12 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetFloat("Speed", 3f);
         movement.Patrol();
-        // If we see the player while investigating, start chasing him
+
+        // If we are passive, don't care about the player, just walk around
+        if (isPassive)
+            return;
+
+        // If we see the player while patrolling, start chasing him
         if (vision.CanSeePlayer())
         {
             state = EnemyState.Chase;
@@ -328,10 +333,12 @@ public class EnemyController : MonoBehaviour
     private void OnDamaged(float amt)
     {
         anim.SetTrigger("Hit");
-        if (isPassive)
+        if (isPassive && state == EnemyState.Idle)
             return;
+        else if (isPassive)
+            isPassive = false;
 
-        lastSeenPlayerPos = player.position;
+            lastSeenPlayerPos = player.position;
 
         state = EnemyState.Chase;
     }
