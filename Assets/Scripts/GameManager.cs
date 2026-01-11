@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
             soundManager.SetSFXVolume(sfxVolume);
             endings = loadedData.GetUnlockedEndings();
 
+            if(endings == null || endings.Length == 0)
+                endings = new bool[4];
         }
     }
 

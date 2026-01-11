@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,12 @@ public class PlayerSteal : MonoBehaviour
     float stealValue;
 
     [SerializeField]
-    float stealCooldown; 
+    float stealCooldown;
+
+    [SerializeField]
+    private GameObject stealTextObject; // The E to steal button
+
+    private Tween stealTextTween;
 
     float timeSinceLastSteal;
 
@@ -52,13 +58,29 @@ public class PlayerSteal : MonoBehaviour
 
                 Debug.Log("Player just stole! Number of stolen items: " + itemsStolen);
 
-                targets.RemoveAt(0); 
+                targets.RemoveAt(0);
+
+                if (targets.Count == 0)
+                    DisableStealText();
             }
             else
             {
                 Debug.Log("Enemy was already stolen from!");
             }
         }
+    }
+
+    void EnableStealText()
+    {
+        stealTextTween?.Kill();
+        stealTextObject.SetActive(true);
+        stealTextTween = stealTextObject.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    void DisableStealText()
+    {
+        stealTextTween?.Kill();
+        stealTextTween = stealTextObject.transform.DOScale(0, 0.2f).SetEase(Ease.InBack).OnComplete(() => stealTextObject.SetActive(false));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -72,6 +94,9 @@ public class PlayerSteal : MonoBehaviour
             }
             Debug.Log("Enemy entered steal range.");
             targets.Add(enemy);
+
+            if (targets.Count == 1)
+                EnableStealText();
         }
     }
 
@@ -86,6 +111,10 @@ public class PlayerSteal : MonoBehaviour
             }
 
             targets.Remove(enemy);
+
+            if (targets.Count == 0)
+                DisableStealText();
+
         }
     }
 
