@@ -47,6 +47,7 @@ public class MainMenu : MonoBehaviour
         float sensitivity = GameManager.GetInstance().GetSensitivity();
         sensitivitySlider.value = sensitivity;
         UpdateSensitivityText(sensitivity);
+        ChangeEndingsDisplay();
     }
 
     public void PlayGame()
@@ -106,30 +107,29 @@ public class MainMenu : MonoBehaviour
         fade.BeginFade(() =>
         {
             Debug.Log("Quit pressed"); //for testing in editor
-            EndingContext.SetQuit();
-            SceneManager.LoadScene("Ending");
-            //Application.Quit();
+            Application.Quit();
         });
     }
 
     public void ChangeEndingsDisplay()
     {
-        Dictionary<string, bool> endings = Ending.GetInstance().GetEndingsState();
+        bool[] endings = GameManager.GetInstance().GetUnlockedEndings();
 
-        if (endings["Saint"])
+
+        if (endings[0])
         {
             UnlockAchievement(EndingTextBoxSaint);
         }
 
-        if (endings["Delinquent"])
+        if (endings[1])
         {
             UnlockAchievement(EndingTextBoxDelinquent);
         }
-        if (endings["OneOfUs"])
+        if (endings[2])
         {
             UnlockAchievement(EndingTextBoxOneOfUs);
         }
-        if (endings["Loser"])
+        if (endings[3])
         {
             UnlockAchievement(EndingTextBoxLoser);
             EndingTextBoxLoser.GetComponentInChildren<TextMeshProUGUI>().text = "LOSER";
@@ -150,7 +150,7 @@ public class MainMenu : MonoBehaviour
         if (lockedTransform != null)
         {
             GameObject locked = lockedTransform.gameObject;
-            locked.SetActive(true);
+            locked.SetActive(false);
         }
     }
 }

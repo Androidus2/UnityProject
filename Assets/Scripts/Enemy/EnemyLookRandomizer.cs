@@ -64,7 +64,6 @@ public class EnemyLookRandomizer : MonoBehaviour
             maxx += 1;
 
         int ind = Random.Range(0, maxx);
-        Debug.Log(ind);
         if (ind < pieces.Length)
             pieces[ind].SetActive(true);
         else

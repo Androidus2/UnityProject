@@ -9,6 +9,7 @@ public static class SaveSystem
     {
         string json = JsonUtility.ToJson(data, prettyPrint: true);
         File.WriteAllText(Path, json);
+        Debug.Log("Game saved to " + Path); 
     }
 
     public static Data Load()

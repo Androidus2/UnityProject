@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     private float sensitivity = 1.0f;
+
+    bool[] endings = new bool[4] { false, false, false, false };
 
     private void Awake()
     {
@@ -47,11 +50,8 @@ public class GameManager : MonoBehaviour
             SoundManager soundManager = SoundManager.GetInstance();
             soundManager.SetMusicVolume(musicVolume);
             soundManager.SetSFXVolume(sfxVolume);
+            endings = loadedData.GetUnlockedEndings();
 
-
-            Ending endingManager = Ending.GetInstance();
-            Dictionary<string, bool> endings = loadedData.GetUnlockedEndings();
-            endingManager.SetUnlockedEndings(endings);
         }
     }
 
@@ -61,8 +61,6 @@ public class GameManager : MonoBehaviour
         SoundManager soundManager = SoundManager.GetInstance();
         float musicVolume = soundManager.GetMusicVolume();
         float sfxVolume = soundManager.GetSFXVolume();
-        Ending endingManager = Ending.GetInstance();
-        Dictionary<string, bool> endings = endingManager.GetEndingsState();
 
         Data saveData = new Data(musicVolume, sfxVolume, sensitivity, endings);
         SaveSystem.Save(saveData);
@@ -81,6 +79,18 @@ public class GameManager : MonoBehaviour
     public void SetSensitivity(float sensitivity)
     {
         this.sensitivity = sensitivity;
+    }
+
+    public void UnlockEnding(int endingIndex)
+    {
+        if (endingIndex < 0 || endingIndex >= endings.Length)
+            return;
+        endings[endingIndex] = true;
+    }
+
+    public bool[] GetUnlockedEndings()
+    {
+        return endings;
     }
 
 }
