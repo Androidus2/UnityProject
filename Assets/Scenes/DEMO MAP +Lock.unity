@@ -387,8 +387,16 @@ PrefabInstance:
       value: -2.8802134e-13
       objectReference: {fileID: 0}
     - target: {fileID: 473397156604703039, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+      propertyPath: walkSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 473397156604703039, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
+      propertyPath: sneakSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 473397156604703039, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
       propertyPath: sprintSpeed
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 579479667150348878, guid: 0d576515a7a515d4bb8e76ead9dc1ffa, type: 3}
       propertyPath: m_IsActive
@@ -48976,6 +48984,10 @@ PrefabInstance:
     - target: {fileID: 1972026583130417448, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429289213280302391, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
+      propertyPath: chaseSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4429289213280302391, guid: c7c6ad90634144141ae77d18ff3d0c4d, type: 3}
       propertyPath: patrolArea
